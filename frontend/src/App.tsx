@@ -9,6 +9,8 @@ function App() {
         <div className="App">
             <Header />
             <Outlet />
+            <br />
+            <footer>i am a footer todo: create me</footer>
         </div>
     );
 }
