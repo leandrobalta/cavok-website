@@ -12,5 +12,12 @@ header {
 #cavok-text-icon {
     height: 7em;
     width: auto;
-    
+}
+
+.text-colored {
+    color: #134074;
+}
+
+#menu-dropdown::after{
+    display: none;
 }
