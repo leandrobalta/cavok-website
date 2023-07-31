@@ -6,7 +6,7 @@ export default function Hero() {
         <div className="hero">
             {/* <video src={video} muted autoPlay loop typeof="video/mp4" ></video> */}
             <div className="content">
-                <h1>PASSAGENS AÉREAS</h1>
+                <h2>PASSAGENS AÉREAS</h2>
             </div>
         </div>
     )

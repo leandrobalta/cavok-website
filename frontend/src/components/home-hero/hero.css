@@ -20,10 +20,10 @@ video{
 }
 
 .content{
-    height: 80%;
-    width: 50%;
+    height: 60%;
+    width: 80%;
     background-color: white;
     border-radius: 1em;
     display: flex;
-    padding: 2em;
+    padding: 3em;
 }
