@@ -21,3 +21,7 @@ header {
 #menu-dropdown::after{
     display: none;
 }
+
+#navbar {
+    padding: 0;
+}
