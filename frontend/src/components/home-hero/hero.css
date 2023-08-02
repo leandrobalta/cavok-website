@@ -1,11 +1,18 @@
 .hero{
-    background-image: url(../../assets/images/hero.png);
-    background-size: 100%;
     width: 100%;
     height: 35em;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: green;
+}
+
+.background{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
 }
 
 .conteiner{
@@ -27,15 +34,39 @@
     text-align: start;
 }
 
+.btn-travel-mode-active{
+    background-color: #134085 !important;
+    color: white !important;
+    border-color: #134085 !important;
+}
+
+.btn-travel-mode{
+    background-color: white !important;
+    color: #134085 !important;
+    border-color: #134085 !important;
+
+    &:hover {
+        background-color: #113763 !important;
+        color: white !important;
+        border-color: #113763 !important;
+    }
+}
+
 .row > * {
     flex: 1;
     width: auto;
 }
 
 .hero-input {
-    border-radius: 100em;
+    /* border-radius: 100em; */
 }
 
 #search-btn {
     margin-top: auto;
+    background-color: #134074 !important;
+    border-color: #134074 !important;
+    &:hover {
+        background-color: #113763 !important;
+        border-color: #113763 !important;
+    }
 }
