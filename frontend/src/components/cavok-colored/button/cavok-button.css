@@ -1,0 +1,8 @@
+#cavok-button{
+    background-color: #134074 !important;
+    border-color: #134074 !important;
+    &:hover {
+        background-color: #113763 !important;
+        border-color: #113763 !important;
+    }
+}
