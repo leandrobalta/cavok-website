@@ -9,6 +9,10 @@ header {
     text-shadow: 2px 2px 4px #000000; */
 }
 
+#conteiner{
+    padding: 0;
+}
+
 #cavok-text-icon {
     height: 7em;
     width: auto;

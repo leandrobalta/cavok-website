@@ -19,12 +19,14 @@
     position: absolute;
     top: 0;
     z-index: 3;
+    padding: 0 16rem;
 }
 
 .search-box{
     background-color: white;
     border-radius: 1em;
     padding: 3em;
+    width: 100%;
 }
 
 .row {

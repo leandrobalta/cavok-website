@@ -5,4 +5,5 @@ footer{
     flex-direction: column;
     justify-content: center;
     padding : 2em;    
+    margin-top: 2rem;
 }

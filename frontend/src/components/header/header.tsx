@@ -15,8 +15,8 @@ const MenuDropdownTitle = () => (
 
 export function Header() {
     return (
-        <Navbar expand="lg" className="bg-body-tertiary" id="navbar">
-            <Container>
+        <Navbar expand="lg" id="navbar">
+            <Container id="conteiner">
                 <Navbar.Brand href="#home">
                     <CavokTextIcon id="cavok-text-icon" />
                 </Navbar.Brand>

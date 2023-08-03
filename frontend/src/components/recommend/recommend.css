@@ -1,0 +1,21 @@
+.recommend{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 3.6rem;    
+    justify-content: center;
+    padding: 0 16rem;
+}
+
+.recommend-card{
+    width: 18rem;
+    background-color: aliceblue;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        transform: translateX(0.4rem) translateY(-1rem);
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+}
