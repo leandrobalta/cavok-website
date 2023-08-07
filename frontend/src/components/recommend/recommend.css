@@ -5,11 +5,12 @@
     align-items: center;
     gap: 3.6rem;    
     justify-content: center;
-    padding: 0 16rem;
+    width: 75vw;
+    margin: 0 auto;
 }
 
 .recommend-card{
-    width: 18rem;
+    width: 22vw;
     background-color: aliceblue;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transition: 0.3s ease-in-out;

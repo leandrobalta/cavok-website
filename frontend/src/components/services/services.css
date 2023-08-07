@@ -1,9 +1,10 @@
 .services {
-    padding: 0 16rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     text-align: start;
+    width: 75%;
+    margin: 0 auto;
 
     @media screen and (min-width: 280px) and (max-width: 720px) {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
