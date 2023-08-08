@@ -1,0 +1,38 @@
+.navbar {
+    padding: 0 15rem !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.options{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.links ul{
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+    list-style-type: none;
+    align-items: center;
+}
+
+.links a {
+    text-decoration: none;
+    color: #134074;
+    font-size: 1.2rem;
+    transition: 0.1s ease-in-out;
+    &:hover {
+        color: #023e8a;
+    }
+}
+
+.menu-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #134074;
+    size: 5rem;
+}

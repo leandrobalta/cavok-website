@@ -1,16 +1,23 @@
 .recommend{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 3.6rem;    
-    justify-content: center;
-    width: 75vw;
+    width: 75vw; /* TODO: CHANGE THIS WIDTH FOR SOME MAIN PADDING */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     margin: 0 auto;
+    gap: 2rem;
+    
+    /* @media screen and (min-width: 280px) and (max-width: 768px) {
+        grid-template-columns: repeat(1fr);
+    } */
+    @media screen and (min-width: 280px) and (max-width: 720px) {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    @media screen and (min-width: 720px) and (max-width: 1080px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
+
 .recommend-card{
-    width: 22vw;
     background-color: aliceblue;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transition: 0.3s ease-in-out;
