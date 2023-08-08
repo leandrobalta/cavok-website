@@ -1,11 +1,12 @@
 import "./navbar.css";
 import { AiOutlineMenu as MenuIcon } from "react-icons/ai";
+import CavokTextIcon from "components/icons/cavok-text";
 
 export function NavBar() {
     return (
         <nav className="navbar">
             <div className="brand">
-                <h2> Logo </h2>
+                <CavokTextIcon id="cavok-text-icon" />
             </div>
             <div className="options">
                 <div className="links">

@@ -35,7 +35,6 @@ export default function Hero() {
                             ))}
                         </ButtonGroup>
                     </div>
-                    <br />
                     <div className="row">
                         <Form.Group className="location-input">
                             <Form.Label>Origem</Form.Label>
@@ -49,7 +48,7 @@ export default function Hero() {
                             <Form.Label>Data de ida</Form.Label>
                             <Form.Control type="date" placeholder="Digite a cidade de origem" />
                         </Form.Group>
-                        <CavokButton style={{ marginTop: "auto" }}>BUSCAR VOOS</CavokButton>
+                        <CavokButton className="search-btn">BUSCAR VOOS</CavokButton>
                     </div>
                 </div>
             </div>

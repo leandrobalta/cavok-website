@@ -1,5 +1,5 @@
 .recommend{
-    width: 75vw; /* TODO: CHANGE THIS WIDTH FOR SOME MAIN PADDING */
+    width: 75%; /* TODO: CHANGE THIS WIDTH FOR SOME MAIN PADDING */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     margin: 0 auto;
@@ -14,11 +14,18 @@
     @media screen and (min-width: 720px) and (max-width: 1080px) {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    @media screen and (max-width: 1000px) {
+        width: 90%;
+    }
+
+    @media screen and (max-width: 768px) {
+        width: 95%;
+    }
 }
 
 
 .recommend-card{
-    background-color: aliceblue;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transition: 0.3s ease-in-out;
 

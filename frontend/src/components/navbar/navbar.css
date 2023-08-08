@@ -1,8 +1,19 @@
 .navbar {
-    padding: 0 15rem !important;
+    padding: 0.1rem 0 !important;
+    width: 75%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0 auto;
+
+    @media screen and (max-width: 1000px) {
+        width: 90%;
+    }
+
+    @media screen and (max-width: 768px) {
+        width: 95%;
+    }
+
 }
 
 .options{
@@ -25,8 +36,16 @@
     font-size: 1.2rem;
     transition: 0.1s ease-in-out;
     &:hover {
-        color: #023e8a;
+        color: #113763;
     }
+
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
+}
+
+#cavok-text-icon {
+    height: 15rem;
 }
 
 .menu-btn {

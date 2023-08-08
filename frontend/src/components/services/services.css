@@ -12,6 +12,14 @@
     @media screen and (min-width: 720px) and (max-width: 1080px) {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    @media screen and (max-width: 1000px) {
+        width: 90%;
+    }
+
+    @media screen and (max-width: 768px) {
+        width: 95%;
+    }
 }
 
 .service {
@@ -19,7 +27,7 @@
     flex-direction: column;
     gap: 1rem;
     padding: 2rem;
-    background-color: aliceblue;
+    background-color: #ddeeff;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transition: 0.3s ease-in-out;
 
