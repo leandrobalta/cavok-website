@@ -2,6 +2,10 @@
 # Edit at https://www.toptal.com/developers/gitignore\?templates\=react,node
 
 ### Node ###
+
+# Npm build output
+build
+
 # Logs
 logs
 *.log
