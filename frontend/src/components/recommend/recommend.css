@@ -1,4 +1,10 @@
 .recommend{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.recommend-body{
     width: 75%; /* TODO: CHANGE THIS WIDTH FOR SOME MAIN PADDING */
     display: grid;
     grid-template-columns: repeat(3, 1fr);

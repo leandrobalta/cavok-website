@@ -34,8 +34,8 @@
     flex-direction: column;
     background-color: white;
     border-radius: 1em;
-    padding: 3em;
-    width: 75%;
+    padding: 2em 1rem;
+    width: 95%;
     gap: 1rem;
 
     @media screen and (max-width: 1000px) {
@@ -49,6 +49,23 @@
         background-color: #ddeeff;
         padding: 1em;
     }
+}
+
+.search-box-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+}
+
+.search-box-header span{
+    font-size: 1.5em; /* Adjust the font size to match <h5> */
+    font-weight: bold;
+}
+
+.location-input{
+    padding-left: 0.25rem !important;
+    padding-right:0.25rem !important;
 }
 
 .row {
@@ -85,8 +102,80 @@
 
 }
 
+
+
 .row > *:not(button) {
     @media screen and (max-width: 768px) {
         padding: 0 !important;
     }
+}
+
+.passengers-input{
+    width: 100%;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+    align-items: center;
+}
+
+.passengers-box{
+    padding: 1rem;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    z-index: 4;
+    gap: 1rem;
+    min-width: 15rem;
+    background-color: #f9f9f9;
+    border-radius: 0.5em;
+    border: 1.5px solid #000;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.passengers-box-header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between !important;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #000;
+}
+
+.passengers-box-header span{
+    font-size: 1.25em; /* Adjust the font size to match <h5> */
+    font-weight: bold;
+}
+
+.passengers-box-body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.passenger h6{
+    margin: 0;
+}
+
+.passenger-box-close-btn{
+    border: none;
+    background: none;
+}
+
+.passenger-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.passenger-amount{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3rem;
 }

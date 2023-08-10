@@ -1,4 +1,5 @@
 import "./services.css";
+import { HorizontalLine } from "components/cavok-colored";
 
 export default function Services() {
     const service1 = require("assets/images/service1.png");
@@ -36,8 +37,12 @@ export default function Services() {
 
     return (
         <div className="services">
-            {
-                data.map((item, index) => {
+            <div className="services-title">
+                <h3>Por que escolher a gente?</h3>
+                <HorizontalLine />
+            </div>
+            <div className="services-body">
+                {data.map((item, index) => {
                     return (
                         <div className="service">
                             <div className="icon">
@@ -46,9 +51,9 @@ export default function Services() {
                             <h3>{item.title}</h3>
                             <p>{item.subTitle}</p>
                         </div>
-                    )
-                })
-            }
+                    );
+                })}
+            </div>
         </div>
     );
 }

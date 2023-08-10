@@ -1,7 +1,8 @@
-import React from 'react';
-import { CavokButton } from 'components/cavok-colored';
+import React from "react";
+import { CavokButton } from "components/cavok-colored";
 import "./recommend.css";
-import { Card } from 'react-bootstrap';
+import { Card } from "react-bootstrap";
+import { HorizontalLine } from "components/cavok-colored";
 
 export default function Recommend() {
     const Destination1 = require("assets/images/Destination1.png");
@@ -57,26 +58,27 @@ export default function Recommend() {
     ];
 
     return (
-        <>
-            <h3>Recomendações</h3>
-            <div className="recommend">
-                {
-                    destinations.map((destination, index) => (
-                        <Card className="recommend-card">
-                            <Card.Img variant="top" src={destination.image} />
-                            <Card.Body>
-                                <Card.Title>{destination.title}</Card.Title>
-                                <Card.Text>{destination.subTitle}</Card.Text>
-                                <Card.Text>
-                                    <span className="cost">₹ {destination.cost}</span>
-                                    <span className="duration">{destination.duration}</span>
-                                </Card.Text>
-                                <CavokButton>Book Now</CavokButton>
-                            </Card.Body>
-                        </Card>
-                    ))
-                }
+        <div className="recommend">
+            <div className="recommend-title">
+                <h3>Recomendações</h3>
+                <HorizontalLine />
             </div>
-        </>
-    )
+            <div className="recommend-body">
+                {destinations.map((destination, index) => (
+                    <Card className="recommend-card">
+                        <Card.Img variant="top" src={destination.image} />
+                        <Card.Body>
+                            <Card.Title>{destination.title}</Card.Title>
+                            <Card.Text>{destination.subTitle}</Card.Text>
+                            <Card.Text>
+                                <span className="cost">₹ {destination.cost}</span>
+                                <span className="duration">{destination.duration}</span>
+                            </Card.Text>
+                            <CavokButton>Book Now</CavokButton>
+                        </Card.Body>
+                    </Card>
+                ))}
+            </div>
+        </div>
+    );
 }

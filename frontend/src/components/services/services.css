@@ -1,4 +1,10 @@
-.services {
+.services{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.services-body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
