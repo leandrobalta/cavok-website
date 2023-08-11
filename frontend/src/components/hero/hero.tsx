@@ -6,6 +6,7 @@ import { IoIosPeople as PeopleIcon } from "react-icons/io";
 import { GrClose as CloseIcon } from "react-icons/gr";
 import { AiOutlinePlus as PlusIcon } from "react-icons/ai";
 import { RiSubtractFill as SubtractIcon } from "react-icons/ri";
+import { FaExchangeAlt as ExchangeIcon } from "react-icons/fa";
 
 enum PassengerEnum {
     Adult,
@@ -85,37 +86,56 @@ export default function Hero() {
                             ))}
                         </ButtonGroup>
                     </div>
-                    <div className="row">
-                        <Form.Group className="location-input">
-                            <Form.Label>Origem</Form.Label>
-                            <Form.Control className="hero-input" type="text" placeholder="Digite a cidade de origem" />
-                        </Form.Group>
-                        <Form.Group className="location-input">
-                            <Form.Label>Destino</Form.Label>
-                            <Form.Control type="text" placeholder="Digite a cidade de origem" />
-                        </Form.Group>
+                    <div className="search-box-form">
+                        <div className="locations">
+                            <Form.Group className="search-box-form-input">
+                                <Form.Label>Origem</Form.Label>
+                                <Form.Control
+                                    className="location-input"
+                                    type="text"
+                                    placeholder="Digite a cidade de origem"
+                                />
+                            </Form.Group>
 
-                        <Form.Group className="location-input">
+                            <ExchangeIcon className="exchange-icon" size={20} />
+
+                            <Form.Group className="search-box-form-input">
+                                <Form.Label>Destino</Form.Label>
+                                <Form.Control
+                                    className="location-input"
+                                    type="text"
+                                    placeholder="Digite a cidade de origem"
+                                />
+                            </Form.Group>
+                        </div>
+
+                        <Form.Group className="search-box-form-input date-input">
                             {travelModeValue === "one-way" ? (
                                 <>
                                     <Form.Label>Data de ida</Form.Label>
-                                    <Form.Control type="date" placeholder="Digite a cidade de origem" />
+                                    <Form.Control
+                                        type="date"
+                                        placeholder="Digite a cidade de origem"
+                                    />
                                 </>
                             ) : (
                                 <>
                                     <Form.Label>Datas</Form.Label>
                                     <InputGroup>
-                                        <Form.Control type="date" placeholder="Digite a cidade de origem" />
-                                        <Form.Control type="date" placeholder="Digite a cidade de origem" />
+                                        <Form.Control className="inline-flex" type="date" placeholder="Digite a cidade de origem" />
+                                        <Form.Control className="inline-flex" type="date" placeholder="Digite a cidade de origem" />
                                     </InputGroup>
                                 </>
                             )}
                         </Form.Group>
 
-                        <Form.Group className="location-input">
+                        <Form.Group className="search-box-form-input">
                             <Form.Label>Passageiros</Form.Label>
                             <Form.Control className="passengers-input" as="button" onClick={() => tooglePassengers()}>
-                                <PeopleIcon size={25} />1 Passageiro
+                                <PeopleIcon size={25} />
+                                <span>
+                                    {passengers.length} {passengers.length > 1 ? "Passageiros" : "Passageiro"}
+                                </span>
                             </Form.Control>
                             {showPassengers && (
                                 <div className="passengers-box">
@@ -166,11 +186,7 @@ export default function Hero() {
                                             label="Econômica"
                                         />
 
-                                        <Form.Check
-                                            type="radio"
-                                            label="Executiva"
-                                            id="executive"
-                                        />
+                                        <Form.Check type="radio" label="Executiva" id="executive" />
                                     </div>
                                 </div>
                             )}
