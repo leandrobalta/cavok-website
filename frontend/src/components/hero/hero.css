@@ -3,7 +3,7 @@
     height: 100%;
     position: relative;
     @media screen and (max-width: 810px) {
-        height: 28rem;
+        height: 35rem;
     }
 }
 
@@ -34,12 +34,9 @@
     background-color: white;
     border-radius: 1em;
     padding: 2em;
-    width: 70%;
+    width: 100%;
     gap: 1rem;
-
-    @media screen and (max-width: 1024px) {
-        width: 95%;
-    }
+    max-width: 85rem;
 
     @media screen and (max-width: 810px) {
         width: 100%;
@@ -71,8 +68,8 @@
 .search-box-form {
     display: flex;
     flex-direction: row;
+    flex-flow: wrap;
     width: 100%;
-    justify-content: space-between;
     gap: 1rem;
 
     @media screen and (max-width: 810px) {
@@ -81,14 +78,44 @@
     }
 }
 
+.search-box-form > * {
+    flex: 1;
+}
+
+.search-box-form > .locations {
+    @media screen and (min-width: 810px) {
+        flex: 2;
+    }
+}
+
 .locations{
     display: flex;
     flex-direction: row;    
     align-items: end;
+    min-width: 20rem !important;
+
+    @media screen and (max-width: 810px) {
+        display: grid;
+        gap: 1rem;
+    }
 }
 
 .exchange-icon{
-    height: 2.5rem;
+    width: 35px;
+    height: 35px;
+    border: 2px solid #000;
+    z-index: 2;
+    border-radius: 0.75rem;
+    padding: 4px;
+    min-width: 35px;
+
+    @media screen and (max-width: 810px) {
+        display: none;
+        font-size: 4.8rem;
+        transition: transform 0.25s linear 0s;
+        transform: rotate(90deg);
+        place-self: center;
+    }    
 }
 
 .search-box-form-input{
@@ -98,21 +125,18 @@
 }
 
 .date-input{
-    /* min-width: 21rem !important; */
-}
-
-.location-input{
-    display: inline-flex !important;
-    /* min-width: 13.5rem !important; */
+    min-width: 18rem !important; 
 }
 
 .inline-flex{
     display: inline-flex !important;
 }
+
 .search-btn {
     margin-top: auto !important;
     font-size: larger !important;
-    min-width: 10rem !important;
+    white-space: nowrap;
+    /* min-width: 10rem !important; */
 
     @media screen and (max-width: 810px) {
         margin-top: 0.5rem !important;
@@ -125,7 +149,11 @@
     justify-content: flex-start;
     gap: 1rem;
     align-items: center;
-    min-width: 10.4rem;
+    /* min-width: 10.4rem; */
+}
+
+.passengers-input > span{
+    white-space: nowrap;
 }
 
 .passengers-box {

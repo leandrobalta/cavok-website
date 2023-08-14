@@ -90,22 +90,14 @@ export default function Hero() {
                         <div className="locations">
                             <Form.Group className="search-box-form-input">
                                 <Form.Label>Origem</Form.Label>
-                                <Form.Control
-                                    className="location-input"
-                                    type="text"
-                                    placeholder="Digite a cidade de origem"
-                                />
+                                <Form.Control type="text" placeholder="Digite a cidade de origem" />
                             </Form.Group>
 
-                            <ExchangeIcon className="exchange-icon" size={20} />
+                            <ExchangeIcon className="exchange-icon" />
 
                             <Form.Group className="search-box-form-input">
                                 <Form.Label>Destino</Form.Label>
-                                <Form.Control
-                                    className="location-input"
-                                    type="text"
-                                    placeholder="Digite a cidade de origem"
-                                />
+                                <Form.Control type="text" placeholder="Digite a cidade de origem" />
                             </Form.Group>
                         </div>
 
@@ -113,17 +105,22 @@ export default function Hero() {
                             {travelModeValue === "one-way" ? (
                                 <>
                                     <Form.Label>Data de ida</Form.Label>
-                                    <Form.Control
-                                        type="date"
-                                        placeholder="Digite a cidade de origem"
-                                    />
+                                    <Form.Control type="date" placeholder="Digite a cidade de origem" />
                                 </>
                             ) : (
                                 <>
                                     <Form.Label>Datas</Form.Label>
                                     <InputGroup>
-                                        <Form.Control className="inline-flex" type="date" placeholder="Digite a cidade de origem" />
-                                        <Form.Control className="inline-flex" type="date" placeholder="Digite a cidade de origem" />
+                                        <Form.Control
+                                            className="inline-flex"
+                                            type="date"
+                                            placeholder="Digite a cidade de origem"
+                                        />
+                                        <Form.Control
+                                            className="inline-flex"
+                                            type="date"
+                                            placeholder="Digite a cidade de origem"
+                                        />
                                     </InputGroup>
                                 </>
                             )}
