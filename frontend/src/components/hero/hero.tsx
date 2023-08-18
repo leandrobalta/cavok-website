@@ -9,6 +9,8 @@ import { RiSubtractFill as SubtractIcon } from "react-icons/ri";
 import { FaExchangeAlt as ExchangeIcon } from "react-icons/fa";
 import { IoIosAddCircle as AddCircleIcon, IoIosRemoveCircle as RemoveCircleIcon } from "react-icons/io";
 import useWindowDimensions from "hooks/window-dimensions";
+import Datetime from "react-datetime";
+import { formatDate } from "utils/format-date";
 
 enum PassengerEnum {
     Adult,
@@ -161,14 +163,13 @@ export default function Hero() {
     // states
     const [travelModeValue, setTravelModeValue] = useState("round-trip");
     const [showPassengers, setShowPassengers] = useState(false);
+    const [dates, setDates] = useState<TravelDates>({ begin: formatDate(new Date()) }); // [begin, end]
     const [passengers, setPassengers] = useState<Passenger[]>([
         { type: PassengerEnum.Adult, amount: 0, description: "acima de 12 anos" },
         { type: PassengerEnum.Child, amount: 0, description: "de 2 a 11 anos" },
         { type: PassengerEnum.Baby, amount: 0, description: "até 1 ano e 11 meses" },
     ]);
-    const [dates, setDates] = useState<TravelDates>({begin: new Date().toISOString().slice(0, 10)}); // [begin, end]
 
-    
     // variables
     const passengerTranslation = {
         [PassengerEnum.Adult]: "Adultos",
@@ -239,31 +240,31 @@ export default function Hero() {
                             {travelModeValue === "one-way" ? (
                                 <>
                                     <Form.Label>Data de ida</Form.Label>
-                                    <Form.Control
-                                        type="date"
+                                    <Datetime
+                                        value={dates.begin}
+                                        dateFormat="DD/MM/YYYY"
+                                        locale="pt"
+                                        timeFormat={false}
+                                        onChange={(value) => console.log("value is : ", value)}
                                     />
                                 </>
                             ) : (
                                 <>
                                     <Form.Label>Datas</Form.Label>
                                     <InputGroup>
-                                        <Form.Control
-                                            className="inline-flex"
-                                            type="date"
-                                            name="begin"
-                                            placeholder="dd-mm-yyyy"
+                                        <Datetime
                                             value={dates.begin}
-                                            min="2018-01-01"
-                                            max="2018-12-31"
+                                            dateFormat="DD/MM/YYYY"
+                                            locale="pt"
+                                            timeFormat={false}
+                                            onChange={(value) => console.log("value is : ", value)}
                                         />
-                                        <Form.Control
-                                            className="inline-flex"
-                                            type="date"
-                                            name="end"
-                                            placeholder="dd-mm-yyyy"
+                                        <Datetime
                                             value={dates.end}
-                                            min="1997-01-01"
-                                            max="2030-12-31"
+                                            dateFormat="DD/MM/YYYY"
+                                            locale="pt"
+                                            timeFormat={false}
+                                            onChange={(value) => console.log("value is : ", value)}
                                         />
                                     </InputGroup>
                                 </>

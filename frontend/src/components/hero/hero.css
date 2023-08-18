@@ -36,7 +36,7 @@
     padding: 2em;
     width: 100%;
     gap: 1rem;
-    max-width: 85rem;
+    max-width: 80rem;
 
     @media screen and (max-width: 768px) {
         width: 100%;
@@ -58,6 +58,10 @@
         gap: 1rem;
         align-items: normal;
     }
+}
+
+.search-box-header > .travel-mode-btn{
+    min-width: 10rem;
 }
 
 .search-box-header span {

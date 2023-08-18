@@ -6,6 +6,7 @@ export const CavokToggleButton: React.FC<ToggleButtonProps> = ({...props}) => {
     return (
         <ToggleButton
             className={props.checked ? "btn-active" : "btn-inactive"}
+            style={{ minWidth: "10rem" }}
             {...props}
         >
             {props.children}

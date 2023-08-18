@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import { Header, Footer, NavBar } from "components/layout";
+import "react-datetime/css/react-datetime.css";
 
 function App() {
     return (
