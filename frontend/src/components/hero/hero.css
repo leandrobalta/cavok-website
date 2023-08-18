@@ -1,3 +1,12 @@
+.inline-flex{
+    display: inline-flex !important;
+}
+
+.form-control:focus{
+    box-shadow: none !important;
+    border-color: #134074 !important;
+}
+
 .hero {
     width: 100%;
     height: 100%;
@@ -129,11 +138,17 @@
 }
 
 .date-input{
-    min-width: 18rem !important; 
+    min-width: 15rem !important; 
 }
 
-.inline-flex{
-    display: inline-flex !important;
+.date-input-group-right > input {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.date-input-group-left > input {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .search-btn {

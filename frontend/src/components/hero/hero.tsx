@@ -163,7 +163,7 @@ export default function Hero() {
     // states
     const [travelModeValue, setTravelModeValue] = useState("round-trip");
     const [showPassengers, setShowPassengers] = useState(false);
-    const [dates, setDates] = useState<TravelDates>({ begin: formatDate(new Date()) }); // [begin, end]
+    const [dates, setDates] = useState<TravelDates>({ begin: formatDate(new Date()), end: formatDate(new Date()) }); // [begin, end]
     const [passengers, setPassengers] = useState<Passenger[]>([
         { type: PassengerEnum.Adult, amount: 0, description: "acima de 12 anos" },
         { type: PassengerEnum.Child, amount: 0, description: "de 2 a 11 anos" },
@@ -251,8 +251,9 @@ export default function Hero() {
                             ) : (
                                 <>
                                     <Form.Label>Datas</Form.Label>
-                                    <InputGroup>
+                                    <div className="date-input-group inline-flex">
                                         <Datetime
+                                            className="date-input-group-left"
                                             value={dates.begin}
                                             dateFormat="DD/MM/YYYY"
                                             locale="pt"
@@ -260,13 +261,14 @@ export default function Hero() {
                                             onChange={(value) => console.log("value is : ", value)}
                                         />
                                         <Datetime
+                                            className="date-input-group-right"
                                             value={dates.end}
                                             dateFormat="DD/MM/YYYY"
                                             locale="pt"
                                             timeFormat={false}
                                             onChange={(value) => console.log("value is : ", value)}
                                         />
-                                    </InputGroup>
+                                    </div>
                                 </>
                             )}
                         </Form.Group>
