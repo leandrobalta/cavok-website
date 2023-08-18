@@ -2,7 +2,7 @@
     width: 100%;
     height: 100%;
     position: relative;
-    @media screen and (max-width: 810px) {
+    @media screen and (max-width: 768px) {
         height: 35rem;
     }
 }
@@ -11,7 +11,7 @@
     width: 100%;
     filter: brightness(70%);
 
-    @media screen and (max-width: 810px) {
+    @media screen and (max-width: 768px) {
         height: 100%;
     }
 }
@@ -38,7 +38,7 @@
     gap: 1rem;
     max-width: 85rem;
 
-    @media screen and (max-width: 810px) {
+    @media screen and (max-width: 768px) {
         width: 100%;
         height: 100%;
         border-radius: 0;
@@ -53,7 +53,7 @@
     align-items: center;
     gap: 3rem;
 
-    @media screen and (max-width: 810px) {
+    @media screen and (max-width: 768px) {
         flex-direction: column;
         gap: 1rem;
         align-items: normal;
@@ -72,7 +72,7 @@
     width: 100%;
     gap: 1rem;
 
-    @media screen and (max-width: 810px) {
+    @media screen and (max-width: 768px) {
         flex-direction: column;
         gap: 1rem;
     }
@@ -83,7 +83,7 @@
 }
 
 .search-box-form > .locations {
-    @media screen and (min-width: 810px) {
+    @media screen and (min-width: 768px) {
         flex: 2;
     }
 }
@@ -94,7 +94,7 @@
     align-items: end;
     min-width: 20rem !important;
 
-    @media screen and (max-width: 810px) {
+    @media screen and (max-width: 768px) {
         display: grid;
         gap: 1rem;
     }
@@ -109,7 +109,7 @@
     padding: 4px;
     min-width: 35px;
 
-    @media screen and (max-width: 810px) {
+    @media screen and (max-width: 768px) {
         display: none;
         font-size: 4.8rem;
         transition: transform 0.25s linear 0s;
@@ -138,7 +138,7 @@
     white-space: nowrap;
     /* min-width: 10rem !important; */
 
-    @media screen and (max-width: 810px) {
+    @media screen and (max-width: 768px) {
         margin-top: 0.5rem !important;
     }
 }
@@ -168,6 +168,11 @@
     border-radius: 0.5em;
     border: 1.5px solid #000;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+
+    @media screen and (min-width: 768px) and (max-width: 1050px) {
+        transform: translate3d(-2rem, 0px, 0px);
+        will-change: transform;
+    }
 }
 
 .passengers-box-header {
@@ -214,5 +219,21 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 0.3rem;
+}
+
+.passenger-amount > button {
+    border: none;
+    background: none;
+    font-size: 2rem;
+}
+
+.passenger-amount > span {
+    margin-top: 0.25rem;
+}
+
+.class-option > label{
+    font-size: 1rem;
+    font-weight: 500;
 }

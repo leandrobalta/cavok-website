@@ -7,6 +7,7 @@ import { GrClose as CloseIcon } from "react-icons/gr";
 import { AiOutlinePlus as PlusIcon } from "react-icons/ai";
 import { RiSubtractFill as SubtractIcon } from "react-icons/ri";
 import { FaExchangeAlt as ExchangeIcon } from "react-icons/fa";
+import { IoIosAddCircle as AddCircleIcon, IoIosRemoveCircle as RemoveCircleIcon } from "react-icons/io";
 import useWindowDimensions from "hooks/window-dimensions";
 
 enum PassengerEnum {
@@ -26,7 +27,7 @@ interface Passenger {
     description: string;
 }
 
-interface PassengersContentProps {
+interface PassengersBoxProps {
     passengers: Passenger[];
     handlePassenger: (type: PassengerEnum, amount: number) => void;
     tooglePassengers: () => void;
@@ -36,87 +37,125 @@ interface PassengersContentProps {
         0: string;
         1: string;
         2: string;
-    }
+    };
+}
+
+interface PassengersContentProps {
+    passengers: Passenger[];
+    handlePassenger: (type: PassengerEnum, amount: number) => void;
+    tooglePassengers: () => void;
+    haveTitle: boolean;
+    passengerTranslation: {
+        0: string;
+        1: string;
+        2: string;
+    };
+}
+
+interface TravelDates {
+    begin: string;
+    end?: string;
 }
 
 const PassengersContent = (props: PassengersContentProps) => {
-    const { width }  = useWindowDimensions();   
+    return (
+        <>
+            {props.haveTitle && (
+                <div className="passengers-box-header">
+                    <span>Passageiros</span>
+                    <button className="passenger-box-close-btn" onClick={() => props.tooglePassengers()}>
+                        <CloseIcon size={20} />
+                    </button>
+                </div>
+            )}
+
+            <div className="passengers-box-body">
+                {props.passengers.map((passenger, idx) => (
+                    <div className="passenger" key={idx}>
+                        <h6>{props.passengerTranslation[passenger.type]}</h6>
+                        <div className="passenger-options">
+                            <span>{passenger.description}</span>
+                            <div className="passenger-amount">
+                                <button onClick={() => props.handlePassenger(passenger.type, passenger.amount - 1)}>
+                                    <RemoveCircleIcon color="#134074" />
+                                </button>
+                                <span>{passenger.amount}</span>
+                                <button onClick={() => props.handlePassenger(passenger.type, passenger.amount + 1)}>
+                                    <AddCircleIcon color="#134074" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/*Class section*/}
+            {props.haveTitle && (
+                <>
+                    <div className="passengers-box-header">
+                        <span>Classe</span>
+                    </div>
+                </>
+            )}
+            <div className="passengers-box-body">
+                <Form.Check type="radio" label="Econômica" id="eco" name="class-option" className="class-option" />
+
+                <Form.Check
+                    type="radio"
+                    label="Executiva"
+                    id="executive"
+                    name="class-option"
+                    className="class-option"
+                />
+            </div>
+
+            <br />
+
+            {/*Button section*/}
+            {!props.haveTitle && (
+                <CavokButton style={{ width: "100%" }} onClick={() => props.tooglePassengers()}>
+                    APLICAR
+                </CavokButton>
+            )}
+        </>
+    );
+};
+
+const PassangersBox = (props: PassengersBoxProps) => {
+    const { width } = useWindowDimensions();
 
     return (
         <>
-            {
-                width > 768 ? (
-                    <div className="passengers-box">
-                                    <div className="passengers-box-header">
-                                        <span>Passageiros</span>
-                                        <button className="passenger-box-close-btn" onClick={() => props.tooglePassengers()}>
-                                            <CloseIcon size={20} />
-                                        </button>
-                                    </div>
-                                    <div className="passengers-box-body">
-                                        {props.passengers.map((passenger, idx) => (
-                                            <div className="passenger" key={idx}>
-                                                <h6>{props.passengerTranslation[passenger.type]}</h6>
-                                                <div className="passenger-options">
-                                                    <span>{passenger.description}</span>
-                                                    <div className="passenger-amount">
-                                                        <CavokButton
-                                                            style={{ borderRadius: "45%" }}
-                                                            onClick={() =>
-                                                                props.handlePassenger(passenger.type, passenger.amount - 1)
-                                                            }
-                                                        >
-                                                            <SubtractIcon />
-                                                        </CavokButton>
-                                                        <span>{passenger.amount}</span>
-                                                        <CavokButton
-                                                            style={{ borderRadius: "45%" }}
-                                                            onClick={() =>
-                                                                props.handlePassenger(passenger.type, passenger.amount + 1)
-                                                            }
-                                                        >
-                                                            <PlusIcon />
-                                                        </CavokButton>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
+            {width > 768 ? (
+                <div className="passengers-box">
+                    <PassengersContent
+                        passengers={props.passengers}
+                        handlePassenger={props.handlePassenger}
+                        tooglePassengers={props.tooglePassengers}
+                        passengerTranslation={props.passengerTranslation}
+                        haveTitle={true}
+                    />
+                </div>
+            ) : (
+                <Offcanvas show={props.show} onHide={() => props.setShow(false)} style={{ width: "90%" }}>
+                    <Offcanvas.Header closeButton>
+                        <Offcanvas.Title>Passageiros e Classes</Offcanvas.Title>
+                    </Offcanvas.Header>
 
-                                    {/*Class section*/}
-                                    <div className="passengers-box-header">
-                                        <span>Classe</span>
-                                    </div>
-                                    <div className="passengers-box-body">
-                                        <Form.Check // prettier-ignore
-                                            type="radio"
-                                            id={`eco`}
-                                            label="Econômica"
-                                        />
-
-                                        <Form.Check type="radio" label="Executiva" id="executive" />
-                                    </div>
-                                </div>
-                ) : 
-                (
-                    <Offcanvas
-                        show={props.show}
-                        onHide={() => props.setShow(false)}
-                        style={{ maxWidth: "70%" }}
-                    >
-                        <Offcanvas.Header closeButton>
-                            <Offcanvas.Title>Passageiros e Classes</Offcanvas.Title>
-                        </Offcanvas.Header>
-
-                        <Offcanvas.Body>
-                            MEU PINTO    
-                        </Offcanvas.Body>                            
-                    </Offcanvas>
-                )
-            }
+                    <Offcanvas.Body>
+                        <PassengersContent
+                            passengers={props.passengers}
+                            handlePassenger={props.handlePassenger}
+                            tooglePassengers={props.tooglePassengers}
+                            passengerTranslation={props.passengerTranslation}
+                            haveTitle={false}
+                        />
+                    </Offcanvas.Body>
+                </Offcanvas>
+            )}
         </>
-    )
-} 
+    );
+};
 
 export default function Hero() {
     // states
@@ -127,14 +166,16 @@ export default function Hero() {
         { type: PassengerEnum.Child, amount: 0, description: "de 2 a 11 anos" },
         { type: PassengerEnum.Baby, amount: 0, description: "até 1 ano e 11 meses" },
     ]);
+    const [dates, setDates] = useState<TravelDates>({begin: new Date().toISOString().slice(0, 10)}); // [begin, end]
 
+    
+    // variables
     const passengerTranslation = {
         [PassengerEnum.Adult]: "Adultos",
         [PassengerEnum.Child]: "Crianças",
         [PassengerEnum.Baby]: "Bebês",
     };
 
-    // variables
     const travelMode = [
         { name: "Ida e volta", value: "round-trip" },
         { name: "Somente ida", value: "one-way" },
@@ -198,7 +239,9 @@ export default function Hero() {
                             {travelModeValue === "one-way" ? (
                                 <>
                                     <Form.Label>Data de ida</Form.Label>
-                                    <Form.Control type="date" placeholder="Digite a cidade de origem" />
+                                    <Form.Control
+                                        type="date"
+                                    />
                                 </>
                             ) : (
                                 <>
@@ -207,12 +250,20 @@ export default function Hero() {
                                         <Form.Control
                                             className="inline-flex"
                                             type="date"
-                                            placeholder="Digite a cidade de origem"
+                                            name="begin"
+                                            placeholder="dd-mm-yyyy"
+                                            value={dates.begin}
+                                            min="2018-01-01"
+                                            max="2018-12-31"
                                         />
                                         <Form.Control
                                             className="inline-flex"
                                             type="date"
-                                            placeholder="Digite a cidade de origem"
+                                            name="end"
+                                            placeholder="dd-mm-yyyy"
+                                            value={dates.end}
+                                            min="1997-01-01"
+                                            max="2030-12-31"
                                         />
                                     </InputGroup>
                                 </>
@@ -227,8 +278,8 @@ export default function Hero() {
                                     {passengers.length} {passengers.length > 1 ? "Passageiros" : "Passageiro"}
                                 </span>
                             </Form.Control>
-                            {showPassengers && 
-                                <PassengersContent
+                            {showPassengers && (
+                                <PassangersBox
                                     passengers={passengers}
                                     handlePassenger={handlePassenger}
                                     tooglePassengers={tooglePassengers}
@@ -236,7 +287,7 @@ export default function Hero() {
                                     setShow={setShowPassengers}
                                     passengerTranslation={passengerTranslation}
                                 />
-                            }
+                            )}
                         </Form.Group>
                         <CavokButton className="search-btn">BUSCAR VOOS</CavokButton>
                     </div>

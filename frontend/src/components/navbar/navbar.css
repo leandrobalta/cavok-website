@@ -1,18 +1,11 @@
 .navbar {
     padding: 0.1rem 0 !important;
-    width: 75%;
+    width: 100%;
+    max-width: 85rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
-
-    @media screen and (max-width: 1000px) {
-        width: 90%;
-    }
-
-    @media screen and (max-width: 768px) {
-        width: 95%;
-    }
 
 }
 
