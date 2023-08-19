@@ -11,6 +11,9 @@ import { IoIosAddCircle as AddCircleIcon, IoIosRemoveCircle as RemoveCircleIcon 
 import useWindowDimensions from "hooks/window-dimensions";
 import Datetime from "react-datetime";
 import { formatDate } from "utils/format-date";
+import moment from "moment";
+import 'moment/locale/pt'
+import { useNavigate } from "react-router-dom";
 
 enum PassengerEnum {
     Adult,
@@ -57,6 +60,12 @@ interface PassengersContentProps {
 interface TravelDates {
     begin: string;
     end?: string;
+}
+
+interface BeginDateTimeInputProps {
+    handleDates: (dates: TravelDates) => void;
+    dates: TravelDates;
+    isBeginDateValid: (currentDate: any, selectedDate: any) => any;
 }
 
 const PassengersContent = (props: PassengersContentProps) => {
@@ -159,7 +168,22 @@ const PassangersBox = (props: PassengersBoxProps) => {
     );
 };
 
+const BeginDateTimeInput = ({ dates, handleDates, isBeginDateValid }: BeginDateTimeInputProps) => (
+    <Datetime
+        className="date-input-group-left"
+        value={dates.begin}
+        dateFormat="DD/MM/YYYY"
+        locale="pt-br"
+        timeFormat={false}
+        onChange={(value) => handleDates({ ...dates, begin: moment(value).format("DD/MM/YYYY") })}
+        closeOnSelect
+        isValidDate={isBeginDateValid}
+    />
+);
+
 export default function Hero() {
+    const navigate = useNavigate();
+
     // states
     const [travelModeValue, setTravelModeValue] = useState("round-trip");
     const [showPassengers, setShowPassengers] = useState(false);
@@ -196,6 +220,23 @@ export default function Hero() {
             return passenger;
         });
         setPassengers(newPassengers);
+    };
+
+    const handleDates = (dates: TravelDates) => {
+        setDates(dates);
+    };
+
+    const isBeginDateValid = (currentDate: any, selectedDate: any) => {
+        return currentDate.isAfter(moment().subtract(1, "days"));
+    };
+
+    const isEndDateValid = (currentDate: any, selectedDate: any) => {
+        return currentDate.isAfter(moment(dates.begin, "DD/MM/YYYY"));
+    };
+
+    const handleSearch = () => {
+        console.log("search");
+        navigate("/search");
     };
 
     return (
@@ -240,33 +281,32 @@ export default function Hero() {
                             {travelModeValue === "one-way" ? (
                                 <>
                                     <Form.Label>Data de ida</Form.Label>
-                                    <Datetime
-                                        value={dates.begin}
-                                        dateFormat="DD/MM/YYYY"
-                                        locale="pt"
-                                        timeFormat={false}
-                                        onChange={(value) => console.log("value is : ", value)}
+                                    <BeginDateTimeInput
+                                        dates={dates}
+                                        handleDates={handleDates}
+                                        isBeginDateValid={isBeginDateValid}
                                     />
                                 </>
                             ) : (
                                 <>
                                     <Form.Label>Datas</Form.Label>
                                     <div className="date-input-group inline-flex">
-                                        <Datetime
-                                            className="date-input-group-left"
-                                            value={dates.begin}
-                                            dateFormat="DD/MM/YYYY"
-                                            locale="pt"
-                                            timeFormat={false}
-                                            onChange={(value) => console.log("value is : ", value)}
+                                        <BeginDateTimeInput
+                                            dates={dates}
+                                            handleDates={handleDates}
+                                            isBeginDateValid={isBeginDateValid}
                                         />
                                         <Datetime
                                             className="date-input-group-right"
+                                            locale="pt-br"
                                             value={dates.end}
                                             dateFormat="DD/MM/YYYY"
-                                            locale="pt"
                                             timeFormat={false}
-                                            onChange={(value) => console.log("value is : ", value)}
+                                            onChange={(value) =>
+                                                handleDates({ ...dates, end: moment(value).format("DD/MM/YYYY") })
+                                            }
+                                            closeOnSelect
+                                            isValidDate={isEndDateValid}
                                         />
                                     </div>
                                 </>
@@ -292,7 +332,7 @@ export default function Hero() {
                                 />
                             )}
                         </Form.Group>
-                        <CavokButton className="search-btn">BUSCAR VOOS</CavokButton>
+                        <CavokButton className="search-btn" onClick={(evt) => handleSearch()}>BUSCAR VOOS</CavokButton>
                     </div>
                 </div>
             </div>

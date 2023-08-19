@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from 'views/home/home';
 import NotFounded from 'views/not-founded/not-founded';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Search from 'views/search/search';
 
 const router = createBrowserRouter([
    {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         {
           path: '/',
           element: <Home />
+        },
+        {
+          path: '/search',
+          element: <Search />
         }
       ]
    }
