@@ -35,3 +35,31 @@
     padding: 0;
     margin: 0;
 }
+
+.filter-content-item-body{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+}
+
+.filter-content-item-body-line{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.filter-content-item-body-line span{
+    border: 1px solid #000;
+    padding: 0.1rem 0.5rem;
+}
+
+.price-input{
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rotate {
+    transition: transform 0.1s ease; /* Adapte a duração e a curva de animação conforme necessário */
+    transform: rotate(180deg); /* Graus de rotação desejados */
+}
