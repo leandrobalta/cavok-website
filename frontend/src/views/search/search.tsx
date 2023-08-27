@@ -3,6 +3,7 @@ import "./search.css";
 import { IoMdArrowDropdown as DropdownIcon } from "react-icons/io";
 import { CavokButton } from "components/cavok-colored";
 import { useState } from "react";
+import { VerticalLine } from "components/vertical-line/vertical-line";
 
 interface DropdownFilterChecksProps {
     title: string;
@@ -29,7 +30,7 @@ interface PriceFilter {
 
 const DropdownFilterChecks = (props: DropdownFilterChecksProps) => {
     const [isCollapseOpen, setIsCollapseOpen] = useState<boolean>(true);
-    
+
     const onClick = useAccordionButton(props.title, () => {
         console.log("clicked");
         setIsCollapseOpen(!isCollapseOpen);
@@ -41,7 +42,7 @@ const DropdownFilterChecks = (props: DropdownFilterChecksProps) => {
         <>
             <div className="filter-content-item" onClick={onClick}>
                 <h6>{props.title}</h6>
-                <DropdownIcon size={25} className={isCollapseOpen ? 'rotate' : ''}/>
+                <DropdownIcon size={25} className={isCollapseOpen ? "rotate" : ""} />
             </div>
             <Accordion.Collapse eventKey={props.title}>
                 <div className="filter-content-item-body">
@@ -75,7 +76,7 @@ const DropdownPriceFilter = (props: DropdownPriceFilterProps) => {
         <>
             <div className="filter-content-item" onClick={onClick}>
                 <h6>{props.title}</h6>
-                <DropdownIcon size={25} className={isCollapseOpen ? 'rotate' : ''}/>
+                <DropdownIcon size={25} className={isCollapseOpen ? "rotate" : ""} />
             </div>
             <Accordion.Collapse eventKey={props.title}>
                 <div className="filter-content-item-body">
@@ -115,6 +116,33 @@ export default function Search() {
     ]);
     const [price, setPrice] = useState<PriceFilter>({ min: 0, max: 1000 });
 
+    const mockTravelResults = [
+        {
+            id: 1,
+            price: 100,
+            stops: 0,
+            company: "Gol",
+            departure: "2021-10-10T10:00:00.000Z",
+            arrival: "2021-10-10T11:00:00.000Z",
+        },
+        {
+            id: 2,
+            price: 200,
+            stops: 1,
+            company: "Azul",
+            departure: "2021-10-10T10:00:00.000Z",
+            arrival: "2021-10-10T11:00:00.000Z",
+        },
+        {
+            id: 3,
+            price: 300,
+            stops: 2,
+            company: "Latam",
+            departure: "2021-10-10T10:00:00.000Z",
+            arrival: "2021-10-10T11:00:00.000Z",
+        },
+    ];
+
     //handlers
     const onPriceChange = (value: PriceFilter) => {
         if (value.min < 0) return;
@@ -129,26 +157,62 @@ export default function Search() {
                 <h3>header</h3>
             </div>
             <div className="search-body">
-                <Accordion alwaysOpen className="side-bar-filter" defaultActiveKey={["Paradas", "Companhias", "Preço"]}>
-                    <div className="filter">
-                        <div className="filter-title">
-                            <h3>Filtros</h3>
-                        </div>
-                        <hr />
-                        <div className="filter-content">
-                            <DropdownFilterChecks title="Paradas" options={stopOptions} />
+                <div className="side-bar">
+                    <Accordion
+                        alwaysOpen
+                        className="side-bar-filter"
+                        defaultActiveKey={["Paradas", "Companhias", "Preço"]}
+                    >
+                        <div className="filter">
+                            <div className="filter-title">
+                                <h3>Filtros</h3>
+                            </div>
                             <hr />
-                            <DropdownFilterChecks title="Companhias" options={companyOptions} />
-                            <hr />
-                            <DropdownPriceFilter price={price} title="Preço" onChange={onPriceChange} />
+                            <div className="filter-content">
+                                <DropdownFilterChecks title="Paradas" options={stopOptions} />
+                                <hr />
+                                <DropdownFilterChecks title="Companhias" options={companyOptions} />
+                                <hr />
+                                <DropdownPriceFilter price={price} title="Preço" onChange={onPriceChange} />
+                            </div>
                         </div>
+                    </Accordion>
+                    <div className="information">
+                        <h3>Atenção</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur metus quis eros
+                            euismod, vitae varius dolor gravida. Cras sem diam, viverra sit amet nibh fringilla,
+                            vulputate posuere erat. Phasellus sagittis eu mauris sit amet imperdiet.
+                        </p>
+                        <p>
+                            Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus
+                            massa, a vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
+                        </p>
                     </div>
-                </Accordion>
+                </div>
                 <div className="search-result">
-                    <div className="search-result-title">
-                        <h3>Search Result</h3>
+                    <div className="results">
+                        {mockTravelResults.map((result) => {
+                            return (
+                                <div className="result-card">
+                                    <div className="flight-holder">
+                                        <div className="flight-holder-header">
+                                            IDA
+                                        </div>
+                                    </div>
+                                    <VerticalLine />
+                                    <div className="price-box">
+                                        <div className="price-box-header">{result.price}</div>
+                                        <div className="price-box-details">
+                                            <span>1 adulto: R${result.price}</span>
+                                            <span>taxa: R$0</span>
+                                            <CavokButton>REALIZAR PEDIDO</CavokButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
-                    <div className="search-result-content"></div>
                 </div>
             </div>
         </div>
