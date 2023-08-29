@@ -66,6 +66,7 @@ interface BeginDateTimeInputProps {
     handleDates: (dates: TravelDates) => void;
     dates: TravelDates;
     isBeginDateValid: (currentDate: any, selectedDate: any) => any;
+    isOneWay?: boolean;
 }
 
 const PassengersContent = (props: PassengersContentProps) => {
@@ -168,9 +169,9 @@ const PassangersBox = (props: PassengersBoxProps) => {
     );
 };
 
-const BeginDateTimeInput = ({ dates, handleDates, isBeginDateValid }: BeginDateTimeInputProps) => (
+const BeginDateTimeInput = ({ dates, handleDates, isBeginDateValid, isOneWay }: BeginDateTimeInputProps) => (
     <Datetime
-        className="date-input-group-left"
+        className={isOneWay ? "" :"date-input-group-left"}
         value={dates.begin}
         dateFormat="DD/MM/YYYY"
         locale="pt-br"
@@ -285,6 +286,7 @@ export default function Hero() {
                                         dates={dates}
                                         handleDates={handleDates}
                                         isBeginDateValid={isBeginDateValid}
+                                        isOneWay
                                     />
                                 </>
                             ) : (

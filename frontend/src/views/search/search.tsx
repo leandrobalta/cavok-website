@@ -102,7 +102,7 @@ const DropdownPriceFilter = (props: DropdownPriceFilterProps) => {
     );
 };
 
-export default function Search() {
+const SideBarFilter = () => {
     //states
     const [stopOptions, setStopOptions] = useState<CheckOption[]>([
         { label: "Direto", amount: 0 },
@@ -116,33 +116,6 @@ export default function Search() {
     ]);
     const [price, setPrice] = useState<PriceFilter>({ min: 0, max: 1000 });
 
-    const mockTravelResults = [
-        {
-            id: 1,
-            price: 100,
-            stops: 0,
-            company: "Gol",
-            departure: "2021-10-10T10:00:00.000Z",
-            arrival: "2021-10-10T11:00:00.000Z",
-        },
-        {
-            id: 2,
-            price: 200,
-            stops: 1,
-            company: "Azul",
-            departure: "2021-10-10T10:00:00.000Z",
-            arrival: "2021-10-10T11:00:00.000Z",
-        },
-        {
-            id: 3,
-            price: 300,
-            stops: 2,
-            company: "Latam",
-            departure: "2021-10-10T10:00:00.000Z",
-            arrival: "2021-10-10T11:00:00.000Z",
-        },
-    ];
-
     //handlers
     const onPriceChange = (value: PriceFilter) => {
         if (value.min < 0) return;
@@ -152,60 +125,120 @@ export default function Search() {
     };
 
     return (
+        <div className="side-bar">
+            <Accordion alwaysOpen className="side-bar-filter" defaultActiveKey={["Paradas", "Companhias", "Preço"]}>
+                <div className="filter">
+                    <div className="filter-title">
+                        <h3>Filtros</h3>
+                    </div>
+                    <hr />
+                    <div className="filter-content">
+                        <DropdownFilterChecks title="Paradas" options={stopOptions} />
+                        <hr />
+                        <DropdownFilterChecks title="Companhias" options={companyOptions} />
+                        <hr />
+                        <DropdownPriceFilter price={price} title="Preço" onChange={onPriceChange} />
+                    </div>
+                </div>
+            </Accordion>
+            <div className="information">
+                <h3>Atenção</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur metus quis eros
+                    euismod, vitae varius dolor gravida. Cras sem diam, viverra sit amet nibh fringilla, vulputate
+                    posuere erat. Phasellus sagittis eu mauris sit amet imperdiet.
+                </p>
+                <p>
+                    Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus massa, a
+                    vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
+                </p>
+            </div>
+        </div>
+    );
+};
+
+export default function Search() {
+    const generateRandomPrice = () => {
+        const value = Math.random() * (10000 - 1000 + 1) + 1000;
+        return Number.parseFloat(value.toString()).toFixed(2);
+    };
+
+    const generateRandomTax = () => {
+        const value = Math.random() * (100 - 10 + 1) + 10;
+        return Number.parseFloat(value.toString()).toFixed(2);
+    };
+
+    const mockTravelResults = [
+        {
+            id: 1,
+            price: generateRandomPrice(),
+            stops: 0,
+            company: "Gol",
+            departure: "2021-10-10T10:00:00.000Z",
+            arrival: "2021-10-10T11:00:00.000Z",
+            tax: generateRandomTax(),
+        },
+        {
+            id: 2,
+            price: generateRandomPrice(),
+            stops: 1,
+            company: "Azul",
+            departure: "2021-10-10T10:00:00.000Z",
+            arrival: "2021-10-10T11:00:00.000Z",
+            tax: generateRandomTax(),
+        },
+        {
+            id: 3,
+            price: generateRandomPrice(),
+            stops: 2,
+            company: "Latam",
+            departure: "2021-10-10T10:00:00.000Z",
+            arrival: "2021-10-10T11:00:00.000Z",
+            tax: generateRandomTax(),
+        },
+    ];
+
+    return (
         <div className="search">
             <div className="search-header">
                 <h3>header</h3>
             </div>
             <div className="search-body">
-                <div className="side-bar">
-                    <Accordion
-                        alwaysOpen
-                        className="side-bar-filter"
-                        defaultActiveKey={["Paradas", "Companhias", "Preço"]}
-                    >
-                        <div className="filter">
-                            <div className="filter-title">
-                                <h3>Filtros</h3>
-                            </div>
-                            <hr />
-                            <div className="filter-content">
-                                <DropdownFilterChecks title="Paradas" options={stopOptions} />
-                                <hr />
-                                <DropdownFilterChecks title="Companhias" options={companyOptions} />
-                                <hr />
-                                <DropdownPriceFilter price={price} title="Preço" onChange={onPriceChange} />
-                            </div>
-                        </div>
-                    </Accordion>
-                    <div className="information">
-                        <h3>Atenção</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur metus quis eros
-                            euismod, vitae varius dolor gravida. Cras sem diam, viverra sit amet nibh fringilla,
-                            vulputate posuere erat. Phasellus sagittis eu mauris sit amet imperdiet.
-                        </p>
-                        <p>
-                            Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus
-                            massa, a vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
-                        </p>
-                    </div>
-                </div>
+                <SideBarFilter />
                 <div className="search-result">
                     <div className="results">
                         {mockTravelResults.map((result) => {
                             return (
                                 <div className="result-card">
                                     <div className="flight-holder">
-                                        <div className="flight-holder-header">
-                                            IDA
-                                        </div>
+                                        <div className="flight-holder-header">IDA</div>
                                     </div>
-                                    <VerticalLine />
+                                    {/* <VerticalLine /> */}
                                     <div className="price-box">
-                                        <div className="price-box-header">{result.price}</div>
+                                        <div className="price-box-header">
+                                            <h5 className="text-bold">R$ {result.price}</h5>
+                                            <span className="text-silver">Por adulto e sem taxas</span>
+                                        </div>
                                         <div className="price-box-details">
-                                            <span>1 adulto: R${result.price}</span>
-                                            <span>taxa: R$0</span>
+                                            <p>
+                                                <span className="text-bold">Adulto: </span>
+                                                <span className="text-silver">R${result.price}</span>
+                                            </p>
+                                            <p>
+                                                <span className="text-bold">Taxa:</span>
+                                                <span className="text-silver">R${result.tax}</span>
+                                            </p>
+                                            <p>
+                                                <span className="text-bold">VALOR TOTAL:</span>
+                                                <span className="text-bold">
+                                                    R$
+                                                    {(
+                                                        Number.parseFloat(result.price) + Number.parseFloat(result.tax)
+                                                    ).toFixed(2)}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div className="purchase-btn">
                                             <CavokButton>REALIZAR PEDIDO</CavokButton>
                                         </div>
                                     </div>

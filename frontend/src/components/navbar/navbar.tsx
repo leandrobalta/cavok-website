@@ -92,28 +92,30 @@ export function NavBar() {
 
     return (
         <nav className="navbar">
-            <div className="brand">
-                <CavokTextIcon id="cavok-text-icon" />
-            </div>
-            <div className="options">
-                <div className="links">
-                    <ul>
-                        <li>
-                            {" "}
-                            <a href="#"> Quem somos </a>
-                        </li>
-                        <li>
-                            {" "}
-                            <a href="#"> Fale Conosco </a>
-                        </li>
-                    </ul>
+            <div className="navbar-conteiner">
+                <div className="brand">
+                    <CavokTextIcon id="cavok-text-icon" />
                 </div>
-                <div className="menu">
-                    <button className="menu-btn" onClick={(evt) => toggleDropdown()}>
-                        <MenuIcon size={25} />
-                        <span>Menu</span>
-                    </button>
-                    {showMenu && <MenuContent show={showMenu} setShow={onHideMenuContent} />}
+                <div className="options">
+                    <div className="links">
+                        <ul>
+                            <li>
+                                {" "}
+                                <a href="#"> Quem somos </a>
+                            </li>
+                            <li>
+                                {" "}
+                                <a href="#"> Fale Conosco </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="menu">
+                        <button className="menu-btn" onClick={(evt) => toggleDropdown()}>
+                            <MenuIcon size={25} />
+                            <span>Menu</span>
+                        </button>
+                        {showMenu && <MenuContent show={showMenu} setShow={onHideMenuContent} />}
+                    </div>
                 </div>
             </div>
         </nav>

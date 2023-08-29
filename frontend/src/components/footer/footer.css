@@ -1,9 +1,8 @@
 footer{
-    background-color: #235d82;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding : 2em;    
-    margin-top: 2rem;
+    box-shadow: 0.5rem 0.5rem 2rem 0 rgba(37,37,39,.25);
 }
