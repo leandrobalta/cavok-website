@@ -158,6 +158,10 @@ const SideBarFilter = () => {
                     Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus massa, a
                     vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
                 </p>
+                <p>
+                    Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus massa, a
+                    vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
+                </p>
             </div>
         </div>
     );
