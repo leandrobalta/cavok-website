@@ -100,6 +100,7 @@
 
 .flight-holder{
     width: 70%;
+    padding: 2rem;
 }
 
 .price-box{
@@ -160,4 +161,29 @@
 
 .text-silver{
     color: #808080;
+}
+
+.flight-holder-conteiner-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.flight-holder-conteiner-header p{
+    text-align: start;
+    margin: 0;
+}
+
+.flight-holder-conteiner-header h5 svg{
+    margin-right: 0.5rem;
+}
+
+.flight-details-airports{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }

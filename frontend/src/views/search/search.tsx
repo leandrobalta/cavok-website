@@ -4,6 +4,12 @@ import { IoMdArrowDropdown as DropdownIcon } from "react-icons/io";
 import { CavokButton } from "components/cavok-colored";
 import { useState } from "react";
 import { VerticalLine } from "components/vertical-line/vertical-line";
+import { TravelMode } from "enums/travel-mode";
+import {
+    PiAirplaneInFlight as InFLightAirplaneIcon,
+    PiAirplaneLandingLight as ArrivingAirplaneIcon,
+    PiAirplaneTakeoffLight as DeparturingAirplaneIcon,
+} from "react-icons/pi";
 
 interface DropdownFilterChecksProps {
     title: string;
@@ -174,27 +180,48 @@ export default function Search() {
             price: generateRandomPrice(),
             stops: 0,
             company: "Gol",
-            departure: "2021-10-10T10:00:00.000Z",
-            arrival: "2021-10-10T11:00:00.000Z",
+            departureTime: "2021-10-10T10:00:00.000Z",
+            arrivalTime: "2021-10-10T11:00:00.000Z",
+            departureAirport: "GRU",
+            arrivalAirport: "CGH",
+            departureCity: "São Paulo",
+            arrivalCity: "São Paulo",
             tax: generateRandomTax(),
+            date: "2021-10-10T10:00:00.000Z",
+            travelTime: "1h",
+            travelMode: TravelMode.ONE_WAY,
         },
         {
             id: 2,
             price: generateRandomPrice(),
             stops: 1,
             company: "Azul",
-            departure: "2021-10-10T10:00:00.000Z",
-            arrival: "2021-10-10T11:00:00.000Z",
+            departureTime: "2021-10-10T10:00:00.000Z",
+            arrivalTime: "2021-10-10T11:00:00.000Z",
+            departureAirport: "GRU",
+            arrivalAirport: "JFK",
+            departureCity: "São Paulo",
+            arrivalCity: "Nova York",
             tax: generateRandomTax(),
+            date: "2021-10-10T10:00:00.000Z",
+            travelTime: "1h",
+            travelMode: TravelMode.ONE_WAY,
         },
         {
             id: 3,
             price: generateRandomPrice(),
             stops: 2,
             company: "Latam",
-            departure: "2021-10-10T10:00:00.000Z",
-            arrival: "2021-10-10T11:00:00.000Z",
+            departureTime: "2021-10-10T10:00:00.000Z",
+            arrivalTime: "2021-10-10T11:00:00.000Z",
+            departureAirport: "GRU",
+            departureCity: "São Paulo",
+            arrivalAirport: "JFK",
+            arrivalCity: "Nova York",
             tax: generateRandomTax(),
+            date: "2021-10-10T10:00:00.000Z",
+            travelTime: "1h",
+            travelMode: TravelMode.ONE_WAY,
         },
     ];
 
@@ -211,7 +238,31 @@ export default function Search() {
                             return (
                                 <div className="result-card">
                                     <div className="flight-holder">
-                                        <div className="flight-holder-header">IDA</div>
+                                        <div className="flight-holder-conteiner">
+                                            <div className="flight-holder-conteiner-header">
+                                                <p>
+                                                    <h5 className="text-bold">
+                                                        <DeparturingAirplaneIcon size={28} />
+                                                        Ida
+                                                    </h5>
+                                                    <span className="text-silver">Sáb, 10 de Out</span>
+                                                </p>
+                                                <p className="flight-details-airports">
+                                                    <p>
+                                                        <h5>{result.departureAirport}</h5>
+                                                        <span className="text-silver">{result.departureCity}</span>
+                                                    </p>
+                                                    <InFLightAirplaneIcon size={28} />
+                                                    <p>
+                                                        <h5>{result.arrivalAirport}</h5>
+                                                        <span className="text-silver">{result.arrivalCity}</span>
+                                                    </p>
+                                                </p>
+                                                <p>
+                                                    <span className="text-bold">Bagagem</span>
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                     {/* <VerticalLine /> */}
                                     <div className="price-box">
