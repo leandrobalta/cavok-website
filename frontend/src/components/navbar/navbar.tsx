@@ -1,9 +1,11 @@
 import "./navbar.css";
 import { AiOutlineMenu as MenuIcon } from "react-icons/ai";
 import CavokTextIcon from "components/icons/cavok-text";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import useWindowDimensions from "hooks/window-dimensions";
+import { useNavigate } from "react-router-dom";
+import { useOutsideClickAlerter } from "hooks/outside-click-alerter";
 
 type MenuContentProps = {
     show: boolean;
@@ -18,38 +20,40 @@ const Divider = () => (
     />
 );
 
-const MenuList = () => (
-    <ul className="menu-list">
-        <li>
-            <a href="">Meu perfil</a>
-        </li>
-        <Divider />
-        <li>
-            <a href="">Meus Pedidos</a>
-        </li>
-        <Divider />
-        <li>
-            <a href="">Cancelamento/Reembolso</a>
-        </li>
-        <Divider />
-        <li>
-            <a href="">Termos e Condições</a>
-        </li>
-        <Divider />
-        <li>
-            <a href="">Central de Ajuda</a>
-        </li>
-        <Divider />
-        <li>
-            <a href="">Política de Privacidade</a>
-        </li>
-        <Divider />
-        <li>
-            <a href="">Dúvidas Frequentes</a>
-        </li>
-        <Divider />
-    </ul>
-);
+const MenuList = () => {
+    return (
+        <ul className="menu-list">
+            <li>
+                <a href="">Meu perfil</a>
+            </li>
+            <Divider />
+            <li>
+                <a href="">Meus Pedidos</a>
+            </li>
+            <Divider />
+            <li>
+                <a href="">Cancelamento/Reembolso</a>
+            </li>
+            <Divider />
+            <li>
+                <a href="">Termos e Condições</a>
+            </li>
+            <Divider />
+            <li>
+                <a href="">Central de Ajuda</a>
+            </li>
+            <Divider />
+            <li>
+                <a href="">Política de Privacidade</a>
+            </li>
+            <Divider />
+            <li>
+                <a href="">Dúvidas Frequentes</a>
+            </li>
+            <Divider />
+        </ul>
+    );
+};
 
 const MenuContent = (props: MenuContentProps) => {
     const { height, width } = useWindowDimensions();
@@ -80,7 +84,16 @@ const MenuContent = (props: MenuContentProps) => {
 };
 
 export function NavBar() {
+    const navigate = useNavigate();
+    const wrapperRef = useRef(null);
+
+    //states
     const [showMenu, setshowMenu] = useState(false);
+
+    const handleOutsideClick = () => {
+        console.log("handleOutsideClick");
+        setshowMenu(false);
+    };
 
     const toggleDropdown = () => {
         setshowMenu(!showMenu);
@@ -90,10 +103,12 @@ export function NavBar() {
         setshowMenu(show);
     };
 
+    useOutsideClickAlerter(wrapperRef, handleOutsideClick);
+
     return (
         <nav className="navbar">
             <div className="navbar-conteiner">
-                <div className="brand">
+                <div className="brand" onClick={(evt) => navigate("/")}>
                     <CavokTextIcon id="cavok-text-icon" />
                 </div>
                 <div className="options">
@@ -109,7 +124,7 @@ export function NavBar() {
                             </li>
                         </ul>
                     </div>
-                    <div className="menu">
+                    <div className="menu" ref={wrapperRef}>
                         <button className="menu-btn" onClick={(evt) => toggleDropdown()}>
                             <MenuIcon size={25} />
                             <span>Menu</span>

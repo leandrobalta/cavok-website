@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./hero.css";
 import { Form, ButtonGroup, ToggleButton, Button, InputGroup, Offcanvas } from "react-bootstrap";
 import { CavokToggleButton, CavokButton } from "components/cavok-colored";
@@ -12,8 +12,10 @@ import useWindowDimensions from "hooks/window-dimensions";
 import Datetime from "react-datetime";
 import { formatDate } from "utils/format-date";
 import moment from "moment";
-import 'moment/locale/pt'
+import "moment/locale/pt";
 import { useNavigate } from "react-router-dom";
+import { useOutsideClickAlerter } from "hooks/outside-click-alerter";
+import DatePicker from "@mui/lab/DatePicker";
 
 enum PassengerEnum {
     Adult,
@@ -171,7 +173,7 @@ const PassangersBox = (props: PassengersBoxProps) => {
 
 const BeginDateTimeInput = ({ dates, handleDates, isBeginDateValid, isOneWay }: BeginDateTimeInputProps) => (
     <Datetime
-        className={isOneWay ? "" :"date-input-group-left"}
+        className={isOneWay ? "" : "date-input-group-left"}
         value={dates.begin}
         dateFormat="DD/MM/YYYY"
         locale="pt-br"
@@ -184,6 +186,7 @@ const BeginDateTimeInput = ({ dates, handleDates, isBeginDateValid, isOneWay }: 
 
 export default function Hero() {
     const navigate = useNavigate();
+    const wrapperRef = useRef(null);
 
     // states
     const [travelModeValue, setTravelModeValue] = useState("round-trip");
@@ -213,6 +216,10 @@ export default function Hero() {
         setShowPassengers(!showPassengers);
     };
 
+    const handleOutsideClick = () => {
+        setShowPassengers(false);
+    };
+
     const handlePassenger = (type: PassengerEnum, amount: number) => {
         const newPassengers = passengers.map((passenger) => {
             if (passenger.type === type) {
@@ -239,6 +246,8 @@ export default function Hero() {
         console.log("search");
         navigate("/search");
     };
+
+    useOutsideClickAlerter(wrapperRef, handleOutsideClick);
 
     return (
         <div className="hero">
@@ -292,13 +301,14 @@ export default function Hero() {
                             ) : (
                                 <>
                                     <Form.Label>Datas</Form.Label>
+                                    <br />
                                     <div className="date-input-group inline-flex">
                                         <BeginDateTimeInput
                                             dates={dates}
                                             handleDates={handleDates}
                                             isBeginDateValid={isBeginDateValid}
                                         />
-                                        <Datetime
+                                        <Datetime 
                                             className="date-input-group-right"
                                             locale="pt-br"
                                             value={dates.end}
@@ -310,12 +320,12 @@ export default function Hero() {
                                             closeOnSelect
                                             isValidDate={isEndDateValid}
                                         />
-                                    </div>
+                                    </div> 
                                 </>
                             )}
                         </Form.Group>
 
-                        <Form.Group className="search-box-form-input">
+                        <Form.Group className="search-box-form-input" ref={wrapperRef}>
                             <Form.Label>Passageiros</Form.Label>
                             <Form.Control className="passengers-input" as="button" onClick={() => tooglePassengers()}>
                                 <PeopleIcon size={25} />
@@ -334,7 +344,9 @@ export default function Hero() {
                                 />
                             )}
                         </Form.Group>
-                        <CavokButton className="search-btn" onClick={(evt) => handleSearch()}>BUSCAR VOOS</CavokButton>
+                        <CavokButton className="search-btn" onClick={(evt) => handleSearch()}>
+                            BUSCAR VOOS
+                        </CavokButton>
                     </div>
                 </div>
             </div>

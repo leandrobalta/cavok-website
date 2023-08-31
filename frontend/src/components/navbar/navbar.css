@@ -34,6 +34,10 @@
     align-items: center;
 }
 
+.brand{
+    cursor: pointer;
+}
+
 .options{
     display: flex;
     flex-direction: row;
