@@ -146,6 +146,18 @@
     border-top-left-radius: 0;
 }
 
+.date-input-group-right > div {
+    @media screen and (max-width: 550px) {
+        transform: translate3d(-3rem, 0px, 0px);
+        will-change: transform;
+    }
+
+    @media screen and (max-width: 480px) {
+        transform: translate3d(-5.2rem, 0px, 0px);
+        will-change: transform;
+    }
+}
+
 .date-input-group-left > input {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;

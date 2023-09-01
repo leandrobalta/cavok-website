@@ -15,7 +15,6 @@ import moment from "moment";
 import "moment/locale/pt";
 import { useNavigate } from "react-router-dom";
 import { useOutsideClickAlerter } from "hooks/outside-click-alerter";
-import DatePicker from "@mui/lab/DatePicker";
 
 enum PassengerEnum {
     Adult,
@@ -296,7 +295,7 @@ export default function Hero() {
                                         handleDates={handleDates}
                                         isBeginDateValid={isBeginDateValid}
                                         isOneWay
-                                    />
+                                    /> 
                                 </>
                             ) : (
                                 <>

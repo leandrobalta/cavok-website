@@ -46,7 +46,6 @@
     ]
   },
   "devDependencies": {
-    "@mui/lab": "^5.0.0-alpha.142",
     "react-datetime": "^3.2.0"
   }
 }
