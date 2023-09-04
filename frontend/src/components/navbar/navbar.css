@@ -14,6 +14,22 @@
     z-index: 1000; /* Ajuste conforme necessário 
 } */
 
+@supports (-webkit-touch-callout: none) {
+    .menu-btn span {
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+    }   
+
+    .links a {
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+    }
+
+
+}
+
 .navbar {
     height: 3.5rem;
     position: sticky !important;
