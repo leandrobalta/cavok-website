@@ -5,9 +5,3 @@
 * {
     box-sizing: border-box;
 }
-
-@supports (-webkit-touch-callout: none) {
-    * {
-        display: -webkit-flex; /* Safari */
-    }
-}
