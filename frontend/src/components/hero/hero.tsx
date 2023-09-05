@@ -15,6 +15,7 @@ import moment from "moment";
 import "moment/locale/pt";
 import { useNavigate } from "react-router-dom";
 import { useOutsideClickAlerter } from "hooks/outside-click-alerter";
+import { Alert } from "components/alert/alert";
 
 enum PassengerEnum {
     Adult,
@@ -242,6 +243,7 @@ export default function Hero() {
     };
 
     const handleSearch = () => {
+        Alert.info({ message: "Buscando voos..." });
         console.log("search");
         navigate("/search");
     };

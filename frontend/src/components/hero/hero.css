@@ -1,12 +1,3 @@
-@supports (-webkit-touch-callout: none) {
-    .search-box-form {
-        @media screen and (max-width: 768px) {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-    }
-}
 .inline-flex {
     display: inline-flex !important;
 }
@@ -100,6 +91,15 @@
     }
 }
 
+@supports (-webkit-touch-callout: none) {
+    .search-box-form {
+        @media screen and (max-width: 768px) {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+    }
+}
 
 .search-box-form > * {
     flex: 1;
