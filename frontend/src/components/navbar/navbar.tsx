@@ -60,7 +60,7 @@ const MenuContent = (props: MenuContentProps) => {
 
     return (
         <>
-            {width > 768 ? (
+            {width > 812 ? (
                 <div className="menu-content">
                     <MenuList />
                 </div>

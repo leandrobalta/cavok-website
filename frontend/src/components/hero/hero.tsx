@@ -140,7 +140,7 @@ const PassangersBox = (props: PassengersBoxProps) => {
 
     return (
         <>
-            {width > 768 ? (
+            {width > 812 ? (
                 <div className="passengers-box">
                     <PassengersContent
                         passengers={props.passengers}
