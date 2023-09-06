@@ -92,13 +92,21 @@
 }
 
 /*if safari*/
-@supports (-webkit-touch-callout: none) {
+/* @supports (-webkit-touch-callout: none) {
     .search-box-form {
         @media screen and (max-width: 812px) {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
         }
+    }
+} */
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 1285px) and (-webkit-min-device-pixel-ratio: 3) {
+    .search-box-form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 }
 
