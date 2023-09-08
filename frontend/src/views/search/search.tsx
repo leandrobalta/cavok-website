@@ -34,6 +34,36 @@ interface PriceFilter {
     max: number;
 }
 
+interface Baggage {
+    handBaggage: boolean;
+    checkedBaggage: boolean;
+}
+
+interface Travel{
+    id: number;
+    price: number;
+    stops: number;
+    company: string;
+    departureTime: string;
+    arrivalAirportCode: string;
+    departureAirportCode: string;
+    arrivalTime: string;
+    departureAirport: string;
+    arrivalAirport: string;
+    departureCity: string;
+    arrivalCity: string;
+    tax: number;
+    date: string;
+    travelTime: string;
+    class: string;
+    flightNumber: string;
+    baggage: Baggage;    
+}
+
+interface TravelResult {
+
+}
+
 const DropdownFilterChecks = (props: DropdownFilterChecksProps) => {
     const [isCollapseOpen, setIsCollapseOpen] = useState<boolean>(true);
 

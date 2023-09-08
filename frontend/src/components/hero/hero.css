@@ -1,30 +1,3 @@
-@media only screen and (min-device-width: 375px) and (max-device-width: 812px) {
-    .search-box-form {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .search-box-form > .locations {
-        flex: 2;
-    }
-
-    .hero {
-        height: 35rem;
-    }
-
-    .background {
-        height: 100%;
-    }
-
-    .search-box{
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
-        background-color: #ddeeff;
-        padding: 1em;
-    }
-}
 .inline-flex {
     display: inline-flex !important;
 }
@@ -38,7 +11,7 @@
     width: 100%;
     height: 100%;
     position: relative;
-    @media screen and (max-width: 812px) {
+    @media screen and (max-width: 768px) {
         height: 35rem;
     }
 }
@@ -47,7 +20,7 @@
     width: 100%;
     filter: brightness(70%);
 
-    @media screen and (max-width: 812px) {
+    @media screen and (max-width: 768px) {
         height: 100%;
     }
 }
@@ -74,7 +47,7 @@
     gap: 1rem;
     max-width: 80rem;
 
-    @media screen and (max-width: 812px) {
+    @media screen and (max-width: 768px) {
         width: 100%;
         height: 100%;
         border-radius: 0;
@@ -89,7 +62,7 @@
     align-items: center;
     gap: 3rem;
 
-    @media screen and (max-width: 812px) {
+    @media screen and (max-width: 768px) {
         flex-direction: column;
         gap: 1rem;
         align-items: normal;
@@ -112,32 +85,31 @@
     width: 100%;
     gap: 1rem;
 
-    @media screen and (max-width: 812px) {
+    @media screen and (max-width: 768px) {
         flex-direction: column;
         gap: 1rem;
     }
 }
 
-/*if safari*/
-/* @supports (-webkit-touch-callout: none) {
+@supports (-webkit-touch-callout: none) {
     .search-box-form {
-        @media screen and (max-width: 812px) {
+        @media screen and (max-width: 768px) {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
         }
     }
-} */
+}
 
 .search-box-form > * {
     flex: 1;
 }
 
-/* .search-box-form > .locations {
-    @media screen and (min-width: 812px) {
+.search-box-form > .locations {
+    @media screen and (min-width: 768px) {
         flex: 2;
     }
-} */
+}
 
 .locations {
     display: flex;
@@ -145,7 +117,7 @@
     align-items: end;
     min-width: 20rem !important;
 
-    @media screen and (max-width: 812px) {
+    @media screen and (max-width: 768px) {
         display: grid;
         gap: 1rem;
     }
@@ -160,7 +132,7 @@
     padding: 4px;
     min-width: 35px;
 
-    @media screen and (max-width: 812px) {
+    @media screen and (max-width: 768px) {
         display: none;
         font-size: 4.8rem;
         transition: transform 0.25s linear 0s;
@@ -207,7 +179,7 @@
     white-space: nowrap;
     /* min-width: 10rem !important; */
 
-    @media screen and (max-width: 812px) {
+    @media screen and (max-width: 768px) {
         margin-top: 0.5rem !important;
     }
 }
@@ -238,7 +210,7 @@
     border: 1.5px solid #000;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 
-    @media screen and (min-width: 812px) and (max-width: 1050px) {
+    @media screen and (min-width: 768px) and (max-width: 1050px) {
         transform: translate3d(-2rem, 0px, 0px);
         will-change: transform;
     }
