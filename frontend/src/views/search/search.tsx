@@ -5,6 +5,7 @@ import { CavokButton } from "components/cavok-colored";
 import { useState } from "react";
 import { VerticalLine } from "components/vertical-line/vertical-line";
 import { TravelMode } from "enums/travel-mode";
+import { mockTravelResults } from "./travel-result-mock";
 import {
     PiAirplaneInFlight as InFLightAirplaneIcon,
     PiAirplaneLandingLight as ArrivingAirplaneIcon,
@@ -60,8 +61,14 @@ interface Travel{
     baggage: Baggage;    
 }
 
-interface TravelResult {
-
+export interface TravelResult {
+    price: number;
+    departure: Travel[];
+    arrival?: Travel[];
+    departureDate: string;
+    arrivalDate?: string;
+    tax: number;
+    totalPrice: number;
 }
 
 const DropdownFilterChecks = (props: DropdownFilterChecksProps) => {
@@ -158,7 +165,7 @@ const SideBarFilter = () => {
         if (value.max < 0) return;
 
         setPrice(value);
-    };
+};
 
     return (
         <div className="side-bar">
@@ -206,58 +213,7 @@ export default function Search() {
     const generateRandomTax = () => {
         const value = Math.random() * (100 - 10 + 1) + 10;
         return Number.parseFloat(value.toString()).toFixed(2);
-    };
-
-    const mockTravelResults = [
-        {
-            id: 1,
-            price: generateRandomPrice(),
-            stops: 0,
-            company: "Gol",
-            departureTime: "2021-10-10T10:00:00.000Z",
-            arrivalTime: "2021-10-10T11:00:00.000Z",
-            departureAirport: "GRU",
-            arrivalAirport: "CGH",
-            departureCity: "São Paulo",
-            arrivalCity: "São Paulo",
-            tax: generateRandomTax(),
-            date: "2021-10-10T10:00:00.000Z",
-            travelTime: "1h",
-            travelMode: TravelMode.ONE_WAY,
-        },
-        {
-            id: 2,
-            price: generateRandomPrice(),
-            stops: 1,
-            company: "Azul",
-            departureTime: "2021-10-10T10:00:00.000Z",
-            arrivalTime: "2021-10-10T11:00:00.000Z",
-            departureAirport: "GRU",
-            arrivalAirport: "JFK",
-            departureCity: "São Paulo",
-            arrivalCity: "Nova York",
-            tax: generateRandomTax(),
-            date: "2021-10-10T10:00:00.000Z",
-            travelTime: "1h",
-            travelMode: TravelMode.ONE_WAY,
-        },
-        {
-            id: 3,
-            price: generateRandomPrice(),
-            stops: 2,
-            company: "Latam",
-            departureTime: "2021-10-10T10:00:00.000Z",
-            arrivalTime: "2021-10-10T11:00:00.000Z",
-            departureAirport: "GRU",
-            departureCity: "São Paulo",
-            arrivalAirport: "JFK",
-            arrivalCity: "Nova York",
-            tax: generateRandomTax(),
-            date: "2021-10-10T10:00:00.000Z",
-            travelTime: "1h",
-            travelMode: TravelMode.ONE_WAY,
-        },
-    ];
+    };    
 
     return (
         <div className="search">
@@ -272,31 +228,64 @@ export default function Search() {
                             return (
                                 <div className="result-card">
                                     <div className="flight-holder">
-                                        <div className="flight-holder-conteiner">
-                                            <div className="flight-holder-conteiner-header">
-                                                <p>
-                                                    <h5 className="text-bold">
-                                                        <DeparturingAirplaneIcon size={28} />
-                                                        Ida
-                                                    </h5>
-                                                    <span className="text-silver">Sáb, 10 de Out</span>
-                                                </p>
-                                                <p className="flight-details-airports">
-                                                    <p>
-                                                        <h5>{result.departureAirport}</h5>
-                                                        <span className="text-silver">{result.departureCity}</span>
-                                                    </p>
-                                                    <InFLightAirplaneIcon size={28} />
-                                                    <p>
-                                                        <h5>{result.arrivalAirport}</h5>
-                                                        <span className="text-silver">{result.arrivalCity}</span>
-                                                    </p>
-                                                </p>
-                                                <p>
-                                                    <span className="text-bold">Bagagem</span>
-                                                </p>
-                                            </div>
-                                        </div>
+                                        {
+                                            result.departure.map((deparTravel) => (
+                                                <div className="flight-holder-conteiner">
+                                                    <div className="flight-holder-conteiner-header">
+                                                        <p>
+                                                            <h5 className="text-bold">
+                                                                <DeparturingAirplaneIcon size={28} />
+                                                                Ida
+                                                            </h5>
+                                                            <span className="text-silver">{result.departureDate}</span>
+                                                        </p>
+                                                        <p className="flight-details-airports">
+                                                            <p>
+                                                                <h5>{deparTravel.departureAirport}</h5>
+                                                                <span className="text-silver">{deparTravel.departureCity}</span>
+                                                            </p>
+                                                            <InFLightAirplaneIcon size={28} />
+                                                            <p>
+                                                                <h5>{deparTravel.arrivalAirport}</h5>
+                                                                <span className="text-silver">{deparTravel.arrivalCity}</span>
+                                                            </p>
+                                                        </p>
+                                                        <p>
+                                                            <span className="text-bold">Bagagem</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                        {
+                                            result.arrival?.map((arrivTravel) => (
+                                                <div className="flight-holder-conteiner">
+                                                    <div className="flight-holder-conteiner-header">
+                                                        <p>
+                                                            <h5 className="text-bold">
+                                                                <ArrivingAirplaneIcon size={28} />
+                                                                Volta
+                                                            </h5>
+                                                            <span className="text-silver">{result.arrivalDate}</span>
+                                                        </p>
+                                                        <p className="flight-details-airports">
+                                                            <p>
+                                                                <h5>{arrivTravel.departureAirport}</h5>
+                                                                <span className="text-silver">{arrivTravel.departureCity}</span>
+                                                            </p>
+                                                            <InFLightAirplaneIcon size={28} />
+                                                            <p>
+                                                                <h5>{arrivTravel.arrivalAirport}</h5>
+                                                                <span className="text-silver">{arrivTravel.arrivalCity}</span>
+                                                            </p>
+                                                        </p>
+                                                        <p>
+                                                            <span className="text-bold">Bagagem</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
                                     </div>
                                     {/* <VerticalLine /> */}
                                     <div className="price-box">
@@ -316,10 +305,7 @@ export default function Search() {
                                             <p>
                                                 <span className="text-bold">VALOR TOTAL:</span>
                                                 <span className="text-bold">
-                                                    R$
-                                                    {(
-                                                        Number.parseFloat(result.price) + Number.parseFloat(result.tax)
-                                                    ).toFixed(2)}
+                                                    R$ {result.price + result.tax}
                                                 </span>
                                             </p>
                                         </div>
