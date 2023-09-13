@@ -1,11 +1,11 @@
 import "./services.css";
 import { HorizontalLine } from "components/cavok-colored";
+import service1 from "assets/images/service1.png";
+import service2 from "assets/images/service2.png";
+import service3 from "assets/images/service3.png";
+import service4 from "assets/images/service4.png";
 
 export default function Services() {
-    const service1 = require("assets/images/service1.png");
-    const service2 = require("assets/images/service2.png");
-    const service3 = require("assets/images/service3.png");
-    const service4 = require("assets/images/service4.png");
 
     const data: {
         icon: any;

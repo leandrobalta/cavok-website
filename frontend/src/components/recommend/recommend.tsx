@@ -3,14 +3,14 @@ import { CavokButton } from "components/cavok-colored";
 import "./recommend.css";
 import { Card } from "react-bootstrap";
 import { HorizontalLine } from "components/cavok-colored";
+import Destination1 from "assets/images/Destination1.png";
+import Destination2 from "assets/images/Destination2.png";
+import Destination3 from "assets/images/Destination3.png";
+import Destination4 from "assets/images/Destination4.png";
+import Destination5 from "assets/images/Destination5.png";
+import Destination6 from "assets/images/Destination6.png";
 
 export default function Recommend() {
-    const Destination1 = require("assets/images/Destination1.png");
-    const Destination2 = require("assets/images/Destination2.png");
-    const Destination3 = require("assets/images/Destination3.png");
-    const Destination4 = require("assets/images/Destination4.png");
-    const Destination5 = require("assets/images/Destination5.png");
-    const Destination6 = require("assets/images/Destination6.png");
 
     const destinations = [
         {

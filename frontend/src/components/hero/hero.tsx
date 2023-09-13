@@ -16,6 +16,7 @@ import "moment/locale/pt";
 import { useNavigate } from "react-router-dom";
 import { useOutsideClickAlerter } from "hooks/outside-click-alerter";
 import { Alert } from "components/alert/alert";
+import heroBackground from "assets/images/hero.png";
 
 enum PassengerEnum {
     Adult,
@@ -209,7 +210,6 @@ export default function Hero() {
         { name: "Ida e volta", value: "round-trip" },
         { name: "Somente ida", value: "one-way" },
     ];
-    const heroBackground = require("assets/images/hero.png");
 
     // functions
     const tooglePassengers = () => {
