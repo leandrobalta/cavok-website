@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import "./hero.css";
-import { Form, ButtonGroup, ToggleButton, Button, InputGroup, Offcanvas } from "react-bootstrap";
+//import { Form, ButtonGroup, ToggleButton, Button, InputGroup, Offcanvas } from "react-bootstrap";
+import { Checkbox, FormGroup, FormControlLabel, Drawer, ButtonGroup, Button, RadioGroup, Radio } from "@mui/material";
 import { CavokToggleButton, CavokButton } from "components/cavok-colored";
 import { IoIosPeople as PeopleIcon } from "react-icons/io";
 import { GrClose as CloseIcon } from "react-icons/gr";
@@ -15,7 +16,7 @@ import moment from "moment";
 import "moment/locale/pt";
 import { useNavigate } from "react-router-dom";
 import { useOutsideClickAlerter } from "hooks/outside-click-alerter";
-import { Alert } from "components/alert/alert";
+//import { Alert } from "components/alert/alert";
 import heroBackground from "assets/images/hero.png";
 
 enum PassengerEnum {
@@ -113,15 +114,10 @@ const PassengersContent = (props: PassengersContentProps) => {
                 </>
             )}
             <div className="passengers-box-body">
-                <Form.Check type="radio" label="Econômica" id="eco" name="class-option" className="class-option" />
-
-                <Form.Check
-                    type="radio"
-                    label="Executiva"
-                    id="executive"
-                    name="class-option"
-                    className="class-option"
-                />
+                <FormGroup>
+                    <FormControlLabel className="class-option" control={<Checkbox />} label="Econômica" />
+                    <FormControlLabel className="class-option" control={<Checkbox />} label="Executiva" />
+                </FormGroup>
             </div>
 
             <br />
@@ -152,12 +148,12 @@ const PassangersBox = (props: PassengersBoxProps) => {
                     />
                 </div>
             ) : (
-                <Offcanvas show={props.show} onHide={() => props.setShow(false)} style={{ width: "90%" }}>
-                    <Offcanvas.Header closeButton>
-                        <Offcanvas.Title>Passageiros e Classes</Offcanvas.Title>
-                    </Offcanvas.Header>
+                <Drawer open={props.show} onClose={() => props.setShow(false)} style={{ width: "90%" }}>
+                    <div>
+                        <h1>Passageiros e Classes</h1>
+                    </div>
 
-                    <Offcanvas.Body>
+                    <div>
                         <PassengersContent
                             passengers={props.passengers}
                             handlePassenger={props.handlePassenger}
@@ -165,8 +161,8 @@ const PassangersBox = (props: PassengersBoxProps) => {
                             passengerTranslation={props.passengerTranslation}
                             haveTitle={false}
                         />
-                    </Offcanvas.Body>
-                </Offcanvas>
+                    </div>
+                </Drawer>
             )}
         </>
     );
@@ -243,7 +239,7 @@ export default function Hero() {
     };
 
     const handleSearch = () => {
-        Alert.info({ message: "Buscando voos..." });
+        //Alert.info({ message: "Buscando voos..." });
         console.log("search");
         navigate("/search");
     };
@@ -258,20 +254,22 @@ export default function Hero() {
                 <div className="search-box">
                     <div className="search-box-header">
                         <span>PASSAGENS AÉREAS</span>
-                        <ButtonGroup>
+                        <RadioGroup
+                            defaultValue={travelModeValue}
+                        >
                             {travelMode.map((travelMode, idx) => (
-                                <CavokToggleButton
+                                <FormControlLabel
+                                    control={<Radio />}
                                     key={idx}
+                                    itemType="radio"
                                     id={`radio-${idx}`}
-                                    type="radio"
                                     value={travelMode.value}
                                     checked={travelModeValue === travelMode.value}
-                                    onChange={(e) => setTravelModeValue(e.currentTarget.value)}
-                                >
-                                    {travelMode.name}
-                                </CavokToggleButton>
+                                    //onChange={(e) => setTravelModeValue(e.currentTarget.value)}
+                                    label={travelMode.name}
+                                />
                             ))}
-                        </ButtonGroup>
+                        </RadioGroup>
                     </div>
                     <div className="search-box-form">
                         <div className="locations">
@@ -297,7 +295,7 @@ export default function Hero() {
                                         handleDates={handleDates}
                                         isBeginDateValid={isBeginDateValid}
                                         isOneWay
-                                    /> 
+                                    />
                                 </>
                             ) : (
                                 <>
@@ -309,7 +307,7 @@ export default function Hero() {
                                             handleDates={handleDates}
                                             isBeginDateValid={isBeginDateValid}
                                         />
-                                        <Datetime 
+                                        <Datetime
                                             className="date-input-group-right"
                                             locale="pt-br"
                                             value={dates.end}
@@ -321,7 +319,7 @@ export default function Hero() {
                                             closeOnSelect
                                             isValidDate={isEndDateValid}
                                         />
-                                    </div> 
+                                    </div>
                                 </>
                             )}
                         </Form.Group>
@@ -345,9 +343,9 @@ export default function Hero() {
                                 />
                             )}
                         </Form.Group>
-                        <CavokButton className="search-btn" onClick={(evt) => handleSearch()}>
+                        <Button className="search-btn" onClick={(evt) => handleSearch()}>
                             BUSCAR VOOS
-                        </CavokButton>
+                        </Button>
                     </div>
                 </div>
             </div>
