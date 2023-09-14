@@ -1,8 +1,17 @@
 import { useRef, useState } from "react";
 import "./hero.css";
 //import { Form, ButtonGroup, ToggleButton, Button, InputGroup, Offcanvas } from "react-bootstrap";
-import { Checkbox, FormGroup, FormControlLabel, Drawer, ButtonGroup, Button, RadioGroup, Radio } from "@mui/material";
-import { CavokToggleButton, CavokButton } from "components/cavok-colored";
+import {
+    Checkbox,
+    FormGroup,
+    FormControlLabel,
+    Drawer,
+    ButtonGroup,
+    Button,
+    RadioGroup,
+    Radio,
+    TextField,
+} from "@mui/material";
 import { IoIosPeople as PeopleIcon } from "react-icons/io";
 import { GrClose as CloseIcon } from "react-icons/gr";
 import { AiOutlinePlus as PlusIcon } from "react-icons/ai";
@@ -18,6 +27,9 @@ import { useNavigate } from "react-router-dom";
 import { useOutsideClickAlerter } from "hooks/outside-click-alerter";
 //import { Alert } from "components/alert/alert";
 import heroBackground from "assets/images/hero.png";
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { DatePicker, MobileDatePicker } from "@mui/x-date-pickers";
 
 enum PassengerEnum {
     Adult,
@@ -25,11 +37,9 @@ enum PassengerEnum {
     Baby,
 }
 
-interface TravelMode {
-    name: string;
-    value: "round-trip" | "one-way";
+interface DatesPickerProps {
+    travelMode: "one-way" | "round-trip";
 }
-
 interface Passenger {
     type: PassengerEnum;
     amount: number;
@@ -124,9 +134,9 @@ const PassengersContent = (props: PassengersContentProps) => {
 
             {/*Button section*/}
             {!props.haveTitle && (
-                <CavokButton style={{ width: "100%" }} onClick={() => props.tooglePassengers()}>
-                    APLICAR
-                </CavokButton>
+                <Button variant="contained" style={{ width: "100%" }} onClick={() => props.tooglePassengers()}>
+                    Aplicar
+                </Button>
             )}
         </>
     );
@@ -181,12 +191,32 @@ const BeginDateTimeInput = ({ dates, handleDates, isBeginDateValid, isOneWay }: 
     />
 );
 
+const DatesPicker = (props: DatesPickerProps) => {
+    const { width } = useWindowDimensions();
+
+    return (
+        <DemoItem label="Datas">
+            {width < 812 ? (
+                <>
+                    <MobileDatePicker label="Ida" />
+                    <MobileDatePicker label="Volta" disabled={props.travelMode !== "round-trip"} />
+                </>
+            ) : (
+                <>
+                    <DatePicker label="Ida" />
+                    <DatePicker label="Volta" disabled={props.travelMode !== "round-trip"} />
+                </>
+            )}
+        </DemoItem>
+    );
+};
+
 export default function Hero() {
     const navigate = useNavigate();
     const wrapperRef = useRef(null);
 
     // states
-    const [travelModeValue, setTravelModeValue] = useState("round-trip");
+    const [travelModeValue, setTravelModeValue] = useState<"one-way" | "round-trip">("round-trip");
     const [showPassengers, setShowPassengers] = useState(false);
     const [dates, setDates] = useState<TravelDates>({ begin: formatDate(new Date()), end: formatDate(new Date()) }); // [begin, end]
     const [passengers, setPassengers] = useState<Passenger[]>([
@@ -254,9 +284,7 @@ export default function Hero() {
                 <div className="search-box">
                     <div className="search-box-header">
                         <span>PASSAGENS AÉREAS</span>
-                        <RadioGroup
-                            defaultValue={travelModeValue}
-                        >
+                        <RadioGroup defaultValue={travelModeValue}>
                             {travelMode.map((travelMode, idx) => (
                                 <FormControlLabel
                                     control={<Radio />}
@@ -273,20 +301,14 @@ export default function Hero() {
                     </div>
                     <div className="search-box-form">
                         <div className="locations">
-                            <Form.Group className="search-box-form-input">
-                                <Form.Label>Origem</Form.Label>
-                                <Form.Control type="text" placeholder="Digite a cidade de origem" />
-                            </Form.Group>
+                            <TextField className="search-box-form-input" label="Origem" variant="outlined" />
 
                             <ExchangeIcon className="exchange-icon" />
 
-                            <Form.Group className="search-box-form-input">
-                                <Form.Label>Destino</Form.Label>
-                                <Form.Control type="text" placeholder="Digite a cidade de origem" />
-                            </Form.Group>
+                            <TextField className="search-box-form-input" label="Destino" variant="outlined" />
                         </div>
 
-                        <Form.Group className="search-box-form-input date-input">
+                        {/* <Form.Group className="search-box-form-input date-input">
                             {travelModeValue === "one-way" ? (
                                 <>
                                     <Form.Label>Data de ida</Form.Label>
@@ -322,9 +344,11 @@ export default function Hero() {
                                     </div>
                                 </>
                             )}
-                        </Form.Group>
+                        </Form.Group> */}
 
-                        <Form.Group className="search-box-form-input" ref={wrapperRef}>
+                        <DatesPicker travelMode={travelModeValue} />
+
+                        {/* <Form.Group className="search-box-form-input" ref={wrapperRef}>
                             <Form.Label>Passageiros</Form.Label>
                             <Form.Control className="passengers-input" as="button" onClick={() => tooglePassengers()}>
                                 <PeopleIcon size={25} />
@@ -342,7 +366,18 @@ export default function Hero() {
                                     passengerTranslation={passengerTranslation}
                                 />
                             )}
-                        </Form.Group>
+                        </Form.Group> */}
+
+                        <TextField
+                            label="Passageiros"
+                            defaultValue={`${passengers.length} ${passengers.length > 1 ? "Passageiros" : "Passageiro"}`}
+                            onClick={() => tooglePassengers()}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+
+
                         <Button className="search-btn" onClick={(evt) => handleSearch()}>
                             BUSCAR VOOS
                         </Button>

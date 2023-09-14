@@ -2,10 +2,10 @@ import "./navbar.css";
 import { AiOutlineMenu as MenuIcon } from "react-icons/ai";
 import CavokTextIcon from "components/icons/cavok-text";
 import { useEffect, useRef, useState } from "react";
-import { Offcanvas } from "react-bootstrap";
 import useWindowDimensions from "hooks/window-dimensions";
 import { useNavigate } from "react-router-dom";
 import { useOutsideClickAlerter } from "hooks/outside-click-alerter";
+import { Drawer } from "@mui/material";
 
 type MenuContentProps = {
     show: boolean;
@@ -65,19 +65,23 @@ const MenuContent = (props: MenuContentProps) => {
                     <MenuList />
                 </div>
             ) : (
-                <Offcanvas
-                    show={props.show}
-                    onHide={() => props.setShow(false)}
-                    placement="end"
-                    style={{ maxWidth: "70%" }}
-                >
-                    <Offcanvas.Header closeButton>
-                        <Offcanvas.Title>Menu</Offcanvas.Title>
-                    </Offcanvas.Header>
-                    <Offcanvas.Body>
-                        <MenuList />
-                    </Offcanvas.Body>
-                </Offcanvas>
+                // <Offcanvas
+                //     show={props.show}
+                //     onHide={() => props.setShow(false)}
+                //     placement="end"
+                //     style={{ maxWidth: "70%" }}
+                // >
+                //     <Offcanvas.Header closeButton>
+                //         <Offcanvas.Title>Menu</Offcanvas.Title>
+                //     </Offcanvas.Header>
+                //     <Offcanvas.Body>
+                //         <MenuList />
+                //     </Offcanvas.Body>
+                // </Offcanvas>
+
+                <Drawer open={props.show} onClose={() => props.setShow(false)}>
+                    <MenuList />
+                </Drawer>
             )}
         </>
     );

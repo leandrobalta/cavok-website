@@ -1,11 +1,18 @@
-import { Accordion, useAccordionButton, Form } from "react-bootstrap";
 import "./search.css";
 import { IoMdArrowDropdown as DropdownIcon } from "react-icons/io";
-import { CavokButton } from "components/cavok-colored";
 import { useState } from "react";
 import { VerticalLine } from "components/vertical-line/vertical-line";
 import { TravelMode } from "enums/travel-mode";
 import { mockTravelResults } from "./travel-result-mock";
+import { Button } from "@mui/material";
+import * as React from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import {
     PiAirplaneInFlight as InFLightAirplaneIcon,
     PiAirplaneLandingLight as ArrivingAirplaneIcon,
@@ -40,7 +47,7 @@ interface Baggage {
     checkedBaggage: boolean;
 }
 
-interface Travel{
+interface Travel {
     id: number;
     price: number;
     stops: number;
@@ -58,7 +65,7 @@ interface Travel{
     travelTime: string;
     class: string;
     flightNumber: string;
-    baggage: Baggage;    
+    baggage: Baggage;
 }
 
 export interface TravelResult {
@@ -74,76 +81,109 @@ export interface TravelResult {
 const DropdownFilterChecks = (props: DropdownFilterChecksProps) => {
     const [isCollapseOpen, setIsCollapseOpen] = useState<boolean>(true);
 
-    const onClick = useAccordionButton(props.title, () => {
-        console.log("clicked");
-        setIsCollapseOpen(!isCollapseOpen);
-    });
+    // const onClick = useAccordionButton(props.title, () => {
+    //     console.log("clicked");
+    //     setIsCollapseOpen(!isCollapseOpen);
+    // });
 
     const allAmount = props.options.reduce((acc, curr) => acc + curr.amount, 0);
 
+    // return (
+    //     <>
+    //         <div className="filter-content-item" onClick={onClick}>
+    //             <h6>{props.title}</h6>
+    //             <DropdownIcon size={25} className={isCollapseOpen ? "rotate" : ""} />
+    //         </div>
+    //         <Accordion.Collapse eventKey={props.title}>
+    //             <div className="filter-content-item-body">
+    //                 <div className="filter-content-item-body-line">
+    //                     <Form.Check type="checkbox" label={`Todos as ${props.title}`} id="todos" defaultChecked />
+    //                     <span>{allAmount}</span>
+    //                 </div>
+    //                 {props.options.map((option, index) => {
+    //                     return (
+    //                         <div className="filter-content-item-body-line">
+    //                             <Form.Check key={index} type="checkbox" label={option.label} id={option.label} />
+    //                             <span>{option.amount}</span>
+    //                         </div>
+    //                     );
+    //                 })}
+    //             </div>
+    //         </Accordion.Collapse>
+    //     </>
+    // );
+
     return (
-        <>
-            <div className="filter-content-item" onClick={onClick}>
-                <h6>{props.title}</h6>
-                <DropdownIcon size={25} className={isCollapseOpen ? "rotate" : ""} />
-            </div>
-            <Accordion.Collapse eventKey={props.title}>
+        <Accordion defaultExpanded>
+            <AccordionSummary expandIcon={<DropdownIcon />}>
+                <Typography>{props.title}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
                 <div className="filter-content-item-body">
                     <div className="filter-content-item-body-line">
-                        <Form.Check type="checkbox" label={`Todos as ${props.title}`} id="todos" defaultChecked />
+                        <FormControlLabel
+                            control={<Checkbox defaultChecked />}
+                            label={`Todos as ${props.title}`}
+                            id="todos"
+                        />
                         <span>{allAmount}</span>
                     </div>
                     {props.options.map((option, index) => {
                         return (
                             <div className="filter-content-item-body-line">
-                                <Form.Check key={index} type="checkbox" label={option.label} id={option.label} />
+                                <FormControlLabel
+                                    control={<Checkbox />}
+                                    key={index}
+                                    label={option.label}
+                                    id={option.label}
+                                />
                                 <span>{option.amount}</span>
                             </div>
                         );
                     })}
                 </div>
-            </Accordion.Collapse>
-        </>
+            </AccordionDetails>
+        </Accordion>
     );
 };
 
-const DropdownPriceFilter = (props: DropdownPriceFilterProps) => {
-    const [isCollapseOpen, setIsCollapseOpen] = useState<boolean>(true);
+// const DropdownPriceFilter = (props: DropdownPriceFilterProps) => {
+//     const [isCollapseOpen, setIsCollapseOpen] = useState<boolean>(true);
 
-    const onClick = useAccordionButton(props.title, () => {
-        console.log("clicked");
-        setIsCollapseOpen(!isCollapseOpen);
-    });
+//     const onClick = useAccordionButton(props.title, () => {
+//         console.log("clicked");
+//         setIsCollapseOpen(!isCollapseOpen);
+//     });
 
-    return (
-        <>
-            <div className="filter-content-item" onClick={onClick}>
-                <h6>{props.title}</h6>
-                <DropdownIcon size={25} className={isCollapseOpen ? "rotate" : ""} />
-            </div>
-            <Accordion.Collapse eventKey={props.title}>
-                <div className="filter-content-item-body">
-                    <div className="filter-content-item-body-line price-input">
-                        <Form.Control
-                            type="number"
-                            value={props.price.min}
-                            onChange={(e) => props.onChange({ ...props.price, min: Number(e.target.value) })}
-                            isInvalid={props.price.min > props.price.max}
-                        />
-                        -
-                        <Form.Control
-                            type="number"
-                            value={props.price.max}
-                            onChange={(e) => props.onChange({ ...props.price, max: Number(e.target.value) })}
-                            isInvalid={props.price.min > props.price.max}
-                        />
-                        <CavokButton>Aplicar</CavokButton>
-                    </div>
-                </div>
-            </Accordion.Collapse>
-        </>
-    );
-};
+//     return (
+//         <>
+//             <div className="filter-content-item" onClick={onClick}>
+//                 <h6>{props.title}</h6>
+//                 <DropdownIcon size={25} className={isCollapseOpen ? "rotate" : ""} />
+//             </div>
+//             <Accordion.Collapse eventKey={props.title}>
+//                 <div className="filter-content-item-body">
+//                     <div className="filter-content-item-body-line price-input">
+//                         <Form.Control
+//                             type="number"
+//                             value={props.price.min}
+//                             onChange={(e) => props.onChange({ ...props.price, min: Number(e.target.value) })}
+//                             isInvalid={props.price.min > props.price.max}
+//                         />
+//                         -
+//                         <Form.Control
+//                             type="number"
+//                             value={props.price.max}
+//                             onChange={(e) => props.onChange({ ...props.price, max: Number(e.target.value) })}
+//                             isInvalid={props.price.min > props.price.max}
+//                         />
+//                         <CavokButton>Aplicar</CavokButton>
+//                     </div>
+//                 </div>
+//             </Accordion.Collapse>
+//         </>
+//     );
+// };
 
 const SideBarFilter = () => {
     //states
@@ -165,25 +205,20 @@ const SideBarFilter = () => {
         if (value.max < 0) return;
 
         setPrice(value);
-};
+    };
 
     return (
         <div className="side-bar">
-            <Accordion alwaysOpen className="side-bar-filter" defaultActiveKey={["Paradas", "Companhias", "Preço"]}>
-                <div className="filter">
-                    <div className="filter-title">
-                        <h3>Filtros</h3>
-                    </div>
-                    <hr />
-                    <div className="filter-content">
-                        <DropdownFilterChecks title="Paradas" options={stopOptions} />
-                        <hr />
-                        <DropdownFilterChecks title="Companhias" options={companyOptions} />
-                        <hr />
-                        <DropdownPriceFilter price={price} title="Preço" onChange={onPriceChange} />
-                    </div>
+            <div className="filter">
+                <div className="filter-title">
+                    <h3>Filtros</h3>
                 </div>
-            </Accordion>
+                <div className="filter-content">
+                    <DropdownFilterChecks title="Paradas" options={stopOptions} />
+                    <DropdownFilterChecks title="Companhias" options={companyOptions} />
+                    {/* <DropdownPriceFilter price={price} title="Preço" onChange={onPriceChange} /> */}
+                </div>
+            </div>
             <div className="information">
                 <h3>Atenção</h3>
                 <p>
@@ -213,7 +248,7 @@ export default function Search() {
     const generateRandomTax = () => {
         const value = Math.random() * (100 - 10 + 1) + 10;
         return Number.parseFloat(value.toString()).toFixed(2);
-    };    
+    };
 
     return (
         <div className="search">
@@ -228,64 +263,68 @@ export default function Search() {
                             return (
                                 <div className="result-card">
                                     <div className="flight-holder">
-                                        {
-                                            result.departure.map((deparTravel) => (
-                                                <div className="flight-holder-conteiner">
-                                                    <div className="flight-holder-conteiner-header">
+                                        {result.departure.map((deparTravel) => (
+                                            <div className="flight-holder-conteiner">
+                                                <div className="flight-holder-conteiner-header">
+                                                    <p>
+                                                        <h5 className="text-bold">
+                                                            <DeparturingAirplaneIcon size={28} />
+                                                            Ida
+                                                        </h5>
+                                                        <span className="text-silver">{result.departureDate}</span>
+                                                    </p>
+                                                    <p className="flight-details-airports">
                                                         <p>
-                                                            <h5 className="text-bold">
-                                                                <DeparturingAirplaneIcon size={28} />
-                                                                Ida
-                                                            </h5>
-                                                            <span className="text-silver">{result.departureDate}</span>
+                                                            <h5>{deparTravel.departureAirport}</h5>
+                                                            <span className="text-silver">
+                                                                {deparTravel.departureCity}
+                                                            </span>
                                                         </p>
-                                                        <p className="flight-details-airports">
-                                                            <p>
-                                                                <h5>{deparTravel.departureAirport}</h5>
-                                                                <span className="text-silver">{deparTravel.departureCity}</span>
-                                                            </p>
-                                                            <InFLightAirplaneIcon size={28} />
-                                                            <p>
-                                                                <h5>{deparTravel.arrivalAirport}</h5>
-                                                                <span className="text-silver">{deparTravel.arrivalCity}</span>
-                                                            </p>
-                                                        </p>
+                                                        <InFLightAirplaneIcon size={28} />
                                                         <p>
-                                                            <span className="text-bold">Bagagem</span>
+                                                            <h5>{deparTravel.arrivalAirport}</h5>
+                                                            <span className="text-silver">
+                                                                {deparTravel.arrivalCity}
+                                                            </span>
                                                         </p>
-                                                    </div>
+                                                    </p>
+                                                    <p>
+                                                        <span className="text-bold">Bagagem</span>
+                                                    </p>
                                                 </div>
-                                            ))
-                                        }
-                                        {
-                                            result.arrival?.map((arrivTravel) => (
-                                                <div className="flight-holder-conteiner">
-                                                    <div className="flight-holder-conteiner-header">
+                                            </div>
+                                        ))}
+                                        {result.arrival?.map((arrivTravel) => (
+                                            <div className="flight-holder-conteiner">
+                                                <div className="flight-holder-conteiner-header">
+                                                    <p>
+                                                        <h5 className="text-bold">
+                                                            <ArrivingAirplaneIcon size={28} />
+                                                            Volta
+                                                        </h5>
+                                                        <span className="text-silver">{result.arrivalDate}</span>
+                                                    </p>
+                                                    <p className="flight-details-airports">
                                                         <p>
-                                                            <h5 className="text-bold">
-                                                                <ArrivingAirplaneIcon size={28} />
-                                                                Volta
-                                                            </h5>
-                                                            <span className="text-silver">{result.arrivalDate}</span>
+                                                            <h5>{arrivTravel.departureAirport}</h5>
+                                                            <span className="text-silver">
+                                                                {arrivTravel.departureCity}
+                                                            </span>
                                                         </p>
-                                                        <p className="flight-details-airports">
-                                                            <p>
-                                                                <h5>{arrivTravel.departureAirport}</h5>
-                                                                <span className="text-silver">{arrivTravel.departureCity}</span>
-                                                            </p>
-                                                            <InFLightAirplaneIcon size={28} />
-                                                            <p>
-                                                                <h5>{arrivTravel.arrivalAirport}</h5>
-                                                                <span className="text-silver">{arrivTravel.arrivalCity}</span>
-                                                            </p>
-                                                        </p>
+                                                        <InFLightAirplaneIcon size={28} />
                                                         <p>
-                                                            <span className="text-bold">Bagagem</span>
+                                                            <h5>{arrivTravel.arrivalAirport}</h5>
+                                                            <span className="text-silver">
+                                                                {arrivTravel.arrivalCity}
+                                                            </span>
                                                         </p>
-                                                    </div>
+                                                    </p>
+                                                    <p>
+                                                        <span className="text-bold">Bagagem</span>
+                                                    </p>
                                                 </div>
-                                            ))
-                                        }
+                                            </div>
+                                        ))}
                                     </div>
                                     {/* <VerticalLine /> */}
                                     <div className="price-box">
@@ -304,13 +343,11 @@ export default function Search() {
                                             </p>
                                             <p>
                                                 <span className="text-bold">VALOR TOTAL:</span>
-                                                <span className="text-bold">
-                                                    R$ {result.price + result.tax}
-                                                </span>
+                                                <span className="text-bold">R$ {result.price + result.tax}</span>
                                             </p>
                                         </div>
                                         <div className="purchase-btn">
-                                            <CavokButton>REALIZAR PEDIDO</CavokButton>
+                                            <Button>REALIZAR PEDIDO</Button>
                                         </div>
                                     </div>
                                 </div>
