@@ -9,6 +9,7 @@ import NotFounded from "views/not-founded/not-founded";
 import Search from "views/search/search";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 const router = createBrowserRouter([
     {
@@ -28,11 +29,21 @@ const router = createBrowserRouter([
     },
 ]);
 
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#134074",
+        },
+    },
+});
+
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
     <React.StrictMode>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <RouterProvider router={router} />
-        </LocalizationProvider>
+        <ThemeProvider theme={theme}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <RouterProvider router={router} />
+            </LocalizationProvider>
+        </ThemeProvider>
     </React.StrictMode>
 );

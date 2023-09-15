@@ -114,7 +114,7 @@
 .locations {
     display: flex;
     flex-direction: row;
-    align-items: end;
+    align-items: center;
     min-width: 20rem !important;
 
     @media screen and (max-width: 768px) {
@@ -151,12 +151,17 @@
     min-width: 15rem !important;
 }
 
-.date-input-group-right > input {
+.date-input-group-left > div {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.date-input-group-right > div {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 }
 
-.date-input-group-right > div {
+/* .date-input-group-right > div {
     @media screen and (max-width: 550px) {
         transform: translate3d(-3rem, 0px, 0px);
         will-change: transform;
@@ -166,12 +171,8 @@
         transform: translate3d(-5.2rem, 0px, 0px);
         will-change: transform;
     }
-}
+} */
 
-.date-input-group-left > input {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-}
 
 .search-btn {
     margin-top: auto !important;

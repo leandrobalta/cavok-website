@@ -30,6 +30,12 @@ import heroBackground from "assets/images/hero.png";
 import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { DatePicker, MobileDatePicker } from "@mui/x-date-pickers";
+import * as React from "react";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 enum PassengerEnum {
     Adult,
@@ -195,19 +201,27 @@ const DatesPicker = (props: DatesPickerProps) => {
     const { width } = useWindowDimensions();
 
     return (
-        <DemoItem label="Datas">
+        <>
             {width < 812 ? (
                 <>
                     <MobileDatePicker label="Ida" />
-                    <MobileDatePicker label="Volta" disabled={props.travelMode !== "round-trip"} />
+                    <MobileDatePicker label="Volta" />
                 </>
             ) : (
                 <>
-                    <DatePicker label="Ida" />
-                    <DatePicker label="Volta" disabled={props.travelMode !== "round-trip"} />
+                    {
+                        props.travelMode === "one-way" ? (
+                            <DatePicker format="DD/MM/YYYY" label="Ida" />
+                        ) : (
+                            <ButtonGroup>
+                                <DatePicker format="DD/MM/YYYY" sx={{ minWidth: 145}} className="date-input-group-left"  label="Ida" />
+                                <DatePicker format="DD/MM/YYYY" sx={{ minWidth: 145}} className="date-input-group-right" label="Volta" />
+                            </ButtonGroup>
+                        )
+                    }
                 </>
             )}
-        </DemoItem>
+        </>
     );
 };
 
@@ -231,11 +245,6 @@ export default function Hero() {
         [PassengerEnum.Child]: "Crianças",
         [PassengerEnum.Baby]: "Bebês",
     };
-
-    const travelMode = [
-        { name: "Ida e volta", value: "round-trip" },
-        { name: "Somente ida", value: "one-way" },
-    ];
 
     // functions
     const tooglePassengers = () => {
@@ -284,101 +293,43 @@ export default function Hero() {
                 <div className="search-box">
                     <div className="search-box-header">
                         <span>PASSAGENS AÉREAS</span>
-                        <RadioGroup defaultValue={travelModeValue}>
-                            {travelMode.map((travelMode, idx) => (
-                                <FormControlLabel
-                                    control={<Radio />}
-                                    key={idx}
-                                    itemType="radio"
-                                    id={`radio-${idx}`}
-                                    value={travelMode.value}
-                                    checked={travelModeValue === travelMode.value}
-                                    //onChange={(e) => setTravelModeValue(e.currentTarget.value)}
-                                    label={travelMode.name}
-                                />
-                            ))}
-                        </RadioGroup>
+                        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                            <Select
+                                value={travelModeValue}
+                                onChange={(e) => setTravelModeValue(e.target.value as "one-way" | "round-trip")}
+                                displayEmpty
+                                inputProps={{ "aria-label": "Without label" }}
+                            >
+                                <MenuItem value={"one-way"}>Somente Ida</MenuItem>
+                                <MenuItem value={"round-trip"}>Ida e Volta</MenuItem>
+                            </Select>
+                        </FormControl>
                     </div>
                     <div className="search-box-form">
                         <div className="locations">
                             <TextField className="search-box-form-input" label="Origem" variant="outlined" />
-
-                            <ExchangeIcon className="exchange-icon" />
-
+                            <div className="exchange-btn">
+                                <ExchangeIcon size={20} color="#134074" />
+                            </div>
                             <TextField className="search-box-form-input" label="Destino" variant="outlined" />
                         </div>
 
-                        {/* <Form.Group className="search-box-form-input date-input">
-                            {travelModeValue === "one-way" ? (
-                                <>
-                                    <Form.Label>Data de ida</Form.Label>
-                                    <BeginDateTimeInput
-                                        dates={dates}
-                                        handleDates={handleDates}
-                                        isBeginDateValid={isBeginDateValid}
-                                        isOneWay
-                                    />
-                                </>
-                            ) : (
-                                <>
-                                    <Form.Label>Datas</Form.Label>
-                                    <br />
-                                    <div className="date-input-group inline-flex">
-                                        <BeginDateTimeInput
-                                            dates={dates}
-                                            handleDates={handleDates}
-                                            isBeginDateValid={isBeginDateValid}
-                                        />
-                                        <Datetime
-                                            className="date-input-group-right"
-                                            locale="pt-br"
-                                            value={dates.end}
-                                            dateFormat="DD/MM/YYYY"
-                                            timeFormat={false}
-                                            onChange={(value) =>
-                                                handleDates({ ...dates, end: moment(value).format("DD/MM/YYYY") })
-                                            }
-                                            closeOnSelect
-                                            isValidDate={isEndDateValid}
-                                        />
-                                    </div>
-                                </>
-                            )}
-                        </Form.Group> */}
-
                         <DatesPicker travelMode={travelModeValue} />
-
-                        {/* <Form.Group className="search-box-form-input" ref={wrapperRef}>
-                            <Form.Label>Passageiros</Form.Label>
-                            <Form.Control className="passengers-input" as="button" onClick={() => tooglePassengers()}>
-                                <PeopleIcon size={25} />
-                                <span>
-                                    {passengers.length} {passengers.length > 1 ? "Passageiros" : "Passageiro"}
-                                </span>
-                            </Form.Control>
-                            {showPassengers && (
-                                <PassangersBox
-                                    passengers={passengers}
-                                    handlePassenger={handlePassenger}
-                                    tooglePassengers={tooglePassengers}
-                                    show={showPassengers}
-                                    setShow={setShowPassengers}
-                                    passengerTranslation={passengerTranslation}
-                                />
-                            )}
-                        </Form.Group> */}
 
                         <TextField
                             label="Passageiros"
-                            defaultValue={`${passengers.length} ${passengers.length > 1 ? "Passageiros" : "Passageiro"}`}
+                            defaultValue={`${passengers.length} ${
+                                passengers.length > 1 ? "Passageiros" : "Passageiro"
+                            }`}
                             onClick={() => tooglePassengers()}
                             InputProps={{
                                 readOnly: true,
                             }}
+                            size="medium"
+                            sx={{ minWidth: 140 }}
                         />
 
-
-                        <Button className="search-btn" onClick={(evt) => handleSearch()}>
+                        <Button className="search-btn" variant="contained" onClick={(evt) => handleSearch()} sx={{ height: "3.4rem", marginBottom: "0.1rem", minWidth: 160 }}>
                             BUSCAR VOOS
                         </Button>
                     </div>
