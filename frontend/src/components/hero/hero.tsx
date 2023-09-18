@@ -11,6 +11,8 @@ import {
     RadioGroup,
     Radio,
     TextField,
+    ToggleButtonGroup,
+    ToggleButton,
 } from "@mui/material";
 import { IoIosPeople as PeopleIcon } from "react-icons/io";
 import { GrClose as CloseIcon } from "react-icons/gr";
@@ -36,6 +38,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { styled } from "@mui/material/styles";
+
+const CavokToggleButton = styled(ToggleButton)({
+  "&.Mui-selected, &.Mui-selected:hover": {
+    color: "white",
+    backgroundColor: '#134074'
+  }
+});
 
 enum PassengerEnum {
     Adult,
@@ -209,16 +219,24 @@ const DatesPicker = (props: DatesPickerProps) => {
                 </>
             ) : (
                 <>
-                    {
-                        props.travelMode === "one-way" ? (
-                            <DatePicker format="DD/MM/YYYY" label="Ida" />
-                        ) : (
-                            <ButtonGroup>
-                                <DatePicker format="DD/MM/YYYY" sx={{ minWidth: 145}} className="date-input-group-left"  label="Ida" />
-                                <DatePicker format="DD/MM/YYYY" sx={{ minWidth: 145}} className="date-input-group-right" label="Volta" />
-                            </ButtonGroup>
-                        )
-                    }
+                    {props.travelMode === "one-way" ? (
+                        <DatePicker className="date-input" format="DD/MM/YYYY" label="Ida" />
+                    ) : (
+                        <ButtonGroup className="date-input">
+                            <DatePicker
+                                format="DD/MM/YYYY"
+                                sx={{ minWidth: 145 }}
+                                className="date-input-group-left"
+                                label="Ida"
+                            />
+                            <DatePicker
+                                format="DD/MM/YYYY"
+                                sx={{ minWidth: 145 }}
+                                className="date-input-group-right"
+                                label="Volta"
+                            />
+                        </ButtonGroup>
+                    )}
                 </>
             )}
         </>
@@ -283,6 +301,11 @@ export default function Hero() {
         navigate("/search");
     };
 
+    const handleTravelMode = (event: React.MouseEvent<HTMLElement>, newTravelMode: "one-way" | "round-trip") => {
+        if(newTravelMode === null) return;
+        setTravelModeValue(newTravelMode);
+    };
+
     useOutsideClickAlerter(wrapperRef, handleOutsideClick);
 
     return (
@@ -293,17 +316,15 @@ export default function Hero() {
                 <div className="search-box">
                     <div className="search-box-header">
                         <span>PASSAGENS AÉREAS</span>
-                        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                            <Select
-                                value={travelModeValue}
-                                onChange={(e) => setTravelModeValue(e.target.value as "one-way" | "round-trip")}
-                                displayEmpty
-                                inputProps={{ "aria-label": "Without label" }}
-                            >
-                                <MenuItem value={"one-way"}>Somente Ida</MenuItem>
-                                <MenuItem value={"round-trip"}>Ida e Volta</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <ToggleButtonGroup
+                            value={travelModeValue}
+                            exclusive
+                            onChange={handleTravelMode}
+                            color="primary" 
+                        >
+                            <CavokToggleButton className="min-w-7rem" value="one-way">Ida</CavokToggleButton>
+                            <CavokToggleButton className="min-w-7rem" value="round-trip">Ida e Volta</CavokToggleButton>
+                        </ToggleButtonGroup>
                     </div>
                     <div className="search-box-form">
                         <div className="locations">
@@ -329,7 +350,12 @@ export default function Hero() {
                             sx={{ minWidth: 140 }}
                         />
 
-                        <Button className="search-btn" variant="contained" onClick={(evt) => handleSearch()} sx={{ height: "3.4rem", marginBottom: "0.1rem", minWidth: 160 }}>
+                        <Button
+                            className="search-btn"
+                            variant="contained"
+                            onClick={(evt) => handleSearch()}
+                            sx={{ height: "3.4rem", marginBottom: "0.1rem", minWidth: 160 }}
+                        >
                             BUSCAR VOOS
                         </Button>
                     </div>

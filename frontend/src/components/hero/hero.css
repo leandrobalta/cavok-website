@@ -123,6 +123,10 @@
     }
 }
 
+.min-w-7rem {
+    min-width: 7rem !important;
+}
+
 .exchange-icon {
     width: 35px;
     height: 35px;
@@ -148,7 +152,7 @@
 }
 
 .date-input {
-    min-width: 15rem !important;
+    min-width: 18rem !important;
 }
 
 .date-input-group-left > div {
