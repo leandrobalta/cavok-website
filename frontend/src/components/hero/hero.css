@@ -123,19 +123,22 @@
     }
 }
 
-.min-w-7rem {
-    min-width: 7rem !important;
+.travel-mode-toggle{
+    min-width: 8rem !important;        
+    text-transform: none !important;
+    @media screen and (max-width: 768px) {
+        width: 100% !important;
+    }
+}
+
+.travel-mode-toggle-group{
+    @media screen and (max-width: 768px) {
+        width: 100% !important;
+    }
 }
 
 .exchange-icon {
-    width: 35px;
-    height: 35px;
-    border: 2px solid #000;
-    z-index: 2;
-    border-radius: 0.75rem;
-    padding: 4px;
-    min-width: 35px;
-
+    
     @media screen and (max-width: 768px) {
         display: none;
         font-size: 4.8rem;

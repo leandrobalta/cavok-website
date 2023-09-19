@@ -75,7 +75,7 @@ export default function Recommend() {
                     //         <CavokButton>Book Now</CavokButton>
                     //     </Card.Body>
                     // </Card>
-                    <Card sx={{ maxWidth: 345 }}>
+                    <Card className="recommend-card">
                         <CardActionArea onClick={(e) => alert("not implemented yet")}>
                             <CardMedia
                                 component="img"

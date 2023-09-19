@@ -194,19 +194,6 @@ const PassangersBox = (props: PassengersBoxProps) => {
     );
 };
 
-const BeginDateTimeInput = ({ dates, handleDates, isBeginDateValid, isOneWay }: BeginDateTimeInputProps) => (
-    <Datetime
-        className={isOneWay ? "" : "date-input-group-left"}
-        value={dates.begin}
-        dateFormat="DD/MM/YYYY"
-        locale="pt-br"
-        timeFormat={false}
-        onChange={(value) => handleDates({ ...dates, begin: moment(value).format("DD/MM/YYYY") })}
-        closeOnSelect
-        isValidDate={isBeginDateValid}
-    />
-);
-
 const DatesPicker = (props: DatesPickerProps) => {
     const { width } = useWindowDimensions();
 
@@ -321,34 +308,47 @@ export default function Hero() {
                             exclusive
                             onChange={handleTravelMode}
                             color="primary" 
+                            className="travel-mode-toggle-group"
                         >
-                            <CavokToggleButton className="min-w-7rem" value="one-way">Ida</CavokToggleButton>
-                            <CavokToggleButton className="min-w-7rem" value="round-trip">Ida e Volta</CavokToggleButton>
+                            <CavokToggleButton className="travel-mode-toggle" value="one-way">Somente Ida</CavokToggleButton>
+                            <CavokToggleButton className="travel-mode-toggle" value="round-trip">Ida e Volta</CavokToggleButton>
                         </ToggleButtonGroup>
                     </div>
                     <div className="search-box-form">
                         <div className="locations">
-                            <TextField className="search-box-form-input" label="Origem" variant="outlined" />
-                            <div className="exchange-btn">
+                            <TextField label="Origem" variant="outlined" />
+                            <div className="exchange-icon">
                                 <ExchangeIcon size={20} color="#134074" />
                             </div>
-                            <TextField className="search-box-form-input" label="Destino" variant="outlined" />
+                            <TextField label="Destino" variant="outlined" />
                         </div>
 
                         <DatesPicker travelMode={travelModeValue} />
 
-                        <TextField
-                            label="Passageiros"
-                            defaultValue={`${passengers.length} ${
-                                passengers.length > 1 ? "Passageiros" : "Passageiro"
-                            }`}
-                            onClick={() => tooglePassengers()}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                            size="medium"
-                            sx={{ minWidth: 140 }}
-                        />
+                        <div>
+                            <TextField
+                                label="Passageiros"
+                                defaultValue={`${passengers.length} ${
+                                    passengers.length > 1 ? "Passageiros" : "Passageiro"
+                                }`}
+                                onClick={() => tooglePassengers()}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                size="medium"
+                                sx={{ width: "100%" }}
+                            />
+                            {showPassengers && (
+                                <PassangersBox
+                                    passengers={passengers}
+                                    handlePassenger={handlePassenger}
+                                    tooglePassengers={tooglePassengers}
+                                    show={showPassengers}
+                                    setShow={setShowPassengers}
+                                    passengerTranslation={passengerTranslation}
+                                />
+                            )}
+                        </div>
 
                         <Button
                             className="search-btn"

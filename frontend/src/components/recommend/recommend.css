@@ -8,6 +8,8 @@
 }
 
 .recommend-body{
+    width: 100%;
+    max-width: 80rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     margin: 0 auto;
@@ -30,12 +32,4 @@
 }
 
 
-.recommend-card{
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    transition: 0.3s ease-in-out;
-
-    &:hover {
-        transform: translateX(0.4rem) translateY(-1rem);
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    }
-}
+.recommend-card{}
