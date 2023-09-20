@@ -19,7 +19,7 @@ import {
     PiAirplaneTakeoffLight as DeparturingAirplaneIcon,
 } from "react-icons/pi";
 
-interface DropdownFilterChecksProps {
+interface FilterChecksProps {
     title: string;
     options: CheckOption[];
     selected?: string;
@@ -78,40 +78,8 @@ export interface TravelResult {
     totalPrice: number;
 }
 
-const DropdownFilterChecks = (props: DropdownFilterChecksProps) => {
-    const [isCollapseOpen, setIsCollapseOpen] = useState<boolean>(true);
-
-    // const onClick = useAccordionButton(props.title, () => {
-    //     console.log("clicked");
-    //     setIsCollapseOpen(!isCollapseOpen);
-    // });
-
+const FilterChecks = (props: FilterChecksProps) => {
     const allAmount = props.options.reduce((acc, curr) => acc + curr.amount, 0);
-
-    // return (
-    //     <>
-    //         <div className="filter-content-item" onClick={onClick}>
-    //             <h6>{props.title}</h6>
-    //             <DropdownIcon size={25} className={isCollapseOpen ? "rotate" : ""} />
-    //         </div>
-    //         <Accordion.Collapse eventKey={props.title}>
-    //             <div className="filter-content-item-body">
-    //                 <div className="filter-content-item-body-line">
-    //                     <Form.Check type="checkbox" label={`Todos as ${props.title}`} id="todos" defaultChecked />
-    //                     <span>{allAmount}</span>
-    //                 </div>
-    //                 {props.options.map((option, index) => {
-    //                     return (
-    //                         <div className="filter-content-item-body-line">
-    //                             <Form.Check key={index} type="checkbox" label={option.label} id={option.label} />
-    //                             <span>{option.amount}</span>
-    //                         </div>
-    //                     );
-    //                 })}
-    //             </div>
-    //         </Accordion.Collapse>
-    //     </>
-    // );
 
     return (
         <Accordion defaultExpanded>
@@ -147,44 +115,6 @@ const DropdownFilterChecks = (props: DropdownFilterChecksProps) => {
     );
 };
 
-// const DropdownPriceFilter = (props: DropdownPriceFilterProps) => {
-//     const [isCollapseOpen, setIsCollapseOpen] = useState<boolean>(true);
-
-//     const onClick = useAccordionButton(props.title, () => {
-//         console.log("clicked");
-//         setIsCollapseOpen(!isCollapseOpen);
-//     });
-
-//     return (
-//         <>
-//             <div className="filter-content-item" onClick={onClick}>
-//                 <h6>{props.title}</h6>
-//                 <DropdownIcon size={25} className={isCollapseOpen ? "rotate" : ""} />
-//             </div>
-//             <Accordion.Collapse eventKey={props.title}>
-//                 <div className="filter-content-item-body">
-//                     <div className="filter-content-item-body-line price-input">
-//                         <Form.Control
-//                             type="number"
-//                             value={props.price.min}
-//                             onChange={(e) => props.onChange({ ...props.price, min: Number(e.target.value) })}
-//                             isInvalid={props.price.min > props.price.max}
-//                         />
-//                         -
-//                         <Form.Control
-//                             type="number"
-//                             value={props.price.max}
-//                             onChange={(e) => props.onChange({ ...props.price, max: Number(e.target.value) })}
-//                             isInvalid={props.price.min > props.price.max}
-//                         />
-//                         <CavokButton>Aplicar</CavokButton>
-//                     </div>
-//                 </div>
-//             </Accordion.Collapse>
-//         </>
-//     );
-// };
-
 const SideBarFilter = () => {
     //states
     const [stopOptions, setStopOptions] = useState<CheckOption[]>([
@@ -214,8 +144,8 @@ const SideBarFilter = () => {
                     <h3>Filtros</h3>
                 </div>
                 <div className="filter-content">
-                    <DropdownFilterChecks title="Paradas" options={stopOptions} />
-                    <DropdownFilterChecks title="Companhias" options={companyOptions} />
+                    <FilterChecks title="Paradas" options={stopOptions} />
+                    <FilterChecks title="Companhias" options={companyOptions} />
                     {/* <DropdownPriceFilter price={price} title="Preço" onChange={onPriceChange} /> */}
                 </div>
             </div>
@@ -329,7 +259,7 @@ export default function Search() {
                                     {/* <VerticalLine /> */}
                                     <div className="price-box">
                                         <div className="price-box-header">
-                                            <h5 className="text-bold">R$ {result.price}</h5>
+                                            <h3 className="text-bold">R$ {result.price}</h3>
                                             <span className="text-silver">Por adulto e sem taxas</span>
                                         </div>
                                         <div className="price-box-details">
@@ -347,7 +277,7 @@ export default function Search() {
                                             </p>
                                         </div>
                                         <div className="purchase-btn">
-                                            <Button>REALIZAR PEDIDO</Button>
+                                            <Button variant="contained">REALIZAR PEDIDO</Button>
                                         </div>
                                     </div>
                                 </div>

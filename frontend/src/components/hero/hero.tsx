@@ -41,10 +41,10 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
 
 const CavokToggleButton = styled(ToggleButton)({
-  "&.Mui-selected, &.Mui-selected:hover": {
-    color: "white",
-    backgroundColor: '#134074'
-  }
+    "&.Mui-selected, &.Mui-selected:hover": {
+        color: "white",
+        backgroundColor: "#134074",
+    },
 });
 
 enum PassengerEnum {
@@ -55,6 +55,7 @@ enum PassengerEnum {
 
 interface DatesPickerProps {
     travelMode: "one-way" | "round-trip";
+    dates: TravelDates;
 }
 interface Passenger {
     type: PassengerEnum;
@@ -88,8 +89,8 @@ interface PassengersContentProps {
 }
 
 interface TravelDates {
-    begin: string;
-    end?: string;
+    begin: Date;
+    end?: Date;
 }
 
 interface BeginDateTimeInputProps {
@@ -114,7 +115,7 @@ const PassengersContent = (props: PassengersContentProps) => {
             <div className="passengers-box-body">
                 {props.passengers.map((passenger, idx) => (
                     <div className="passenger" key={idx}>
-                        <h6>{props.passengerTranslation[passenger.type]}</h6>
+                        <h4>{props.passengerTranslation[passenger.type]}</h4>
                         <div className="passenger-options">
                             <span>{passenger.description}</span>
                             <div className="passenger-amount">
@@ -140,10 +141,14 @@ const PassengersContent = (props: PassengersContentProps) => {
                 </>
             )}
             <div className="passengers-box-body">
-                <FormGroup>
-                    <FormControlLabel className="class-option" control={<Checkbox />} label="Econômica" />
-                    <FormControlLabel className="class-option" control={<Checkbox />} label="Executiva" />
-                </FormGroup>
+                <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="economy"
+                    name="radio-buttons-group"
+                >
+                    <FormControlLabel value="economy" control={<Radio />} label="Economica" />
+                    <FormControlLabel value="executive" control={<Radio />} label="Executiva" />
+                </RadioGroup>
             </div>
 
             <br />
@@ -174,19 +179,21 @@ const PassangersBox = (props: PassengersBoxProps) => {
                     />
                 </div>
             ) : (
-                <Drawer open={props.show} onClose={() => props.setShow(false)} style={{ width: "90%" }}>
-                    <div>
-                        <h1>Passageiros e Classes</h1>
-                    </div>
+                <Drawer open={props.show} onClose={() => props.setShow(false)}>
+                    <div className="passenger-drawner-content">
+                        <div>
+                            <h1>Passageiros e Classes</h1>
+                        </div>
 
-                    <div>
-                        <PassengersContent
-                            passengers={props.passengers}
-                            handlePassenger={props.handlePassenger}
-                            tooglePassengers={props.tooglePassengers}
-                            passengerTranslation={props.passengerTranslation}
-                            haveTitle={false}
-                        />
+                        <div>
+                            <PassengersContent
+                                passengers={props.passengers}
+                                handlePassenger={props.handlePassenger}
+                                tooglePassengers={props.tooglePassengers}
+                                passengerTranslation={props.passengerTranslation}
+                                haveTitle={false}
+                            />
+                        </div>
                     </div>
                 </Drawer>
             )}
@@ -201,8 +208,13 @@ const DatesPicker = (props: DatesPickerProps) => {
         <>
             {width < 812 ? (
                 <>
-                    <MobileDatePicker label="Ida" />
-                    <MobileDatePicker label="Volta" />
+                    <MobileDatePicker className="bg-white" format="DD/MM/YYYY" label="Ida" />
+                    <MobileDatePicker
+                        className="bg-white"
+                        disabled={props.travelMode === "one-way"}
+                        format="DD/MM/YYYY"
+                        label="Volta"
+                    />
                 </>
             ) : (
                 <>
@@ -213,13 +225,13 @@ const DatesPicker = (props: DatesPickerProps) => {
                             <DatePicker
                                 format="DD/MM/YYYY"
                                 sx={{ minWidth: 145 }}
-                                className="date-input-group-left"
+                                className="date-input-group-left bg-white"
                                 label="Ida"
                             />
                             <DatePicker
                                 format="DD/MM/YYYY"
                                 sx={{ minWidth: 145 }}
-                                className="date-input-group-right"
+                                className="date-input-group-right bg-white"
                                 label="Volta"
                             />
                         </ButtonGroup>
@@ -237,7 +249,7 @@ export default function Hero() {
     // states
     const [travelModeValue, setTravelModeValue] = useState<"one-way" | "round-trip">("round-trip");
     const [showPassengers, setShowPassengers] = useState(false);
-    const [dates, setDates] = useState<TravelDates>({ begin: formatDate(new Date()), end: formatDate(new Date()) }); // [begin, end]
+    const [dates, setDates] = useState<TravelDates>({ begin: new Date(), end: new Date() }); // [begin, end]
     const [passengers, setPassengers] = useState<Passenger[]>([
         { type: PassengerEnum.Adult, amount: 0, description: "acima de 12 anos" },
         { type: PassengerEnum.Child, amount: 0, description: "de 2 a 11 anos" },
@@ -269,19 +281,6 @@ export default function Hero() {
         });
         setPassengers(newPassengers);
     };
-
-    const handleDates = (dates: TravelDates) => {
-        setDates(dates);
-    };
-
-    const isBeginDateValid = (currentDate: any, selectedDate: any) => {
-        return currentDate.isAfter(moment().subtract(1, "days"));
-    };
-
-    const isEndDateValid = (currentDate: any, selectedDate: any) => {
-        return currentDate.isAfter(moment(dates.begin, "DD/MM/YYYY"));
-    };
-
     const handleSearch = () => {
         //Alert.info({ message: "Buscando voos..." });
         console.log("search");
@@ -289,7 +288,7 @@ export default function Hero() {
     };
 
     const handleTravelMode = (event: React.MouseEvent<HTMLElement>, newTravelMode: "one-way" | "round-trip") => {
-        if(newTravelMode === null) return;
+        if (newTravelMode === null) return;
         setTravelModeValue(newTravelMode);
     };
 
@@ -307,23 +306,27 @@ export default function Hero() {
                             value={travelModeValue}
                             exclusive
                             onChange={handleTravelMode}
-                            color="primary" 
-                            className="travel-mode-toggle-group"
+                            color="primary"
+                            className="travel-mode-toggle-group bg-white"
                         >
-                            <CavokToggleButton className="travel-mode-toggle" value="one-way">Somente Ida</CavokToggleButton>
-                            <CavokToggleButton className="travel-mode-toggle" value="round-trip">Ida e Volta</CavokToggleButton>
+                            <CavokToggleButton className="travel-mode-toggle" value="one-way">
+                                Somente Ida
+                            </CavokToggleButton>
+                            <CavokToggleButton className="travel-mode-toggle" value="round-trip">
+                                Ida e Volta
+                            </CavokToggleButton>
                         </ToggleButtonGroup>
                     </div>
                     <div className="search-box-form">
                         <div className="locations">
-                            <TextField label="Origem" variant="outlined" />
+                            <TextField label="Origem" variant="outlined" className="bg-white" />
                             <div className="exchange-icon">
                                 <ExchangeIcon size={20} color="#134074" />
                             </div>
-                            <TextField label="Destino" variant="outlined" />
+                            <TextField label="Destino" variant="outlined" className="bg-white" />
                         </div>
 
-                        <DatesPicker travelMode={travelModeValue} />
+                        <DatesPicker travelMode={travelModeValue} dates={dates} />
 
                         <div>
                             <TextField
@@ -337,6 +340,7 @@ export default function Hero() {
                                 }}
                                 size="medium"
                                 sx={{ width: "100%" }}
+                                className="bg-white"
                             />
                             {showPassengers && (
                                 <PassangersBox

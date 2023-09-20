@@ -2,6 +2,10 @@
     display: inline-flex !important;
 }
 
+.bg-white{
+    background-color: white !important;
+}
+
 .form-control:focus {
     box-shadow: none !important;
     border-color: #134074 !important;
@@ -116,6 +120,7 @@
     flex-direction: row;
     align-items: center;
     min-width: 20rem !important;
+    gap: 0.1rem;
 
     @media screen and (max-width: 768px) {
         display: grid;
@@ -247,8 +252,12 @@
     padding: 0.5rem;
 }
 
-.passenger h6 {
+.passenger h4 {
     margin: 0;
+}
+
+.passenger * {
+    text-align: start;
 }
 
 .passenger-box-close-btn {
@@ -260,8 +269,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     gap: 1rem;
+}
+
+.passenger-options *{
+    margin: auto 0;
 }
 
 .passenger-amount {
@@ -280,6 +292,10 @@
 
 .passenger-amount > span {
     margin-top: 0.25rem;
+}
+
+.passenger-drawner-content{
+    padding: 0.5rem;
 }
 
 .class-option > label {

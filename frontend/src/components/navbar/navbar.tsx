@@ -50,7 +50,6 @@ const MenuList = () => {
             <li>
                 <a href="">Dúvidas Frequentes</a>
             </li>
-            <Divider />
         </ul>
     );
 };
@@ -79,7 +78,7 @@ const MenuContent = (props: MenuContentProps) => {
                 //     </Offcanvas.Body>
                 // </Offcanvas>
 
-                <Drawer open={props.show} onClose={() => props.setShow(false)}>
+                <Drawer open={props.show} onClose={() => props.setShow(false)} anchor="right">
                     <MenuList />
                 </Drawer>
             )}
@@ -128,7 +127,7 @@ export function NavBar() {
                             </li>
                         </ul>
                     </div>
-                    <div className="menu" ref={wrapperRef}>
+                    <div className="menu" >
                         <button className="menu-btn" onClick={(evt) => toggleDropdown()}>
                             <MenuIcon size={25} />
                             <span>Menu</span>
