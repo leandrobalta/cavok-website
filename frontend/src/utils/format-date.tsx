@@ -1,11 +1,10 @@
-function padTo2Digits(num: number) {
-    return num.toString().padStart(2, '0');
-  }
-  
-export function formatDate(date: Date) {
-    return [
-      padTo2Digits(date.getDate()),
-      padTo2Digits(date.getMonth() + 1),
-      date.getFullYear(),
-    ].join('/');
-  }
+export function formatDate(date: string) {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleDateString("pt-BR");
+}
+
+export function getTime(date: string) {
+    const dateObj = new Date(date);
+    //get only hour and minute
+    return dateObj.toLocaleTimeString("pt-BR").slice(0, 5);
+}
