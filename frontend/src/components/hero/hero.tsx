@@ -219,7 +219,7 @@ const DatesPicker = (props: DatesPickerProps) => {
             ) : (
                 <>
                     {props.travelMode === "one-way" ? (
-                        <DatePicker className="date-input" format="DD/MM/YYYY" label="Ida" />
+                        <DatePicker className="date-input bg-white" format="DD/MM/YYYY" label="Ida" />
                     ) : (
                         <ButtonGroup className="date-input">
                             <DatePicker
@@ -244,97 +244,11 @@ const DatesPicker = (props: DatesPickerProps) => {
 
 //create the hero container props interface based on hero component and the variables that it uses
 interface HeroContainerProps {
-    travelModeValue: "one-way" | "round-trip";
-    showPassengers: boolean;
-    setShowPassengers: (show: boolean) => void;
-    dates: TravelDates;
-    passengers: Passenger[];
-    passengerTranslation: {
-        0: string;
-        1: string;
-        2: string;
-    };
-    tooglePassengers: () => void;
-    handlePassenger: (type: PassengerEnum, amount: number) => void;
-    handleSearch: () => void;
-    handleTravelMode: (event: React.MouseEvent<HTMLElement>, newTravelMode: "one-way" | "round-trip") => void;
+    className?: string;
 }
 
 export function HeroContainer(props: HeroContainerProps) {
-    return (
-        <div className="conteiner">
-            <div className="search-box">
-                <div className="search-box-header">
-                    <span>PASSAGENS AÉREAS</span>
-                    <ToggleButtonGroup
-                        value={props.travelModeValue}
-                        exclusive
-                        onChange={props.handleTravelMode}
-                        color="primary"
-                        className="travel-mode-toggle-group bg-white"
-                    >
-                        <CavokToggleButton className="travel-mode-toggle" value="one-way">
-                            Somente Ida
-                        </CavokToggleButton>
-                        <CavokToggleButton className="travel-mode-toggle" value="round-trip">
-                            Ida e Volta
-                        </CavokToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-                <div className="search-box-form">
-                    <div className="locations">
-                        <TextField label="Origem" variant="outlined" className="bg-white" />
-                        <div className="exchange-icon">
-                            <ExchangeIcon size={20} color="#134074" />
-                        </div>
-                        <TextField label="Destino" variant="outlined" className="bg-white" />
-                    </div>
-
-                    <DatesPicker travelMode={props.travelModeValue} dates={props.dates} />
-
-                    <div>
-                        <TextField
-                            label="Passageiros"
-                            defaultValue={`${props.passengers.length} ${
-                                props.passengers.length > 1 ? "Passageiros" : "Passageiro"
-                            }`}
-                            onClick={() => props.tooglePassengers()}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                            size="medium"
-                            sx={{ width: "100%" }}
-                            className="bg-white"
-                        />
-                        {props.showPassengers && (
-                            <PassangersBox
-                                passengers={props.passengers}
-                                handlePassenger={props.handlePassenger}
-                                tooglePassengers={props.tooglePassengers}
-                                show={props.showPassengers}
-                                setShow={props.setShowPassengers}
-                                passengerTranslation={props.passengerTranslation}
-                            />
-                        )}
-                    </div>
-
-                    <Button
-                        className="search-btn"
-                        variant="contained"
-                        onClick={(evt) => props.handleSearch()}
-                        sx={{ height: "3.4rem", marginBottom: "0.1rem", minWidth: 160 }}
-                    >
-                        BUSCAR VOOS
-                    </Button>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-export default function Hero() {
     const navigate = useNavigate();
-    const wrapperRef = useRef(null);
 
     // states
     const [travelModeValue, setTravelModeValue] = useState<"one-way" | "round-trip">("round-trip");
@@ -382,24 +296,80 @@ export default function Hero() {
         setTravelModeValue(newTravelMode);
     };
 
-    useOutsideClickAlerter(wrapperRef, handleOutsideClick);
+    return (
+        <div className={props.className ? props.className : "search-box"}>
+            <div className="search-box-header">
+                <span>PASSAGENS AÉREAS</span>
+                <ToggleButtonGroup
+                    value={travelModeValue}
+                    exclusive
+                    onChange={handleTravelMode}
+                    color="primary"
+                    className="travel-mode-toggle-group bg-white"
+                >
+                    <CavokToggleButton className="travel-mode-toggle" value="one-way">
+                        Somente Ida
+                    </CavokToggleButton>
+                    <CavokToggleButton className="travel-mode-toggle" value="round-trip">
+                        Ida e Volta
+                    </CavokToggleButton>
+                </ToggleButtonGroup>
+            </div>
+            <div className="search-box-form">
+                <div className="locations">
+                    <TextField label="Origem" variant="outlined" className="bg-white" />
+                    <div className="exchange-icon">
+                        <ExchangeIcon size={20} color="#134074" />
+                    </div>
+                    <TextField label="Destino" variant="outlined" className="bg-white" />
+                </div>
 
+                <DatesPicker travelMode={travelModeValue} dates={dates} />
+
+                <div className="min-w-[10rem]">
+                    <TextField
+                        label="Passageiros"
+                        defaultValue={`${passengers.length} ${passengers.length > 1 ? "Passageiros" : "Passageiro"}`}
+                        onClick={() => tooglePassengers()}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        size="medium"
+                        className="bg-white w-full"
+                    />
+                    {showPassengers && (
+                        <PassangersBox
+                            passengers={passengers}
+                            handlePassenger={handlePassenger}
+                            tooglePassengers={tooglePassengers}
+                            show={showPassengers}
+                            setShow={setShowPassengers}
+                            passengerTranslation={passengerTranslation}
+                        />
+                    )}
+                </div>
+
+                <Button
+                    className="search-btn"
+                    variant="contained"
+                    onClick={(evt) => handleSearch()}
+                    sx={{ height: "3.4rem", marginBottom: "0.1rem", minWidth: 160 }}
+                >
+                    BUSCAR VOOS
+                </Button>
+            </div>
+        </div>
+    );
+}
+
+export default function Hero() {
     return (
         <div className="hero">
             {/* <video src={video} muted autoPlay loop typeof="video/mp4" ></video> */}
             <img src={heroBackground} className="background" alt="" />
-            <HeroContainer
-                travelModeValue={travelModeValue}
-                showPassengers={showPassengers}
-                setShowPassengers={setShowPassengers}
-                dates={dates}
-                passengers={passengers}
-                passengerTranslation={passengerTranslation}
-                tooglePassengers={tooglePassengers}
-                handlePassenger={handlePassenger}
-                handleSearch={handleSearch}
-                handleTravelMode={handleTravelMode}
-            />
+            <div className="conteiner">
+                <HeroContainer />
+            </div>
         </div>
     );
 }

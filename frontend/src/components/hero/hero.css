@@ -1,11 +1,6 @@
 .inline-flex {
     display: inline-flex !important;
 }
-
-.bg-white{
-    background-color: white !important;
-}
-
 .form-control:focus {
     box-shadow: none !important;
     border-color: #134074 !important;

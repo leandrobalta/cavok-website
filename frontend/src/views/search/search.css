@@ -1,4 +1,4 @@
-.search{
+.search {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -7,71 +7,72 @@
     margin-bottom: 2rem;
 }
 
-.search-header{
+.search-header {
     background-color: #134085;
 }
 
-.search-body{
+.search-body {
     display: flex;
     flex-direction: row;
     height: 100%;
     width: 95%;
     max-width: 80rem;
-    margin: 0 auto; 
+    margin: 0 auto;
     gap: 3rem;
 }
 
-.side-bar{
+.side-bar {
     width: 25%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
 }
 
-.side-bar-filter{
+.side-bar-filter {
     text-align: start;
 }
 
-.information{
+.information {
     text-align: start;
 }
 
-.filter-title{
+.filter-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.filter-content-item{
-    display: flex; 
+.filter-content-item {
+    display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
 }
 
-.filter-content-item h6{
+.filter-content-item h6 {
     padding: 0;
     margin: 0;
 }
 
-.filter-content-item-body{
+.filter-content-item-body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     padding: 0.5rem 0;
 }
 
-.filter-content-item-body-line{
+.filter-content-item-body-line {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.filter-content-item-body-line span{
+.filter-content-item-body-line span {
     padding: 0.1rem 0.5rem;
 }
 
-.price-input{
+.price-input {
     align-items: center;
     gap: 0.5rem;
 }
@@ -81,24 +82,24 @@
     transform: rotate(180deg); /* Graus de rotação desejados */
 }
 
-.search-result{
+.search-result {
     width: 75%;
 }
 
-.results{
+.results {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.result-card{
+.result-card {
     display: flex;
     flex-direction: row;
     border-radius: 0.2rem;
-    box-shadow: 0.5rem 0.5rem 2rem 0 rgba(37,37,39,.25);
+    box-shadow: 0.5rem 0.5rem 2rem 0 rgba(37, 37, 39, 0.25);
 }
 
-.price-box{
+.price-box {
     padding: 1rem;
     width: 30%;
     display: flex;
@@ -108,33 +109,31 @@
     border-left: 0.2px solid #dcdcdc;
 }
 
-.price-box-header{
+.price-box-header {
     width: 100%;
     padding: 1rem 0;
     border-bottom: 0.2px solid #dcdcdc;
 }
 
-.price-box-header h3{
+.price-box-header h3 {
     margin: 0;
 }
 
-
-
-.price-box div{
+.price-box div {
     width: 100%;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
 }
 
-.price-box-details{
+.price-box-details {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
 }
 
-.price-box-details p{
+.price-box-details p {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -142,25 +141,25 @@
     margin: 0;
 }
 
-.price-box > .purchase-btn{
+.price-box > .purchase-btn {
     width: 100%;
-    display: flex ;
+    display: flex;
     align-items: center;
 }
 
-.purchase-btn > button{
+.purchase-btn > button {
     width: 100%;
 }
 
-.text-bold{
+.text-bold {
     font-weight: bold;
 }
 
-.text-silver{
+.text-silver {
     color: #808080;
 }
 
-.flight-details-airports{
+.flight-details-airports {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -168,10 +167,14 @@
     gap: 1rem;
 }
 
-.travel-item span:last-child{
+.travel-item span:last-child {
     width: 100%;
 }
 
-.travel-item{
+.travel-item span:first-child {
+    padding-left: 0;
+}
+
+.travel-item {
     margin: 0 !important;
 }
