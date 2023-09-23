@@ -4,7 +4,7 @@ import { useState } from "react";
 import { VerticalLine } from "components/vertical-line/vertical-line";
 import { TravelMode } from "enums/travel-mode";
 import { mockTravelResults } from "./travel-result-mock";
-import { Button, Divider, Radio, RadioGroup } from "@mui/material";
+import { Button, Divider, Drawer, IconButton, Radio, RadioGroup, makeStyles } from "@mui/material";
 import * as React from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -25,12 +25,16 @@ import { PiSuitcaseRollingDuotone as BigSuitcaseIcon } from "react-icons/pi";
 import { HeroContainer } from "components/hero/hero";
 import { AiOutlineInfoCircle as InfoIcon } from "react-icons/ai";
 import useWindowDimensions from "hooks/window-dimensions";
+import { FaExchangeAlt as ExchangeIcon } from "react-icons/fa";
+import { GrClose as CloseIcon } from "react-icons/gr";
+import { FiFilter as FilterIcon } from "react-icons/fi";
 
 interface FilterChecksProps {
     title: string;
     options: CheckOption[];
     selected?: string;
     onChange?: (value: string) => void;
+    accordion: boolean;
 }
 
 interface DropdownPriceFilterProps {
@@ -89,94 +93,75 @@ const FilterChecks = (props: FilterChecksProps) => {
     const allAmount = props.options.reduce((acc, curr) => acc + curr.amount, 0);
 
     return (
-        <Accordion defaultExpanded>
-            <AccordionSummary expandIcon={<DropdownIcon />}>
-                <Typography>{props.title}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <div className="filter-content-item-body">
-                    <div className="filter-content-item-body-line">
-                        <FormControlLabel
-                            control={<Checkbox defaultChecked />}
-                            label={`Todos as ${props.title}`}
-                            id="todos"
-                        />
-                        <span>{allAmount}</span>
-                    </div>
-                    {props.options.map((option, index) => {
-                        return (
+        <>
+            {props.accordion ? (
+                <Accordion defaultExpanded>
+                    <AccordionSummary expandIcon={<DropdownIcon />}>
+                        <Typography>{props.title}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <div className="filter-content-item-body">
                             <div className="filter-content-item-body-line">
                                 <FormControlLabel
-                                    control={<Checkbox />}
-                                    key={index}
-                                    label={option.label}
-                                    id={option.label}
+                                    control={<Checkbox defaultChecked />}
+                                    label={`Todos as ${props.title}`}
+                                    id="todos"
                                 />
-                                <span>{option.amount}</span>
+                                <span>{allAmount}</span>
                             </div>
-                        );
-                    })}
+                            {props.options.map((option, index) => {
+                                return (
+                                    <div className="filter-content-item-body-line">
+                                        <FormControlLabel
+                                            control={<Checkbox />}
+                                            key={index}
+                                            label={option.label}
+                                            id={option.label}
+                                        />
+                                        <span>{option.amount}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </AccordionDetails>
+                </Accordion>
+            ) : (
+                <div className="flex flex-col">
+                    <div className="filter-content-item-header">
+                        <h5 className="m-0 text-bold">{props.title}</h5>
+                    </div>
+                    <div className="filter-content-item-body">
+                        <div className="filter-content-item-body-line">
+                            <FormControlLabel
+                                control={<Checkbox defaultChecked />}
+                                label={`Todos as ${props.title}`}
+                                id="todos"
+                            />
+                            <span>{allAmount}</span>
+                        </div>
+                        {props.options.map((option, index) => {
+                            return (
+                                <div className="filter-content-item-body-line">
+                                    <FormControlLabel
+                                        control={<Checkbox />}
+                                        key={index}
+                                        label={option.label}
+                                        id={option.label}
+                                    />
+                                    <span>{option.amount}</span>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
-            </AccordionDetails>
-        </Accordion>
-    );
-};
-
-const SideBarFilter = () => {
-    //states
-    const [stopOptions, setStopOptions] = useState<CheckOption[]>([
-        { label: "Direto", amount: 0 },
-        { label: "1 parada", amount: 1 },
-        { label: "2 ou mais paradas", amount: 3 },
-    ]);
-    const [companyOptions, setCompanyOptions] = useState<CheckOption[]>([
-        { label: "Gol", amount: 0 },
-        { label: "Azul", amount: 1 },
-        { label: "Latam", amount: 3 },
-    ]);
-    const [price, setPrice] = useState<PriceFilter>({ min: 0, max: 1000 });
-
-    //handlers
-    const onPriceChange = (value: PriceFilter) => {
-        if (value.min < 0) return;
-        if (value.max < 0) return;
-
-        setPrice(value);
-    };
-
-    return (
-        <div className="w-1/4 flex flex-col gap-4 max-md:hidden">
-            <div className="filter">
-                <div className="filter-title">
-                    <h3 className="text-bold m-0">Filtros</h3>
-                </div>
-                <div className="filter-content">
-                    <FilterChecks title="Paradas" options={stopOptions} />
-                    <FilterChecks title="Companhias" options={companyOptions} />
-                    {/* <DropdownPriceFilter price={price} title="Preço" onChange={onPriceChange} /> */}
-                </div>
-            </div>
-            <div className="information">
-                <h3 className="text-bold">Atenção</h3>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur metus quis eros
-                    euismod, vitae varius dolor gravida. Cras sem diam, viverra sit amet nibh fringilla, vulputate
-                    posuere erat. Phasellus sagittis eu mauris sit amet imperdiet.
-                </p>
-                <p>
-                    Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus massa, a
-                    vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
-                </p>
-                <p>
-                    Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus massa, a
-                    vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
-                </p>
-            </div>
-        </div>
+            )}
+        </>
     );
 };
 
 function TravelItem({ travel }: { travel: Travel }) {
+    const { width, height } = useWindowDimensions();
+
     return (
         <div className="flex flex-row justify-between w-full items-center">
             <h5 className="m-0 text-bold">{travel.company}</h5>
@@ -201,11 +186,13 @@ function TravelItem({ travel }: { travel: Travel }) {
                 </div>
             </div>
 
-            <div className="flex flex-row gap-[0.1rem] items-center">
-                <BackPackIcon color="green" size={12} />
-                <LittleSuitcaseIcon color="green" size={15} />
-                <BigSuitcaseIcon size={17} />
-            </div>
+            {width > 370 && (
+                <div className="flex flex-row gap-[0.1rem] items-center">
+                    <BackPackIcon color="green" size={12} />
+                    <LittleSuitcaseIcon color="green" size={15} />
+                    <BigSuitcaseIcon size={17} />
+                </div>
+            )}
 
             <InfoIcon size={20} color="#134074" />
         </div>
@@ -214,9 +201,167 @@ function TravelItem({ travel }: { travel: Travel }) {
 
 export default function Search() {
     const { width, height } = useWindowDimensions();
+    const [showNewSearch, setShowNewSearch] = useState(false);
+    const [showFilter, setShowFilter] = useState(false);
+
+    const handleSearchDrawerClose = () => {
+        setShowNewSearch(false);
+    };
+
+    const handleSearchDrawerOpen = () => {
+        setShowNewSearch(true);
+    };
+
+    const handleFilterDrawerClose = () => {
+        setShowFilter(false);
+    };
+
+    const handleFilterDrawerOpen = () => {
+        setShowFilter(true);
+    };
+
+    const SideBarFilter = () => {
+        //states
+        const [stopOptions, setStopOptions] = useState<CheckOption[]>([
+            { label: "Direto", amount: 0 },
+            { label: "1 parada", amount: 1 },
+            { label: "2 ou mais paradas", amount: 3 },
+        ]);
+        const [companyOptions, setCompanyOptions] = useState<CheckOption[]>([
+            { label: "Gol", amount: 0 },
+            { label: "Azul", amount: 1 },
+            { label: "Latam", amount: 3 },
+        ]);
+        const [price, setPrice] = useState<PriceFilter>({ min: 0, max: 1000 });
+
+        //handlers
+        const onPriceChange = (value: PriceFilter) => {
+            if (value.min < 0) return;
+            if (value.max < 0) return;
+
+            setPrice(value);
+        };
+
+        return (
+            <>
+                <Drawer
+                    anchor="left"
+                    open={showFilter}
+                    PaperProps={{
+                        sx: { width: "100%" },
+                    }}
+                >
+                    <div className="flex items-center justify-between p-2">
+                        <h1 className="text-4xl m-0 text-bold">Filtros</h1>
+                        <IconButton onClick={handleFilterDrawerClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    </div>
+                    <Divider />
+                    <div className="p-5 flex flex-col gap-4">
+                        <FilterChecks accordion={false} title="Paradas" options={stopOptions} />
+                        <Divider />
+                        <FilterChecks accordion={false} title="Companhias" options={companyOptions} />
+                        {/* <DropdownPriceFilter price={price} title="Preço" onChange={onPriceChange} /> */}
+                        <Button variant="contained" size="large" onClick={handleFilterDrawerClose}>
+                            Aplicar
+                        </Button>
+                    </div>
+                </Drawer>
+                <div className="w-1/4 flex flex-col gap-4 max-md:hidden">
+                    <div className="filter">
+                        <div className="filter-title">
+                            <h3 className="text-bold m-0">Filtros</h3>
+                        </div>
+                        <div className="filter-content">
+                            <FilterChecks accordion title="Paradas" options={stopOptions} />
+                            <FilterChecks accordion title="Companhias" options={companyOptions} />
+                            {/* <DropdownPriceFilter price={price} title="Preço" onChange={onPriceChange} /> */}
+                        </div>
+                    </div>
+                    <div className="information">
+                        <h3 className="text-bold">Atenção</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur metus quis eros
+                            euismod, vitae varius dolor gravida. Cras sem diam, viverra sit amet nibh fringilla,
+                            vulputate posuere erat. Phasellus sagittis eu mauris sit amet imperdiet.
+                        </p>
+                        <p>
+                            Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus
+                            massa, a vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
+                        </p>
+                        <p>
+                            Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus
+                            massa, a vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
+                        </p>
+                    </div>
+                </div>
+            </>
+        );
+    };
+
+    const SearchHeader = () => {
+        return (
+            <>
+                <Drawer
+                    anchor="left"
+                    open={showNewSearch}
+                    PaperProps={{
+                        sx: { width: "100%" },
+                    }}
+                >
+                    <div className="flex items-center justify-between p-2">
+                        <h1 className="text-4xl m-0 text-bold">Nova Busca</h1>
+                        <IconButton onClick={handleSearchDrawerClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    </div>
+                    <Divider />
+                    <HeroContainer />
+                </Drawer>
+                <div className="w-full bg-[#ddeeff] shadow-md">
+                    {width < 768 ? (
+                        <div className="px-3 py-2 flex flex-row justify-between">
+                            <div className="flex flex-row items-center gap-1">
+                                <h2 className="m-0 text-bold">
+                                    {mockTravelResults[0].departure[0].departureAirportCode}
+                                </h2>
+                                <ExchangeIcon />
+                                <h2 className="m-0 text-bold">
+                                    {mockTravelResults[0].departure[0].arrivalAirportCode}
+                                </h2>
+                            </div>
+
+                            {width > 400 && (
+                                <div className="flex flex-row items-center">
+                                    <h3 className="m-0 text-bold">{formatDate(mockTravelResults[0].departureDate)}</h3>
+                                    {mockTravelResults[0].arrivalDate && (
+                                        <h3 className="m-0 text-bold">
+                                            - {formatDate(mockTravelResults[0].arrivalDate)}
+                                        </h3>
+                                    )}
+                                </div>
+                            )}
+
+                            <Button
+                                variant="outlined"
+                                size="small"
+                                className="!normal-case"
+                                onClick={handleSearchDrawerOpen}
+                            >
+                                Nova Busca
+                            </Button>
+                        </div>
+                    ) : (
+                        <HeroContainer className="bg-[#ddeeff] flex flex-col rounded-2xl py-8 w-full gap-4 max-w-7xl mx-auto" />
+                    )}
+                </div>
+            </>
+        );
+    };
 
     const ResultCard = (result: TravelResult) => (
-        <div className="w-[70%] p-8 max-md:w-full">
+        <div className="w-[70%] py-8 px-4 max-md:w-full">
             <div className="flex gap-2 flex-col">
                 <div className="flex flex-row justify-between items-center gap-4">
                     <div className="flex flex-row gap-2 items-center">
@@ -313,12 +458,18 @@ export default function Search() {
 
     return (
         <div className="search">
-            <div className="w-full bg-[#ddeeff] shadow-md max-md:hidden">
-                <HeroContainer className="bg-[#ddeeff] flex flex-col rounded-2xl py-8 w-full gap-4 max-w-7xl mx-auto" />
-            </div>
+            {SearchHeader()}
             <div className="search-body">
                 <SideBarFilter />
                 <div className="w-3/4 max-md:w-full max-md:mt-4">
+                    { 
+                    width < 768 &&
+                    (<div className="flex flex-row justify-between items-center">
+                        <h3 className="text-bold m-0">Resultados da busca</h3>
+                        <Button size="large" className="flex flex-row gap-2 !pr-0" onClick={handleFilterDrawerOpen}>
+                            <FilterIcon /> Filtros
+                        </Button>
+                    </div>)}
                     <div className="flex flex-col gap-6">
                         {mockTravelResults.map((result) => {
                             return (
@@ -326,7 +477,7 @@ export default function Search() {
                                     <>
                                         {width < 768 && PriceBoxHeader(result)}
                                         {ResultCard(result)}
-                                        {PriceBox(result, width >768)}
+                                        {PriceBox(result, width > 768)}
                                     </>
                                 </div>
                             );
