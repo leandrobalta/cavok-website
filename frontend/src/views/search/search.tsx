@@ -321,7 +321,7 @@ export default function Search() {
                 </Drawer>
                 <div className="w-full bg-[#ddeeff] shadow-md">
                     {width < 768 ? (
-                        <div className="px-3 py-2 flex flex-row justify-between">
+                        <div className="px-2 py-2 flex flex-row justify-between">
                             <div className="flex flex-row items-center gap-1">
                                 <h2 className="m-0 text-bold">
                                     {mockTravelResults[0].departure[0].departureAirportCode}
@@ -337,7 +337,7 @@ export default function Search() {
                                     <h3 className="m-0 text-bold">{formatDate(mockTravelResults[0].departureDate)}</h3>
                                     {mockTravelResults[0].arrivalDate && (
                                         <h3 className="m-0 text-bold">
-                                            - {formatDate(mockTravelResults[0].arrivalDate)}
+                                            -{formatDate(mockTravelResults[0].arrivalDate)}
                                         </h3>
                                     )}
                                 </div>
