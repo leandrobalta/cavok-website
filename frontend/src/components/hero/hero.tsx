@@ -221,7 +221,7 @@ const DatesPicker = (props: DatesPickerProps) => {
                     {props.travelMode === "one-way" ? (
                         <DatePicker className="date-input bg-white" format="DD/MM/YYYY" label="Ida" />
                     ) : (
-                        <ButtonGroup className="date-input">
+                        <ButtonGroup className="date-input" sx={{ minWidth: 145 }}>
                             <DatePicker
                                 format="DD/MM/YYYY"
                                 sx={{ minWidth: 145 }}

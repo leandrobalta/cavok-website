@@ -166,7 +166,7 @@ function TravelItem({ travel }: { travel: Travel }) {
         <div className="flex flex-row justify-between w-full items-center">
             <h5 className="m-0 text-bold">{travel.company}</h5>
 
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-2">
                 <div className="flex flex-col">
                     <span className="text-bold">{getTime(travel.departureTime)}</span>
                     <span className="text-silver">{travel.departureAirportCode}</span>
@@ -268,7 +268,7 @@ export default function Search() {
                         </Button>
                     </div>
                 </Drawer>
-                <div className="w-1/4 flex flex-col gap-4 max-md:hidden">
+                <div className="w-[30rem] flex flex-col gap-4 max-md:hidden">
                     <div className="filter">
                         <div className="filter-title">
                             <h3 className="text-bold m-0">Filtros</h3>
@@ -361,7 +361,7 @@ export default function Search() {
     };
 
     const ResultCard = (result: TravelResult) => (
-        <div className="w-[70%] py-8 px-4 max-md:w-full">
+        <div className="w-[70%] py-8 px-4 max-[1080px]:w-full">
             <div className="flex gap-2 flex-col">
                 <div className="flex flex-row justify-between items-center gap-4">
                     <div className="flex flex-row gap-2 items-center">
@@ -434,7 +434,7 @@ export default function Search() {
     );
 
     const PriceBox = (result: TravelResult, hasHeader: boolean = true) => (
-        <div className="p-4 w-[30%] flex flex-col items-center gap-4 border-[0.2px] max-md:w-full">
+        <div className="p-4 w-[30%] flex flex-col items-center gap-4 border-[0.2px] max-[1080px]:w-full">
             <div className="price-box-details">
                 {hasHeader && PriceBoxHeader(result)}
                 <p>
@@ -461,7 +461,7 @@ export default function Search() {
             {SearchHeader()}
             <div className="search-body">
                 <SideBarFilter />
-                <div className="w-3/4 max-md:w-full max-md:mt-4">
+                <div className="w-full max-md:w-full max-md:mt-4">
                     { 
                     width < 768 &&
                     (<div className="flex flex-row justify-between items-center">
@@ -473,11 +473,11 @@ export default function Search() {
                     <div className="flex flex-col gap-6">
                         {mockTravelResults.map((result) => {
                             return (
-                                <div className="flex flex-row rounded shadow-md max-md:flex-col bg-white max-md:border max-md:border-black">
+                                <div className="flex flex-row rounded shadow-md max-[1080px]:flex-col bg-white max-md:border max-md:border-black">
                                     <>
-                                        {width < 768 && PriceBoxHeader(result)}
+                                        {width < 1080 && PriceBoxHeader(result)}
                                         {ResultCard(result)}
-                                        {PriceBox(result, width > 768)}
+                                        {PriceBox(result, width > 1080)}
                                     </>
                                 </div>
                             );
