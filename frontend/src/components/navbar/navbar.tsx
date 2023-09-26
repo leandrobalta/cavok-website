@@ -21,10 +21,28 @@ const Divider = () => (
 );
 
 const MenuList = () => {
+    const navigate = useNavigate();
+    const [isLogged, setIsLogged] = useState(false);
+
+    const handleUserOption = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        if (isLogged) {
+            sessionStorage.removeItem("token");
+            setIsLogged(false);
+            alert("sorry but doesnt exists user page yet")
+        }
+        else{
+            navigate("/login")
+        }
+    }
+
+    useEffect(() => {
+        sessionStorage.getItem("token") ? setIsLogged(true) : setIsLogged(false);
+    }, [])
+
     return (
         <ul className="menu-list">
             <li>
-                <a href="">Meu perfil</a>
+                <a href="" className="text-bold" onClick={handleUserOption}>{isLogged ? `Ola, Usuario` : `Entre ou cadastre-se`}</a>
             </li>
             <Divider />
             <li>

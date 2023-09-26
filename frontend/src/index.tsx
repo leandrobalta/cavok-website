@@ -10,6 +10,7 @@ import Search from "pages/search/search";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { createTheme, ThemeProvider } from "@mui/material";
+import LoginPage from "pages/login/login";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
                 path: "/search",
                 element: <Search />,
             },
+            {
+                path: "/login",
+                element: <LoginPage/>
+            }
         ],
     },
 ]);

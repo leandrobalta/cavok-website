@@ -163,10 +163,11 @@ function TravelItem({ travel }: { travel: Travel }) {
     const { width, height } = useWindowDimensions();
 
     return (
-        <div className="flex flex-row justify-between w-full items-center">
-            <h5 className="m-0 text-bold">{travel.company}</h5>
+        /*<div className="flex flex-row justify-between w-full items-center">*/
+        <div className="travel-item">
+            <h5 className="m-0 text-bold text-start">{travel.company}</h5>
 
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row gap-2 justify-center">
                 <div className="flex flex-col">
                     <span className="text-bold">{getTime(travel.departureTime)}</span>
                     <span className="text-silver">{travel.departureAirportCode}</span>
@@ -186,15 +187,17 @@ function TravelItem({ travel }: { travel: Travel }) {
                 </div>
             </div>
 
-            {width > 370 && (
-                <div className="flex flex-row gap-[0.1rem] items-center">
-                    <BackPackIcon color="green" size={12} />
-                    <LittleSuitcaseIcon color="green" size={15} />
-                    <BigSuitcaseIcon size={17} />
-                </div>
-            )}
+            <div className="flex flex-row justify-around">
+                {width > 370 && (
+                    <div className="flex flex-row gap-[0.1rem] items-center justify-center">
+                        <BackPackIcon color="green" size={12} />
+                        <LittleSuitcaseIcon color="green" size={15} />
+                        <BigSuitcaseIcon size={17} />
+                    </div>
+                )}
 
-            <InfoIcon size={20} color="#134074" />
+                <InfoIcon size={20} color="#134074" />
+            </div>
         </div>
     );
 }
@@ -462,14 +465,14 @@ export default function Search() {
             <div className="search-body">
                 <SideBarFilter />
                 <div className="w-full max-md:w-full max-md:mt-4">
-                    { 
-                    width < 768 &&
-                    (<div className="flex flex-row justify-between items-center">
-                        <h3 className="text-bold m-0">Resultados da busca</h3>
-                        <Button size="large" className="flex flex-row gap-2 !pr-0" onClick={handleFilterDrawerOpen}>
-                            <FilterIcon /> Filtros
-                        </Button>
-                    </div>)}
+                    {width < 768 && (
+                        <div className="flex flex-row justify-between items-center">
+                            <h3 className="text-bold m-0">Resultados da busca</h3>
+                            <Button size="large" className="flex flex-row gap-2 !pr-0" onClick={handleFilterDrawerOpen}>
+                                <FilterIcon /> Filtros
+                            </Button>
+                        </div>
+                    )}
                     <div className="flex flex-col gap-6">
                         {mockTravelResults.map((result) => {
                             return (

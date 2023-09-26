@@ -298,3 +298,11 @@
     font-size: 1rem;
     font-weight: 500;
 }
+
+.travel-item{
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    gap: 1rem;
+    align-items: center;
+    width: 100%;
+}
