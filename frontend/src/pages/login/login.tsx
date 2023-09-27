@@ -13,7 +13,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="h-full flex items-center justify-center pt-40">
+        <div className="h-full flex items-center justify-center pt-20 px-4">
             <div className="w-96 p-4 space-y-4 bg-white shadow-md rounded-lg">
                 <h2 className="text-2xl font-bold">Login</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -33,13 +33,13 @@ export default function LoginPage() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    <div>
+                    <div className="w-full flex flex-col gap-2">
                         <Button type="submit" variant="contained" color="primary">
-                            Sign in
+                            Entrar
                         </Button>
-                        <p className="flex justify-center gap-2">
+                        <p className="flex justify-center gap-2 whitespace-nowrap">
                             Ainda nao possui cadastro?
-                            <a href="/signin" className="text-[#134074] hover:underline">
+                            <a href="/signin" className="text-[#134074] hover:underline whitespace-nowrap">
                                 Crie uma conta
                             </a>
                         </p>

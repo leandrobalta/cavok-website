@@ -12,10 +12,10 @@ export default function Signin() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
+        <div className="f-full flex items-center justify-center pt-20 px-4">
             <div className="w-96 p-4 space-y-4 bg-white shadow-md rounded-lg">
                 <h2 className="text-2xl font-bold">Inscrição</h2>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <TextField
                         fullWidth
                         label="Nome completo"
@@ -38,9 +38,18 @@ export default function Signin() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button type="submit" variant="contained" color="primary">
-                        Inscrever-se
-                    </Button>
+
+                    <div className="w-full flex flex-col gap-2">
+                        <Button type="submit" variant="contained" color="primary">
+                            Inscrever-se
+                        </Button>
+                        <p className="flex justify-center gap-2 whitespace-nowrap">
+                            Ja possui cadastro?
+                            <a href="/login" className="text-[#134074] hover:underline">
+                                Entrar
+                            </a>
+                        </p>
+                    </div>
                 </form>
             </div>
         </div>

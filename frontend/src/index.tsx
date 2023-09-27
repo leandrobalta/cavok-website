@@ -11,6 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { createTheme, ThemeProvider } from "@mui/material";
 import LoginPage from "pages/login/login";
+import Signin from "pages/signin/signin";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 element: <LoginPage/>
+            },
+            {
+                path: "/signin",
+                element: <Signin /> 
             }
         ],
     },
