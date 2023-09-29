@@ -13,6 +13,8 @@ import {
     TextField,
     ToggleButtonGroup,
     ToggleButton,
+    IconButton,
+    Divider,
 } from "@mui/material";
 import { IoIosPeople as PeopleIcon } from "react-icons/io";
 import { GrClose as CloseIcon } from "react-icons/gr";
@@ -104,12 +106,15 @@ const PassengersContent = (props: PassengersContentProps) => {
     return (
         <>
             {props.haveTitle && (
-                <div className="passengers-box-header">
-                    <span>Passageiros</span>
-                    <button className="passenger-box-close-btn" onClick={() => props.tooglePassengers()}>
-                        <CloseIcon size={20} />
-                    </button>
-                </div>
+                <>
+                    <div className="flex items-center justify-between p-2">
+                        <h1 className="text-4xl m-0 text-bold">Passageiros</h1>
+                        <IconButton onClick={props.tooglePassengers}>
+                            <CloseIcon />
+                        </IconButton>
+                    </div>
+                    <Divider />
+                </>
             )}
 
             <div className="passengers-box-body">
@@ -179,11 +184,24 @@ const PassangersBox = (props: PassengersBoxProps) => {
                     />
                 </div>
             ) : (
-                <Drawer open={props.show} onClose={() => props.setShow(false)}>
+                <Drawer
+                    anchor="left"
+                    open={props.show}
+                    onClose={() => props.setShow(false)}
+                    PaperProps={{
+                        sx: { width: "70%" },
+                    }}
+                >
                     <div className="passenger-drawner-content">
-                        <div>
-                            <h1>Passageiros e Classes</h1>
-                        </div>
+                        <>
+                            <div className="flex items-center justify-between p-2">
+                                <h1 className="text-start text-3xl m-0 text-bold">Passageiros e Classes</h1>
+                                <IconButton onClick={props.tooglePassengers}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </div>
+                            <Divider />
+                        </>
 
                         <div>
                             <PassengersContent
@@ -208,7 +226,7 @@ const DatesPicker = (props: DatesPickerProps) => {
         <>
             {width < 812 ? (
                 <>
-                    <MobileDatePicker className="bg-white" format="DD/MM/YYYY" label="Ida" />
+                    <MobileDatePicker className="bg-white" format="DD/MM/YYYY" label="Ida" minDate={dayjs(new Date())}/>
                     <MobileDatePicker
                         className="bg-white"
                         disabled={props.travelMode === "one-way"}
@@ -219,16 +237,18 @@ const DatesPicker = (props: DatesPickerProps) => {
             ) : (
                 <>
                     {props.travelMode === "one-way" ? (
-                        <DatePicker className="date-input bg-white" format="DD/MM/YYYY" label="Ida" />
+                        <DatePicker className="date-input bg-white" format="DD/MM/YYYY" label="Ida" minDate={dayjs(new Date())} />
                     ) : (
                         <ButtonGroup className="date-input" sx={{ minWidth: 145 }}>
                             <DatePicker
+                                minDate={dayjs(new Date())}
                                 format="DD/MM/YYYY"
                                 sx={{ minWidth: 145 }}
                                 className="date-input-group-left bg-white"
                                 label="Ida"
                             />
                             <DatePicker
+                                minDate={dayjs(new Date()) }
                                 format="DD/MM/YYYY"
                                 sx={{ minWidth: 145 }}
                                 className="date-input-group-right bg-white"
@@ -249,6 +269,8 @@ interface HeroContainerProps {
 
 export function HeroContainer(props: HeroContainerProps) {
     const navigate = useNavigate();
+    const wrapperRef = useRef(null);
+    const { width } = useWindowDimensions();
 
     // states
     const [travelModeValue, setTravelModeValue] = useState<"one-way" | "round-trip">("round-trip");
@@ -296,6 +318,8 @@ export function HeroContainer(props: HeroContainerProps) {
         setTravelModeValue(newTravelMode);
     };
 
+    useOutsideClickAlerter(wrapperRef, handleOutsideClick);
+
     return (
         <div className={props.className ? props.className : "search-box"}>
             <div className="search-box-header">
@@ -326,7 +350,7 @@ export function HeroContainer(props: HeroContainerProps) {
 
                 <DatesPicker travelMode={travelModeValue} dates={dates} />
 
-                <div className="min-w-[10rem]">
+                <div className="min-w-[10rem]" ref={width > 768 ? wrapperRef : undefined}>
                     <TextField
                         label="Passageiros"
                         defaultValue={`${passengers.length} ${passengers.length > 1 ? "Passageiros" : "Passageiro"}`}

@@ -107,6 +107,7 @@ const MenuContent = (props: MenuContentProps) => {
 export function NavBar() {
     const navigate = useNavigate();
     const wrapperRef = useRef(null);
+    const { height, width } = useWindowDimensions();
 
     //states
     const [showMenu, setshowMenu] = useState(false);
@@ -145,7 +146,7 @@ export function NavBar() {
                             </li>
                         </ul>
                     </div>
-                    <div className="menu" >
+                    <div className="menu" ref={width > 768 ? wrapperRef : undefined}>
                         <button className="menu-btn" onClick={(evt) => toggleDropdown()}>
                             <MenuIcon size={25} />
                             <span>Menu</span>
