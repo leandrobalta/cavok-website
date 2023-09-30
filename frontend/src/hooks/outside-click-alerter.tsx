@@ -6,7 +6,7 @@ export function useOutsideClickAlerter(ref: React.MutableRefObject<any>, onClose
 
         function handleClickOutside(event: any) {
             if (ref.current && !ref.current.contains(event.target)) {
-                console.log("u clicked outside of the component");
+                //console.log("u clicked outside of the component");
                 onClose();
                 // here need to make my react component desappear
                 // but I don't know how to do it

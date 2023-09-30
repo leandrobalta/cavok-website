@@ -86,6 +86,7 @@ export interface TravelResult {
     departureDate: string;
     arrivalDate?: string;
     tax: number;
+    boardingTax: number;
     totalPrice: number;
 }
 
@@ -445,7 +446,11 @@ export default function Search() {
                     <span className="text-silver">R${result.price}</span>
                 </p>
                 <p>
-                    <span className="text-bold">Taxa:</span>
+                    <span className="text-bold">Taxa de embarque:</span>
+                    <span className="text-silver">R${result.tax}</span>
+                </p>
+                <p>
+                    <span className="text-bold">Impostos e encargos:</span>
                     <span className="text-silver">R${result.tax}</span>
                 </p>
                 <p>

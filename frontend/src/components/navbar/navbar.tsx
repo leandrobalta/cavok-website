@@ -113,7 +113,7 @@ export function NavBar() {
     const [showMenu, setshowMenu] = useState(false);
 
     const handleOutsideClick = () => {
-        console.log("handleOutsideClick");
+        //console.log("handleOutsideClick");
         setshowMenu(false);
     };
 

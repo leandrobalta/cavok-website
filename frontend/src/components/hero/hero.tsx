@@ -56,6 +56,8 @@ enum PassengerEnum {
 }
 
 interface DatesPickerProps {
+    handleBeginDate: (date: dayjs.Dayjs) => void;
+    handleEndDate: (date: dayjs.Dayjs) => void;
     travelMode: "one-way" | "round-trip";
     dates: TravelDates;
 }
@@ -91,8 +93,8 @@ interface PassengersContentProps {
 }
 
 interface TravelDates {
-    begin: Date;
-    end?: Date;
+    begin: dayjs.Dayjs;
+    end?: dayjs.Dayjs;
 }
 
 interface BeginDateTimeInputProps {
@@ -222,37 +224,64 @@ const PassangersBox = (props: PassengersBoxProps) => {
 const DatesPicker = (props: DatesPickerProps) => {
     const { width } = useWindowDimensions();
 
+    React.useEffect(() => {
+        if (props.dates.end?.isBefore(props.dates.begin)) {
+            props.handleEndDate(props.dates.begin);
+        }
+    },[props.dates])
+
     return (
         <>
             {width < 812 ? (
                 <>
-                    <MobileDatePicker className="bg-white" format="DD/MM/YYYY" label="Ida" minDate={dayjs(new Date())}/>
                     <MobileDatePicker
+                        value={props.dates.begin}
+                        className="bg-white"
+                        format="DD/MM/YYYY"
+                        label="Ida"
+                        minDate={dayjs(new Date())}
+                        onChange={(date) => props.handleBeginDate(date!)}
+                    />
+                    <MobileDatePicker
+                        value={props.dates.end}
                         className="bg-white"
                         disabled={props.travelMode === "one-way"}
                         format="DD/MM/YYYY"
                         label="Volta"
+                        minDate={props.dates.begin}
+                        onChange={(date) => props.handleEndDate(date!)}
                     />
                 </>
             ) : (
                 <>
                     {props.travelMode === "one-way" ? (
-                        <DatePicker className="date-input bg-white" format="DD/MM/YYYY" label="Ida" minDate={dayjs(new Date())} />
+                        <DatePicker
+                            value={props.dates.begin}
+                            className="date-input bg-white"
+                            format="DD/MM/YYYY"
+                            label="Ida"
+                            minDate={dayjs(new Date())}
+                            onChange={(date) => props.handleBeginDate(date!)}
+                        />
                     ) : (
                         <ButtonGroup className="date-input" sx={{ minWidth: 145 }}>
                             <DatePicker
+                                value={props.dates.begin}
                                 minDate={dayjs(new Date())}
                                 format="DD/MM/YYYY"
                                 sx={{ minWidth: 145 }}
                                 className="date-input-group-left bg-white"
                                 label="Ida"
+                                onChange={(date) => props.handleBeginDate(date!)}
                             />
                             <DatePicker
-                                minDate={dayjs(new Date()) }
+                                value={props.dates.end}
+                                minDate={props.dates.begin}
                                 format="DD/MM/YYYY"
                                 sx={{ minWidth: 145 }}
                                 className="date-input-group-right bg-white"
                                 label="Volta"
+                                onChange={(date) => props.handleEndDate(date!)}
                             />
                         </ButtonGroup>
                     )}
@@ -275,7 +304,7 @@ export function HeroContainer(props: HeroContainerProps) {
     // states
     const [travelModeValue, setTravelModeValue] = useState<"one-way" | "round-trip">("round-trip");
     const [showPassengers, setShowPassengers] = useState(false);
-    const [dates, setDates] = useState<TravelDates>({ begin: new Date(), end: new Date() }); // [begin, end]
+    const [dates, setDates] = useState<TravelDates>({ begin: dayjs(new Date()), end: dayjs(new Date()) }); // [begin, end]
     const [passengers, setPassengers] = useState<Passenger[]>([
         { type: PassengerEnum.Adult, amount: 0, description: "acima de 12 anos" },
         { type: PassengerEnum.Child, amount: 0, description: "de 2 a 11 anos" },
@@ -318,6 +347,14 @@ export function HeroContainer(props: HeroContainerProps) {
         setTravelModeValue(newTravelMode);
     };
 
+    const handleBeginDate = (date: dayjs.Dayjs) => {
+        setDates({ ...dates, begin: date });
+    };
+
+    const handleEndDate = (date: dayjs.Dayjs) => {
+        setDates({ ...dates, end: date });
+    };
+
     useOutsideClickAlerter(wrapperRef, handleOutsideClick);
 
     return (
@@ -348,7 +385,12 @@ export function HeroContainer(props: HeroContainerProps) {
                     <TextField label="Destino" variant="outlined" className="bg-white" />
                 </div>
 
-                <DatesPicker travelMode={travelModeValue} dates={dates} />
+                <DatesPicker
+                    handleBeginDate={handleBeginDate}
+                    handleEndDate={handleEndDate}
+                    travelMode={travelModeValue}
+                    dates={dates}
+                />
 
                 <div className="min-w-[10rem]" ref={width > 768 ? wrapperRef : undefined}>
                     <TextField
