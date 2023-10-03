@@ -1,0 +1,9 @@
+.login {
+    /*background: url("assets/images/login-background.jpg") no-repeat center center fixed;*/
+    background-image: url("../../assets/images/login-background.jpg");
+    height: calc(100vh - 3.5rem);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}

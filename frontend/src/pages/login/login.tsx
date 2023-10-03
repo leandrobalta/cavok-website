@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import LoginBackground from "assets/images/login-background.jpg";
+import "./login.css";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -13,9 +14,8 @@ export default function LoginPage() {
     };
 
     return (
-        <>
-            <img src={LoginBackground} className="fixed" alt="" />
-            <div className="h-full flex items-center justify-center pt-20 px-4">
+        <div className="login">
+            <div className="h-full flex items-center justify-center">
                 <div className="w-96 p-4 space-y-4 bg-white shadow-md rounded-lg z-10">
                     <h2 className="text-2xl font-bold">Login</h2>
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -54,6 +54,6 @@ export default function LoginPage() {
                     </form>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
