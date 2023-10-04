@@ -83,13 +83,13 @@ export default function HorizontalLinearStepper(props: HorizontalLinearStepperPr
                         stepProps.completed = false;
                     }
                     return (
-                        <Step key={label} {...stepProps}>
-                            <StepLabel {...labelProps}>{label}</StepLabel>
+                        <Step {...stepProps}>
+                            <StepLabel {...labelProps}>{step.content}</StepLabel>
                         </Step>
                     );
                 })}
             </Stepper>
-            {activeStep === steps.length ? (
+            {activeStep === props.steps.length ? (
                 <React.Fragment>
                     <Typography sx={{ mt: 2, mb: 1 }}>All steps completed - you&apos;re finished</Typography>
                     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -105,12 +105,12 @@ export default function HorizontalLinearStepper(props: HorizontalLinearStepperPr
                             Back
                         </Button>
                         <Box sx={{ flex: "1 1 auto" }} />
-                        {isStepOptional(activeStep) && (
+                        {props.steps[activeStep] && (
                             <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                                 Skip
                             </Button>
                         )}
-                        <Button onClick={handleNext}>{activeStep === steps.length - 1 ? "Finish" : "Next"}</Button>
+                        <Button onClick={handleNext}>{activeStep === props.steps.length - 1 ? "Finish" : "Next"}</Button>
                     </Box>
                 </React.Fragment>
             )}
