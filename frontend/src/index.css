@@ -9,7 +9,6 @@ body {
     monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;
 }
 
 code {
@@ -18,10 +17,5 @@ code {
 }
 
 html{
-  height: 100%;
   background-color: #f8f6f7;
-}
-
-#root{
-  height: 100%;
 }
