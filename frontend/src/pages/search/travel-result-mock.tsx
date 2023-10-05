@@ -2,6 +2,7 @@ import { TravelResult } from "./search";
 
 export const mockTravelResults: TravelResult[] = [
     {
+        boardingTax: 100,
         price: 1000,
         departure: [
             {
@@ -151,6 +152,7 @@ export const mockTravelResults: TravelResult[] = [
         totalPrice: 1000,
     },
     {
+        boardingTax: 100,
         price: 1000,
         departure: [
             {
@@ -228,6 +230,7 @@ export const mockTravelResults: TravelResult[] = [
         totalPrice: 1000,
     },
     {
+        boardingTax: 100,
         price: 1000,
         departure: [
             {

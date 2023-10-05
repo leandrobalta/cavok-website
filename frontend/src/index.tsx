@@ -12,6 +12,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { createTheme, ThemeProvider } from "@mui/material";
 import LoginPage from "pages/login/login";
 import Signin from "pages/signin/signin";
+import Payment from "pages/payment/payment";
 
 const router = createBrowserRouter([
     {
@@ -34,7 +35,12 @@ const router = createBrowserRouter([
             {
                 path: "/signin",
                 element: <Signin /> 
-            }
+            },
+            // MAKE THIS TEMPORARY ROUTE FOR PAYMENT
+            {
+                path: "/payment",
+                element: <Payment />,
+            },
         ],
     },
 ]);

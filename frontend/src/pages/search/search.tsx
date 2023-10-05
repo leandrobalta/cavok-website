@@ -28,6 +28,7 @@ import useWindowDimensions from "hooks/window-dimensions";
 import { FaExchangeAlt as ExchangeIcon } from "react-icons/fa";
 import { GrClose as CloseIcon } from "react-icons/gr";
 import { FiFilter as FilterIcon } from "react-icons/fi";
+import { Outlet, useNavigate } from "react-router-dom";
 
 interface FilterChecksProps {
     title: string;
@@ -207,6 +208,7 @@ export default function Search() {
     const { width, height } = useWindowDimensions();
     const [showNewSearch, setShowNewSearch] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
+    const navigate = useNavigate();
 
     const handleSearchDrawerClose = () => {
         setShowNewSearch(false);
@@ -223,6 +225,10 @@ export default function Search() {
     const handleFilterDrawerOpen = () => {
         setShowFilter(true);
     };
+
+    const handlePlaceOrder = () => {
+        navigate("/payment");
+    }
 
     const SideBarFilter = () => {
         //states
@@ -245,6 +251,7 @@ export default function Search() {
 
             setPrice(value);
         };
+
 
         return (
             <>
@@ -459,7 +466,7 @@ export default function Search() {
                 </p>
             </div>
             <div className="purchase-btn w-full max-md:mt-4">
-                <Button variant="contained">REALIZAR PEDIDO</Button>
+                <Button variant="contained" onClick={handlePlaceOrder}>REALIZAR PEDIDO</Button>
             </div>
         </div>
     );
