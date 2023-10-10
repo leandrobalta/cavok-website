@@ -29,6 +29,12 @@ const router = createBrowserRouter([
             {
                 path: "/search",
                 element: <Search />,
+                children: [
+                    {
+                        path: "payment",
+                        element: <Payment />,
+                    },
+                ],
             },
             {
                 path: "/login",
@@ -39,10 +45,6 @@ const router = createBrowserRouter([
                 element: <Signin />,
             },
             // MAKE THIS TEMPORARY ROUTE FOR PAYMENT
-            {
-                path: "/payment",
-                element: <Payment />,
-            },
         ],
     },
 ]);

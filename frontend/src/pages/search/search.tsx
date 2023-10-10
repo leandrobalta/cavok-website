@@ -227,8 +227,8 @@ export default function Search() {
     };
 
     const handlePlaceOrder = () => {
-        navigate("/payment");
-    }
+        navigate("payment");
+    };
 
     const SideBarFilter = () => {
         //states
@@ -251,7 +251,6 @@ export default function Search() {
 
             setPrice(value);
         };
-
 
         return (
             <>
@@ -466,40 +465,52 @@ export default function Search() {
                 </p>
             </div>
             <div className="purchase-btn w-full max-md:mt-4">
-                <Button variant="contained" onClick={handlePlaceOrder}>REALIZAR PEDIDO</Button>
+                <Button variant="contained" onClick={handlePlaceOrder}>
+                    REALIZAR PEDIDO
+                </Button>
             </div>
         </div>
     );
 
     return (
-        <div className="search">
-            {SearchHeader()}
-            <div className="search-body">
-                <SideBarFilter />
-                <div className="w-full max-md:w-full max-md:mt-4">
-                    {width < 768 && (
-                        <div className="flex flex-row justify-between items-center">
-                            <h3 className="text-bold m-0">Resultados da busca</h3>
-                            <Button size="large" className="flex flex-row gap-2 !pr-0" onClick={handleFilterDrawerOpen}>
-                                <FilterIcon /> Filtros
-                            </Button>
-                        </div>
-                    )}
-                    <div className="flex flex-col gap-6">
-                        {mockTravelResults.map((result) => {
-                            return (
-                                <div className="flex flex-row rounded shadow-md max-[1080px]:flex-col bg-white max-md:border max-md:border-black">
-                                    <>
-                                        {width < 1080 && PriceBoxHeader(result)}
-                                        {ResultCard(result)}
-                                        {PriceBox(result, width > 1080)}
-                                    </>
+        <>
+            {window.location.pathname === "/search" ? (
+                <div className="search">
+                    {SearchHeader()}
+                    <div className="search-body">
+                        <SideBarFilter />
+                        <div className="w-full max-md:w-full max-md:mt-4">
+                            {width < 768 && (
+                                <div className="flex flex-row justify-between items-center">
+                                    <h3 className="text-bold m-0">Resultados da busca</h3>
+                                    <Button
+                                        size="large"
+                                        className="flex flex-row gap-2 !pr-0"
+                                        onClick={handleFilterDrawerOpen}
+                                    >
+                                        <FilterIcon /> Filtros
+                                    </Button>
                                 </div>
-                            );
-                        })}
+                            )}
+                            <div className="flex flex-col gap-6">
+                                {mockTravelResults.map((result) => {
+                                    return (
+                                        <div className="flex flex-row rounded shadow-md max-[1080px]:flex-col bg-white max-md:border max-md:border-black">
+                                            <>
+                                                {width < 1080 && PriceBoxHeader(result)}
+                                                {ResultCard(result)}
+                                                {PriceBox(result, width > 1080)}
+                                            </>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            ) : (
+                <Outlet />
+            )}
+        </>
     );
 }

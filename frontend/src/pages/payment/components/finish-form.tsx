@@ -1,4 +1,4 @@
-import { Divider, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import { Button, Checkbox, Divider, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { PayerTypeEnum } from "enums/payer-type";
 import { PaymentModeEnum } from "enums/payment-mode";
 import { useState } from "react";
@@ -6,6 +6,9 @@ import { useState } from "react";
 export function FinishForm() {
     const [paymentMode, setPaymentMode] = useState<PaymentModeEnum>(PaymentModeEnum.pix);
     const [payerType, setPayerType] = useState<PayerTypeEnum>(PayerTypeEnum.person);
+    const [termsAndConditions, setTermsAndConditions] = useState<boolean>(false);
+    //const passengersCount = [1, 2, 3, 4, 5, 6, 7, 8];
+    const passengersCount = [1];
 
     const handlePaymentModeChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         const target = evt.target as HTMLInputElement;
@@ -22,7 +25,26 @@ export function FinishForm() {
             <a href="/search" className="text-[#134085] text-start">
                 Voltar
             </a>
-            <h1 className="text-bold text-start">Está quase acabando! Basta completar os seus dados e finalizar a compra</h1>
+            <h1 className="text-bold text-start">
+                Está quase acabando! Basta completar os seus dados e finalizar a compra
+            </h1>
+            {passengersCount.map((value) => (
+                <div className="flex flex-col gap-2 border-black bg-white p-4 rounded-lg text-start">
+                    <div className="flex flex-col gap-2">
+                        <h2 className="text-bold">Dados do passageiro {value}</h2>
+                        <div className="flex flex-row gap-2">
+                            <TextField fullWidth label="Nome completo" variant="outlined" />
+                            <TextField fullWidth label="Email" variant="outlined" />
+                            <TextField fullWidth label="Telefone" variant="outlined" />
+                            <TextField fullWidth label="CPF" variant="outlined" />
+                            <TextField fullWidth label="Data de nascimento" variant="outlined" />
+                        </div>
+                    </div>
+                </div>
+            ))}
+
+            {/* bagagem section */}
+
             <div className="flex flex-col gap-2 border-black bg-white p-4 rounded-lg text-start">
                 <div className="flex flex-col gap-2">
                     <h2 className="text-bold">Formas de pagamento</h2>
@@ -74,7 +96,6 @@ export function FinishForm() {
                 </div>
             </div>
 
-
             <div className="flex flex-col gap-2 border-black bg-white p-4 rounded-lg text-start">
                 <div className="flex flex-col gap-2">
                     <h2 className="text-bold">Detalhes do pagador</h2>
@@ -118,8 +139,7 @@ export function FinishForm() {
                                 </div>
                             </div>
                         </>
-                    ) :
-                    (
+                    ) : (
                         <>
                             <Divider />
                             <div className="flex flex-col gap-2">
@@ -133,6 +153,21 @@ export function FinishForm() {
                     )}
                 </div>
             </div>
+
+            {/* material ui checkbox to check if the person aprove the terms and conditions of cavok viagens, only if this checkbox is checked the consumer can finish the payment */}
+            <FormControlLabel
+                control={<Checkbox />}
+                label={`Li e concordo com os termos e condições da Cavok Viagens`}
+                value={termsAndConditions}
+                onChange={(evt) => {
+                    const target = evt.target as HTMLInputElement;
+                    setTermsAndConditions(target.checked);
+                }}
+            />
+
+            <Button disabled={!termsAndConditions} variant="contained" color="primary" className="w-full">
+                Finalizar compra
+            </Button>
         </div>
     );
 }
