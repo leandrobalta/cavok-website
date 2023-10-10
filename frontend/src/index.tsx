@@ -13,6 +13,8 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import LoginPage from "pages/login/login";
 import Signin from "pages/signin/signin";
 import Payment from "pages/payment/payment";
+import { LoadingProvider } from "hooks/use-loading";
+import { AlertUtilsProvider } from "context/alert-utils.context";
 
 const router = createBrowserRouter([
     {
@@ -30,11 +32,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/login",
-                element: <LoginPage/>
+                element: <LoginPage />,
             },
             {
                 path: "/signin",
-                element: <Signin /> 
+                element: <Signin />,
             },
             // MAKE THIS TEMPORARY ROUTE FOR PAYMENT
             {
@@ -58,7 +60,11 @@ root.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <RouterProvider router={router} />
+                <AlertUtilsProvider>
+                    <LoadingProvider>
+                        <RouterProvider router={router} />
+                    </LoadingProvider>
+                </AlertUtilsProvider>
             </LocalizationProvider>
         </ThemeProvider>
     </React.StrictMode>
