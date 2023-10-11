@@ -41,6 +41,9 @@ dependencies:
   dayjs:
     specifier: ^1.11.9
     version: 1.11.9
+  moment:
+    specifier: ^2.29.4
+    version: 2.29.4
   react:
     specifier: ^18.2.0
     version: 18.2.0
