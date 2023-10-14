@@ -1,8 +1,18 @@
-import { Button, Checkbox, Divider, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import { Button, ButtonGroup, Checkbox, Divider, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { PayerTypeEnum } from "enums/payer-type";
 import { PaymentModeEnum } from "enums/payment-mode";
 import { useState } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { IoMdArrowDropdown as DropdownIcon } from "react-icons/io";
+import { LuBackpack as BackPackIcon } from "react-icons/lu";
+import { LiaSuitcaseRollingSolid as LittleSuitcaseIcon } from "react-icons/lia";
+//import { PiSuitcaseRollingDuotone as BigSuitcaseIcon } from "react-icons/pi";
+import { RiSuitcase3Line as SuitcaseIcon } from "react-icons/ri";
+import { PiSuitcaseRollingBold as BigSuitcaseIcon } from "react-icons/pi";
 
 export function FinishForm() {
     const [paymentMode, setPaymentMode] = useState<PaymentModeEnum>(PaymentModeEnum.pix);
@@ -10,6 +20,9 @@ export function FinishForm() {
     const [termsAndConditions, setTermsAndConditions] = useState<boolean>(false);
     //const passengersCount = [1, 2, 3, 4, 5, 6, 7, 8];
     const passengersCount = [1];
+    const [hasBackPack, setHasBackPack] = useState<boolean>(true);
+    const [hasLittleSuitcase, setHasLittleSuitcase] = useState<boolean>(true);
+    const [bigSuitcaseCount, setBigSuitcaseCount] = useState<number>(0);
 
     const handlePaymentModeChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         const target = evt.target as HTMLInputElement;
@@ -20,6 +33,16 @@ export function FinishForm() {
         const target = evt.target as HTMLInputElement;
         setPayerType(target.value as PayerTypeEnum);
     };
+
+    const handleRemoveBigSuitcase = () => {
+        if (bigSuitcaseCount > 0) {
+            setBigSuitcaseCount(bigSuitcaseCount - 1);
+        }
+    }
+
+    const handleAddBigSuitcase = () => {
+        setBigSuitcaseCount(bigSuitcaseCount + 1);
+    }
 
     return (
         <div className="flex flex-col gap-4 [h2]:text-lg">
@@ -41,11 +64,71 @@ export function FinishForm() {
                             <TextField fullWidth label="CPF" variant="outlined" />
                             <DatePicker />
                         </div>
+                        <Accordion className="shadow-xl">
+                            <AccordionSummary
+                                expandIcon={<DropdownIcon />}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                                sx={{
+                                    backgroundColor: "#ddeeff",
+                                    //color: "white",
+                                }}
+                            >
+                                <h3 className="text-bold">Dados da Bagagem</h3>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <div className="flex flex-col p-2 gap-2">
+                                    <h3>IDA</h3>
+                                    <div className="flex flex-col gap-2">
+                                        <div className="flex flex-row justify-between">
+                                            <div className="flex flex-row items-center gap-2">
+                                                <BackPackIcon color={hasBackPack ? "green" : ""} /> Inclui 1 item
+                                                pessoal.
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-row justify-between">
+                                            <div className="flex flex-row items-center gap-2 justify-start">
+                                                <SuitcaseIcon color={hasLittleSuitcase ? "green" : ""} /> Inclui 1 mala
+                                                de mão.
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-row justify-between">
+                                            <div className="flex flex-row items-center gap-2">
+                                                {bigSuitcaseCount > 0 ? (
+                                                    <>
+                                                        <BigSuitcaseIcon color="green" /> {`Inclui ${bigSuitcaseCount} mala${bigSuitcaseCount > 1 ? "s" : ""} de 23kg.`}
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <BigSuitcaseIcon /> {"Não inclui mala de 23kg."}
+                                                    </>
+                                                )}
+                                            </div>
+                                            <ButtonGroup variant="outlined" size="small" aria-label="outlined button group">
+                                                <Button disabled={bigSuitcaseCount === 0} onClick={handleRemoveBigSuitcase}>-</Button>
+                                                <Button onClick={handleAddBigSuitcase}>+</Button>
+                                            </ButtonGroup>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/*here i'll check if back trip exists and create a card for baggage info */
+                                /*<>
+                                        <Divider />
+                                        <div className="flex flex-col p-2 gap-2">
+                                            <h3>VOLTA</h3>
+                                            <div className="flex flex-row gap-4">
+                                                <TextField fullWidth label="Bagagem de mão" variant="outlined" />
+                                                <TextField fullWidth label="Bagagem despachada" variant="outlined" />
+                                            </div>
+                                        </div>
+                                    </>
+                                    */}
+                            </AccordionDetails>
+                        </Accordion>
                     </div>
                 </div>
             ))}
-
-            {/* bagagem section */}
 
             <div className="flex flex-col gap-4 border-black bg-white p-4 rounded-lg text-start shadow-xl">
                 <div className="flex flex-col gap-4">

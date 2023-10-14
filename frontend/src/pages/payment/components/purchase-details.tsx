@@ -26,7 +26,7 @@ export function PurchaseDetails() {
                     </p>
                     <Divider />
                         {/* <p className="text-[#134085]"> */}
-                        <p className="text-bold text-red-700 text-lg">
+                        <p className="text-bold text-[#113763] text-lg">
                             <span>VALOR TOTAL:</span>
                             <span>R$ {result.price + result.tax}</span>
                         </p>
