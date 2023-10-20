@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import "./App.css";
 import { Footer, NavBar } from "components/layout";
 import "react-datetime/css/react-datetime.css";
+import 'react-credit-cards/es/styles-compiled.css';
 
 function App() {
     return (

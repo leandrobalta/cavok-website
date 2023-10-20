@@ -13,6 +13,17 @@ import { LiaSuitcaseRollingSolid as LittleSuitcaseIcon } from "react-icons/lia";
 //import { PiSuitcaseRollingDuotone as BigSuitcaseIcon } from "react-icons/pi";
 import { RiSuitcase3Line as SuitcaseIcon } from "react-icons/ri";
 import { PiSuitcaseRollingBold as BigSuitcaseIcon } from "react-icons/pi";
+import Cards from "react-credit-cards";
+import InputMask from "react-input-mask";
+import { validateName } from "utils/validate-name";
+
+interface CardInfo {
+    cvc: string;
+    expiry: string;
+    focus: string;
+    name: string;
+    number: string;
+}
 
 export function FinishForm() {
     const [paymentMode, setPaymentMode] = useState<PaymentModeEnum>(PaymentModeEnum.pix);
@@ -24,6 +35,13 @@ export function FinishForm() {
     const [hasLittleSuitcase, setHasLittleSuitcase] = useState<boolean>(true);
     const [bigSuitcaseCount, setBigSuitcaseCount] = useState<number>(0);
     const [hasBack, setHasBack] = useState<boolean>(true);
+    const [cardInfo, setCardInfo] = useState<CardInfo>({
+        cvc: "",
+        expiry: "",
+        focus: "",
+        name: "",
+        number: "",
+    });
 
     const handlePaymentModeChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         const target = evt.target as HTMLInputElement;
@@ -45,6 +63,31 @@ export function FinishForm() {
         setBigSuitcaseCount(bigSuitcaseCount + 1);
     };
 
+    const handleCardInputFocus = (e: any) => {
+        setCardInfo({ ...cardInfo, focus: e.target.name });
+    };
+
+    const handleCardInputChange = (e: any) => {
+        const { name, value } = e.target;
+
+        console.log(name, value);
+
+        if (name === "name") {
+            console.log("is name");
+            if (!validateName(value)) {
+                return;
+            }
+        }
+
+        if (name == "expiry") {
+            console.log("is expiry");
+            console.log("value", value);  
+            console.log("value.length", value.length); 
+        }
+
+        setCardInfo({ ...cardInfo, [name]: value });
+    };
+
     return (
         <div className="flex flex-col gap-4 [h2]:text-lg">
             <a href="/search" className="text-[#134085] text-start">
@@ -63,7 +106,7 @@ export function FinishForm() {
                             <TextField fullWidth label="Email" variant="outlined" />
                             <TextField fullWidth label="Telefone" variant="outlined" />
                             <TextField fullWidth label="CPF OU PASSAPORTE" variant="outlined" />
-                            <DatePicker />
+                            <DatePicker label="Nascimento" format="DD/MM/YYYY" />
                         </div>
                         <Accordion className="shadow-xl">
                             <AccordionSummary
@@ -225,15 +268,44 @@ export function FinishForm() {
                     {paymentMode === PaymentModeEnum.credit && (
                         <>
                             <Divider />
-                            <div className="flex flex-col gap-4">
-                                <h2 className="text-bold">Cartão de crédito</h2>
-                                <div className="flex flex-row gap-4">
-                                    <TextField fullWidth label="Número do cartão" variant="outlined" />
-                                    <TextField fullWidth label="Email" variant="outlined" />
-                                </div>
-                                <div className="flex flex-row gap-4">
-                                    <TextField fullWidth label="Validade" variant="outlined" />
-                                    <TextField fullWidth label="CVV" variant="outlined" />
+                            <div className="flex flex-row gap-6 items-center">
+                                <Cards
+                                    cvc={cardInfo.cvc}
+                                    expiry={cardInfo.expiry}
+                                    focused={cardInfo.focus}
+                                    name={cardInfo.name}
+                                    number={cardInfo.number}
+                                />
+                                <div className="flex flex-col w-4/5 gap-4">
+                                    <InputMask
+                                        mask="9999 9999 9999 9999"
+                                        onChange={handleCardInputChange}
+                                        onFocus={handleCardInputFocus}
+                                    >
+                                        <TextField label="Numero" variant="outlined" name="number" />
+                                    </InputMask>
+                                    <TextField
+                                        name="name"
+                                        onChange={handleCardInputChange}
+                                        label="Nome do titular (Como no Cartão)"
+                                        variant="outlined"
+                                        onFocus={handleCardInputFocus}
+                                    />
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <InputMask onChange={handleCardInputChange} onFocus={handleCardInputFocus} mask={[/\d/, /\d/, '/', /\d/, /\d/]}>
+                                            <TextField type="tel" name="expiry" label="Validade (MM/YY)" variant="outlined" />
+                                        </InputMask>
+                                        <TextField
+                                            name="cvc"
+                                            onChange={handleCardInputChange}
+                                            onFocus={handleCardInputFocus}
+                                            label="CVC (Codigo de Segurança)"
+                                            variant="outlined"
+                                            inputProps={{
+                                                pattern: "d{3}",
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </>
