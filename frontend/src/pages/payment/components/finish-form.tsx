@@ -1,8 +1,22 @@
-import { Button, ButtonGroup, Checkbox, Divider, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import {
+    Button,
+    ButtonGroup,
+    Checkbox,
+    Divider,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Radio,
+    RadioGroup,
+    Select,
+    SelectChangeEvent,
+    TextField,
+} from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { PayerTypeEnum } from "enums/payer-type";
 import { PaymentModeEnum } from "enums/payment-mode";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -29,12 +43,13 @@ export function FinishForm() {
     const [paymentMode, setPaymentMode] = useState<PaymentModeEnum>(PaymentModeEnum.pix);
     const [payerType, setPayerType] = useState<PayerTypeEnum>(PayerTypeEnum.person);
     const [termsAndConditions, setTermsAndConditions] = useState<boolean>(false);
-    //const passengersCount = [1, 2, 3, 4, 5, 6, 7, 8];
+    const [payerGender, setPayerGender] = useState<"male" | "female">("male");
     const passengersCount = [1];
     const [hasBackPack, setHasBackPack] = useState<boolean>(true);
     const [hasLittleSuitcase, setHasLittleSuitcase] = useState<boolean>(true);
     const [bigSuitcaseCount, setBigSuitcaseCount] = useState<number>(0);
     const [hasBack, setHasBack] = useState<boolean>(true);
+    const [cardExpiryValid, setCardExpiryValid] = useState<boolean>(true);
     const [cardInfo, setCardInfo] = useState<CardInfo>({
         cvc: "",
         expiry: "",
@@ -79,14 +94,42 @@ export function FinishForm() {
             }
         }
 
-        if (name == "expiry") {
-            console.log("is expiry");
-            console.log("value", value);  
-            console.log("value.length", value.length); 
-        }
-
         setCardInfo({ ...cardInfo, [name]: value });
     };
+
+    const onPayerGenderChange = (event: SelectChangeEvent<string>) => {
+        setPayerGender(event.target.value as any);
+    };
+
+    const checkCardExpiryValid = (date: string) => {
+        const [month, year] = date.split("/");
+        console.log("month", month);
+        console.log("year", year);
+
+        if (!month || !year) return;
+
+        if (!month.includes("_") && !year.includes("_")) {
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth() + 1; // Mês atual é baseado em 1 (janeiro = 1, fevereiro = 2, etc.)
+
+            const inputMonth = parseInt(month, 10);
+            const inputYear = parseInt(`20${year}`, 10);
+
+            if (
+                inputMonth >= 1 &&
+                inputMonth <= 12 &&
+                (inputYear > currentYear || (inputYear === currentYear && inputMonth >= currentMonth))
+            ) {
+                setCardExpiryValid(true);
+            } else {
+                setCardExpiryValid(false);
+            }
+        }
+    };
+
+    useEffect(() => {
+        checkCardExpiryValid(cardInfo.expiry);
+    }, [cardInfo.expiry]);
 
     return (
         <div className="flex flex-col gap-4 [h2]:text-lg">
@@ -104,8 +147,12 @@ export function FinishForm() {
                             <TextField fullWidth label="Primeiro nome" variant="outlined" />
                             <TextField fullWidth label="Sobrenome" variant="outlined" />
                             <TextField fullWidth label="Email" variant="outlined" />
-                            <TextField fullWidth label="Telefone" variant="outlined" />
-                            <TextField fullWidth label="CPF OU PASSAPORTE" variant="outlined" />
+                            <InputMask mask="(99) 99999-9999" maskChar={null}>
+                                <TextField fullWidth label="Telefone" variant="outlined" />
+                            </InputMask>
+                            <InputMask mask="999.999.999-99" maskChar={null}>
+                                <TextField fullWidth label="CPF OU PASSAPORTE" variant="outlined" />
+                            </InputMask>
                             <DatePicker label="Nascimento" format="DD/MM/YYYY" />
                         </div>
                         <Accordion className="shadow-xl">
@@ -268,7 +315,7 @@ export function FinishForm() {
                     {paymentMode === PaymentModeEnum.credit && (
                         <>
                             <Divider />
-                            <div className="flex flex-row gap-6 items-center">
+                            <div className="flex flex-row gap-6 items-center max-lg:flex-col">
                                 <Cards
                                     cvc={cardInfo.cvc}
                                     expiry={cardInfo.expiry}
@@ -292,19 +339,30 @@ export function FinishForm() {
                                         onFocus={handleCardInputFocus}
                                     />
                                     <div className="grid grid-cols-2 gap-4">
-                                        <InputMask onChange={handleCardInputChange} onFocus={handleCardInputFocus} mask={[/\d/, /\d/, '/', /\d/, /\d/]}>
-                                            <TextField type="tel" name="expiry" label="Validade (MM/YY)" variant="outlined" />
-                                        </InputMask>
-                                        <TextField
-                                            name="cvc"
+                                        <InputMask
                                             onChange={handleCardInputChange}
                                             onFocus={handleCardInputFocus}
-                                            label="CVC (Codigo de Segurança)"
-                                            variant="outlined"
-                                            inputProps={{
-                                                pattern: "d{3}",
-                                            }}
-                                        />
+                                            mask="99/99"
+                                        >
+                                            <TextField
+                                                type="tel"
+                                                name="expiry"
+                                                label="Validade (MM/YY)"
+                                                variant="outlined"
+                                                error={!cardExpiryValid}
+                                            />
+                                        </InputMask>
+                                        <InputMask
+                                            mask="999"
+                                            onChange={handleCardInputChange}
+                                            onFocus={handleCardInputFocus}
+                                        >
+                                            <TextField
+                                                name="cvc"
+                                                label="CVC (Codigo de Segurança)"
+                                                variant="outlined"
+                                            />
+                                        </InputMask>
                                     </div>
                                 </div>
                             </div>
@@ -345,28 +403,81 @@ export function FinishForm() {
                             }}
                         /> */}
                     </RadioGroup>
+                    <Divider />
                     {payerType === PayerTypeEnum.person ? (
-                        <>
-                            <Divider />
-                            <div className="flex flex-col gap-4">
-                                <h2 className="text-bold">Pessoa Fisica</h2>
-                                <div className="flex flex-row gap-4">
-                                    <TextField fullWidth label="Nome completo" variant="outlined" />
+                        <div className="flex flex-col gap-4">
+                            <h2 className="text-bold">Pessoa Fisica</h2>
+                            <div className="grid grid-cols-2 gap-4">
+                                <TextField fullWidth label="Nome completo" variant="outlined" />
+                                <InputMask mask="999.999.999-99" maskChar={null}>
                                     <TextField fullWidth label="CPF" variant="outlined" />
-                                </div>
+                                </InputMask>
+                                <DatePicker label="Nascimento" format="DD/MM/YYYY" />
+                                <TextField fullWidth label="Email" variant="outlined" />
+                                <InputMask mask="(99) 99999-9999" maskChar={null}>
+                                    <TextField fullWidth label="Telefone" variant="outlined" />
+                                </InputMask>
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Genero</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Genero"
+                                        onChange={onPayerGenderChange}
+                                    >
+                                        <MenuItem value="male">Masculino</MenuItem>
+                                        <MenuItem value="female">Feminino</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <InputMask mask="99.999-99">
+                                    <TextField fullWidth label="CEP" variant="outlined" />
+                                </InputMask>
+                                <TextField fullWidth label="Endereço" variant="outlined" />
+                                <TextField fullWidth label="Numero" variant="outlined" />
+                                <TextField fullWidth label="Complemento" variant="outlined" />
+                                <TextField fullWidth label="Bairro" variant="outlined" />
+                                <TextField fullWidth label="Cidade" variant="outlined" />
+                                <TextField fullWidth label="Estado" variant="outlined" />
                             </div>
-                        </>
+                        </div>
                     ) : (
-                        <>
-                            <Divider />
-                            <div className="flex flex-col gap-4">
-                                <h2 className="text-bold">Pessoa Juridica</h2>
-                                <div className="flex flex-row gap-4">
-                                    <TextField fullWidth label="Razão Social" variant="outlined" />
+                        <div className="flex flex-col gap-4">
+                            <h2 className="text-bold">Pessoa Juridica</h2>
+                            <div className="grid grid-cols-2 gap-4">
+                                <TextField fullWidth label="Nome completo do responsavél" variant="outlined" />
+                                <DatePicker label="Nascimento" format="DD/MM/YYYY" />
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Genero</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Genero"
+                                        onChange={onPayerGenderChange}
+                                    >
+                                        <MenuItem value="male">Masculino</MenuItem>
+                                        <MenuItem value="female">Feminino</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <TextField fullWidth label="Email" variant="outlined" />
+                                <TextField fullWidth label="Nome da empresa" variant="outlined" />
+                                <TextField fullWidth label="Razão social" variant="outlined" />
+                                <InputMask mask="99.999.999/9999-99" maskChar={null}>
                                     <TextField fullWidth label="CNPJ" variant="outlined" />
-                                </div>
+                                </InputMask>
+                                <InputMask mask="(99) 99999-9999" maskChar={null}>
+                                    <TextField fullWidth label="Telefone" variant="outlined" />
+                                </InputMask>
+                                <InputMask mask="99.999-99">
+                                    <TextField fullWidth label="CEP" variant="outlined" />
+                                </InputMask>
+                                <TextField fullWidth label="Endereço" variant="outlined" />
+                                <TextField fullWidth label="Numero" variant="outlined" />
+                                <TextField fullWidth label="Complemento" variant="outlined" />
+                                <TextField fullWidth label="Bairro" variant="outlined" />
+                                <TextField fullWidth label="Cidade" variant="outlined" />
+                                <TextField fullWidth label="Estado" variant="outlined" />
                             </div>
-                        </>
+                        </div>
                     )}
                 </div>
             </div>
