@@ -13,7 +13,7 @@ import {
     SelectChangeEvent,
     TextField,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DatePicker, MobileDatePicker } from "@mui/x-date-pickers";
 import { PayerTypeEnum } from "enums/payer-type";
 import { PaymentModeEnum } from "enums/payment-mode";
 import { useEffect, useState } from "react";
@@ -30,6 +30,7 @@ import { PiSuitcaseRollingBold as BigSuitcaseIcon } from "react-icons/pi";
 import Cards from "react-credit-cards";
 import InputMask from "react-input-mask";
 import { validateName } from "utils/validate-name";
+import useWindowDimensions from "hooks/window-dimensions";
 
 interface CardInfo {
     cvc: string;
@@ -40,6 +41,8 @@ interface CardInfo {
 }
 
 export function FinishForm() {
+    const { width } = useWindowDimensions();
+
     const [paymentMode, setPaymentMode] = useState<PaymentModeEnum>(PaymentModeEnum.pix);
     const [payerType, setPayerType] = useState<PayerTypeEnum>(PayerTypeEnum.person);
     const [termsAndConditions, setTermsAndConditions] = useState<boolean>(false);
@@ -153,7 +156,11 @@ export function FinishForm() {
                             <InputMask mask="999.999.999-99" maskChar={null}>
                                 <TextField fullWidth label="CPF OU PASSAPORTE" variant="outlined" />
                             </InputMask>
-                            <DatePicker label="Nascimento" format="DD/MM/YYYY" />
+                            {width > 820 ? (
+                                <DatePicker label="Nascimento" format="DD/MM/YYYY" />
+                            ) : (
+                                <MobileDatePicker label="Nascimento" format="DD/MM/YYYY" />
+                            )}
                         </div>
                         <Accordion className="shadow-xl">
                             <AccordionSummary
@@ -412,7 +419,11 @@ export function FinishForm() {
                                 <InputMask mask="999.999.999-99" maskChar={null}>
                                     <TextField fullWidth label="CPF" variant="outlined" />
                                 </InputMask>
-                                <DatePicker label="Nascimento" format="DD/MM/YYYY" />
+                                {width > 820 ? (
+                                    <DatePicker label="Nascimento" format="DD/MM/YYYY" />
+                                ) : (
+                                    <MobileDatePicker label="Nascimento" format="DD/MM/YYYY" />
+                                )}
                                 <TextField fullWidth label="Email" variant="outlined" />
                                 <InputMask mask="(99) 99999-9999" maskChar={null}>
                                     <TextField fullWidth label="Telefone" variant="outlined" />
@@ -445,7 +456,11 @@ export function FinishForm() {
                             <h2 className="text-bold">Pessoa Juridica</h2>
                             <div className="grid grid-cols-2 gap-4">
                                 <TextField fullWidth label="Nome completo do responsavél" variant="outlined" />
-                                <DatePicker label="Nascimento" format="DD/MM/YYYY" />
+                                {width > 820 ? (
+                                    <DatePicker label="Nascimento" format="DD/MM/YYYY" />
+                                ) : (
+                                    <MobileDatePicker label="Nascimento" format="DD/MM/YYYY" />
+                                )}
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Genero</InputLabel>
                                     <Select
