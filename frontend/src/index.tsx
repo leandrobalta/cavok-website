@@ -15,6 +15,9 @@ import Signin from "pages/signin/signin";
 import Payment from "pages/payment/payment";
 import { LoadingProvider } from "hooks/use-loading";
 import { AlertUtilsProvider } from "context/alert-utils.context";
+import Politics  from 'pages/politics/politics'
+import Terms from "pages/terms/terms";
+import Privacy from "pages/privacy/privacy";
 
 const router = createBrowserRouter([
     {
@@ -44,7 +47,18 @@ const router = createBrowserRouter([
                 path: "/signin",
                 element: <Signin />,
             },
-            // MAKE THIS TEMPORARY ROUTE FOR PAYMENT
+            {
+                path: "/politics",
+                element: <Politics />,
+            },
+            {
+                path: "/terms",
+                element: <Terms />,
+            },
+            {
+                path: "/privacy",
+                element: <Privacy />,
+            }
         ],
     },
 ]);

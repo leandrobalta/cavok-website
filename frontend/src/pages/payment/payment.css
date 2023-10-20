@@ -1,0 +1,18 @@
+.payment-conteiner{
+    display: grid;
+    width: 100%;
+    max-width: 80rem;
+    height: full;
+    margin: 0 auto;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+    padding-top: 1.5rem;
+    gap: 1rem;
+    grid-template-columns: 3fr 1.25fr;
+
+    @media screen and (max-width: 820px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        
+    }
+}

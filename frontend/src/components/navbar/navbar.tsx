@@ -50,11 +50,11 @@ const MenuList = () => {
             </li>
             <Divider />
             <li>
-                <a href="">Cancelamento/Reembolso</a>
+                <a href="../politics">Cancelamento/Reembolso</a>
             </li>
             <Divider />
             <li>
-                <a href="">Termos e Condições</a>
+                <a href="../terms">Termos e Condições</a>
             </li>
             <Divider />
             <li>
@@ -62,7 +62,7 @@ const MenuList = () => {
             </li>
             <Divider />
             <li>
-                <a href="">Política de Privacidade</a>
+                <a href="../privacy">Política de Privacidade</a>
             </li>
             <Divider />
             <li>
