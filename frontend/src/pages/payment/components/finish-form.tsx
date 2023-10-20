@@ -50,7 +50,8 @@ export function FinishForm() {
     const passengersCount = [1];
     const [hasBackPack, setHasBackPack] = useState<boolean>(true);
     const [hasLittleSuitcase, setHasLittleSuitcase] = useState<boolean>(true);
-    const [bigSuitcaseCount, setBigSuitcaseCount] = useState<number>(0);
+    const [outBigSuitcaseCount, setOutBigSuitcaseCount] = useState<number>(0);
+    const [backBigSuitcaseCount, setBackBigSuitcaseCount] = useState<number>(0);
     const [hasBack, setHasBack] = useState<boolean>(true);
     const [cardExpiryValid, setCardExpiryValid] = useState<boolean>(true);
     const [cardInfo, setCardInfo] = useState<CardInfo>({
@@ -71,14 +72,24 @@ export function FinishForm() {
         setPayerType(target.value as PayerTypeEnum);
     };
 
-    const handleRemoveBigSuitcase = () => {
-        if (bigSuitcaseCount > 0) {
-            setBigSuitcaseCount(bigSuitcaseCount - 1);
+    const handleOutRemoveBigSuitcase = () => {
+        if (outBigSuitcaseCount > 0) {
+            setOutBigSuitcaseCount(outBigSuitcaseCount - 1);
         }
     };
 
-    const handleAddBigSuitcase = () => {
-        setBigSuitcaseCount(bigSuitcaseCount + 1);
+    const handleOutAddBigSuitcase = () => {
+        setOutBigSuitcaseCount(outBigSuitcaseCount + 1);
+    };
+
+    const handleBackRemoveBigSuitcase = () => {
+        if (backBigSuitcaseCount > 0) {
+            setBackBigSuitcaseCount(backBigSuitcaseCount - 1);
+        }
+    };
+
+    const handleBackAddBigSuitcase = () => {
+        setBackBigSuitcaseCount(backBigSuitcaseCount + 1);
     };
 
     const handleCardInputFocus = (e: any) => {
@@ -194,11 +205,11 @@ export function FinishForm() {
                                         </div>
                                         <div className="flex flex-row justify-between">
                                             <div className="flex flex-row items-center gap-2">
-                                                {bigSuitcaseCount > 0 ? (
+                                                {outBigSuitcaseCount > 0 ? (
                                                     <>
                                                         <BigSuitcaseIcon color="green" />{" "}
-                                                        {`Inclui ${bigSuitcaseCount} mala${
-                                                            bigSuitcaseCount > 1 ? "s" : ""
+                                                        {`Inclui ${outBigSuitcaseCount} mala${
+                                                            outBigSuitcaseCount > 1 ? "s" : ""
                                                         } de 23kg.`}
                                                     </>
                                                 ) : (
@@ -214,12 +225,12 @@ export function FinishForm() {
                                                 aria-label="outlined button group"
                                             >
                                                 <Button
-                                                    disabled={bigSuitcaseCount === 0}
-                                                    onClick={handleRemoveBigSuitcase}
+                                                    disabled={outBigSuitcaseCount === 0}
+                                                    onClick={handleOutRemoveBigSuitcase}
                                                 >
                                                     -
                                                 </Button>
-                                                <Button onClick={handleAddBigSuitcase}>+</Button>
+                                                <Button onClick={handleOutAddBigSuitcase}>+</Button>
                                             </ButtonGroup>
                                         </div>
                                     </div>
@@ -249,11 +260,11 @@ export function FinishForm() {
                                                 </div>
                                                 <div className="flex flex-row justify-between">
                                                     <div className="flex flex-row items-center gap-2">
-                                                        {bigSuitcaseCount > 0 ? (
+                                                        {backBigSuitcaseCount > 0 ? (
                                                             <>
                                                                 <BigSuitcaseIcon color="green" />{" "}
-                                                                {`Inclui ${bigSuitcaseCount} mala${
-                                                                    bigSuitcaseCount > 1 ? "s" : ""
+                                                                {`Inclui ${backBigSuitcaseCount} mala${
+                                                                    backBigSuitcaseCount > 1 ? "s" : ""
                                                                 } de 23kg.`}
                                                             </>
                                                         ) : (
@@ -269,12 +280,12 @@ export function FinishForm() {
                                                         aria-label="outlined button group"
                                                     >
                                                         <Button
-                                                            disabled={bigSuitcaseCount === 0}
-                                                            onClick={handleRemoveBigSuitcase}
+                                                            disabled={backBigSuitcaseCount === 0}
+                                                            onClick={handleBackRemoveBigSuitcase}
                                                         >
                                                             -
                                                         </Button>
-                                                        <Button onClick={handleAddBigSuitcase}>+</Button>
+                                                        <Button onClick={handleBackAddBigSuitcase}>+</Button>
                                                     </ButtonGroup>
                                                 </div>
                                             </div>
@@ -457,10 +468,10 @@ export function FinishForm() {
                             <div className="grid grid-cols-2 gap-4">
                                 <TextField fullWidth label="Nome completo do responsavél" variant="outlined" />
                                 {width > 820 ? (
-                                    <DatePicker label="Nascimento" format="DD/MM/YYYY" />
-                                ) : (
-                                    <MobileDatePicker label="Nascimento" format="DD/MM/YYYY" />
-                                )}
+                                <DatePicker label="Nascimento" format="DD/MM/YYYY" />
+                            ) : (
+                                <MobileDatePicker label="Nascimento" format="DD/MM/YYYY" />
+                            )}
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Genero</InputLabel>
                                     <Select
