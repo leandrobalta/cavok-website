@@ -204,25 +204,28 @@ export function FinishForm() {
                                             </div>
                                         </div>
                                         <div className="flex flex-row justify-between">
-                                            <div className="flex flex-row items-center gap-2">
+                                            <div className="flex flex-col items-center">
                                                 {outBigSuitcaseCount > 0 ? (
-                                                    <>
+                                                    <div className="flex flex-row items-center">
                                                         <BigSuitcaseIcon color="green" />{" "}
                                                         {`Inclui ${outBigSuitcaseCount} mala${
                                                             outBigSuitcaseCount > 1 ? "s" : ""
                                                         } de 23kg.`}
-                                                    </>
+                                                    </div>
                                                 ) : (
-                                                    <>
+                                                    <div className="flex flex-row items-center gap-2">
                                                         <BigSuitcaseIcon /> {"Não inclui mala de 23kg."}
-                                                    </>
+                                                    </div>
                                                 )}
-                                                <span className="text-silver">{"(50 reais.)"}</span>
+                                                <span className="w-full ml-12 text-silver text-start">
+                                                    {"(50 reais.)"}
+                                                </span>
                                             </div>
                                             <ButtonGroup
                                                 variant="outlined"
                                                 size="small"
                                                 aria-label="outlined button group"
+                                                className="h-8"
                                             >
                                                 <Button
                                                     disabled={outBigSuitcaseCount === 0}
@@ -259,25 +262,28 @@ export function FinishForm() {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-row justify-between">
-                                                    <div className="flex flex-row items-center gap-2">
+                                                    <div className="flex flex-col items-center">
                                                         {backBigSuitcaseCount > 0 ? (
-                                                            <>
+                                                            <div className="flex flex-row items-center">
                                                                 <BigSuitcaseIcon color="green" />{" "}
                                                                 {`Inclui ${backBigSuitcaseCount} mala${
                                                                     backBigSuitcaseCount > 1 ? "s" : ""
                                                                 } de 23kg.`}
-                                                            </>
+                                                            </div>
                                                         ) : (
-                                                            <>
+                                                            <div className="flex flex-row items-center gap-2">
                                                                 <BigSuitcaseIcon /> {"Não inclui mala de 23kg."}
-                                                            </>
+                                                            </div>
                                                         )}
-                                                        <span className="text-silver">{"(50 reais.)"}</span>
+                                                        <span className="w-full ml-12 text-silver text-start">
+                                                            {"(50 reais.)"}
+                                                        </span>
                                                     </div>
                                                     <ButtonGroup
                                                         variant="outlined"
                                                         size="small"
                                                         aria-label="outlined button group"
+                                                        className="h-8"
                                                     >
                                                         <Button
                                                             disabled={backBigSuitcaseCount === 0}
@@ -468,10 +474,10 @@ export function FinishForm() {
                             <div className="grid grid-cols-2 gap-4">
                                 <TextField fullWidth label="Nome completo do responsavél" variant="outlined" />
                                 {width > 820 ? (
-                                <DatePicker label="Nascimento" format="DD/MM/YYYY" />
-                            ) : (
-                                <MobileDatePicker label="Nascimento" format="DD/MM/YYYY" />
-                            )}
+                                    <DatePicker label="Nascimento" format="DD/MM/YYYY" />
+                                ) : (
+                                    <MobileDatePicker label="Nascimento" format="DD/MM/YYYY" />
+                                )}
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Genero</InputLabel>
                                     <Select
@@ -484,6 +490,9 @@ export function FinishForm() {
                                         <MenuItem value="female">Feminino</MenuItem>
                                     </Select>
                                 </FormControl>
+                                <InputMask mask="999.999.999-99" maskChar={null}>
+                                    <TextField fullWidth label="CPF do responsavel" variant="outlined" />
+                                </InputMask>
                                 <TextField fullWidth label="Email" variant="outlined" />
                                 <TextField fullWidth label="Nome da empresa" variant="outlined" />
                                 <TextField fullWidth label="Razão social" variant="outlined" />
