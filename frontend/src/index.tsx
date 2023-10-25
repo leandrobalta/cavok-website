@@ -61,10 +61,10 @@ const router = createBrowserRouter([
                 path: "/privacy",
                 element: <Privacy />,
             },
-            {
-                path: "/doubts",
-                element: <Doubts />
-            },
+            // {
+            //     path: "/doubts",
+            //     element: <Doubts />
+            // },
             {
                 path: "about",
                 element: <About />

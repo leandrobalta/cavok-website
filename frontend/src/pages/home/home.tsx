@@ -1,5 +1,5 @@
 import Hero from "components/hero/hero"
-import Services from "pages/home/components/services/services"
+import Services from "components/services/services"
 import "./home.css";
 import Recommend from "pages/home/components/recommend/recommend";
 

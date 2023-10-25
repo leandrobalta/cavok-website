@@ -5,7 +5,11 @@ import service2 from "assets/images/service2.png";
 import service3 from "assets/images/service3.png";
 import service4 from "assets/images/service4.png";
 
-export default function Services() {
+interface ServicesProps {
+    withoutTitle?: boolean;
+}
+
+export default function Services(props: ServicesProps) {
 
     const data: {
         icon: any;
@@ -37,10 +41,13 @@ export default function Services() {
 
     return (
         <div className="services">
-            <div className="services-title">
-                <h3>Por que escolher a gente?</h3>
-                <HorizontalLine />
-            </div>
+            {
+                !props.withoutTitle && 
+                <div className="services-title">
+                    <h3>Por que escolher a gente?</h3>
+                    <HorizontalLine />
+                </div>
+            }
             <div className="services-body">
                 {data.map((item, index) => {
                     return (

@@ -60,10 +60,10 @@ const MenuList = () => {
             <li>
                 <a href="../privacy">Política de Privacidade</a>
             </li>
-            <Divider />
+            {/* <Divider />
             <li>
                 <a href="../doubts">Dúvidas Frequentes</a>
-            </li>
+            </li> */}
         </ul>
     );
 };

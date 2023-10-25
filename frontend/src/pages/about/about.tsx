@@ -1,8 +1,10 @@
 import { InfoPage } from "components/info-page/info-page";
+import AirPortBgCropped from "assets/images/airport-cropped.jpg"
+import Services from "components/services/services";
 
 export default function About() {
     return (
-        <div className="flex justify-center bg-[#f8f6f7] my-4 max-md:px-4">
+        <div className="flex flex-col items-center gap-16 bg-[rgb(248,246,247)] my-4 max-md:px-4 ">
             <InfoPage title="Quem Somos">
                 <h2 className="text-bold text-lg">Bem-vindo &agrave; Cavok Viagens - Sua Rota para o Mundo!</h2>
 
@@ -56,6 +58,7 @@ export default function About() {
 
                 <h2 className="text-bold text-lg">Junte-se a n&oacute;s nesta jornada e permita-nos ser seu companheiro de viagem confi&aacute;vel.</h2>
             </InfoPage>
+            <Services withoutTitle/>
         </div>
     );
 }
