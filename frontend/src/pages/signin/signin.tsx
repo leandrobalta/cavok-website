@@ -90,7 +90,7 @@ export default function Signin() {
                                     <MenuItem value="female">Feminino</MenuItem>
                                 </Select>
                             </FormControl>
-                            <InputMask mask="99.999-99">
+                            <InputMask mask="99.999-999">
                                 <TextField fullWidth label="CEP" variant="outlined" />
                             </InputMask>
                             <TextField fullWidth label="Endereço" variant="outlined" />

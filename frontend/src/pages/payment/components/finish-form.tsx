@@ -510,7 +510,7 @@ export function FinishForm() {
                         <div className="flex flex-col gap-4">
                             <h2 className="text-bold">{"Pessoa Jurídica"}</h2>
                             <div className="grid grid-cols-2 gap-4">
-                                <TextField fullWidth label="Nome completo do responsavél" variant="outlined" />
+                                <TextField fullWidth label="Nome completo do responsável" variant="outlined" />
                                 {width > 820 ? (
                                     <DatePicker label="Nascimento" format="DD/MM/YYYY" />
                                 ) : (
@@ -529,7 +529,7 @@ export function FinishForm() {
                                     </Select>
                                 </FormControl>
                                 <InputMask mask="999.999.999-99" maskChar={null}>
-                                    <TextField fullWidth label="CPF do responsavel" variant="outlined" />
+                                    <TextField fullWidth label="CPF do responsável" variant="outlined" />
                                 </InputMask>
                                 <TextField fullWidth label="Email" variant="outlined" />
                                 <TextField fullWidth label="Nome da empresa" variant="outlined" />
