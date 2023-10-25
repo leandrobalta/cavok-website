@@ -107,8 +107,14 @@ export function FinishForm() {
             }
         }
 
-        if (name === "cvc" && value.toString().lenght === 4){
-            console.log("cvc value: ", value)
+        if (name === "cvc") {
+            console.log("cvc value: ", value);
+            console.log("cvc value lenght: ", value.toString().length);
+            const valueLenght = value.toString().length;
+
+            if (valueLenght === 4) {
+                return;
+            }
         }
 
         setCardInfo({ ...cardInfo, [name]: value });
