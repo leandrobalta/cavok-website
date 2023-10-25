@@ -62,7 +62,7 @@ const MenuList = () => {
             </li>
             <Divider />
             <li>
-                <a href="">Dúvidas Frequentes</a>
+                <a href="../doubts">Dúvidas Frequentes</a>
             </li>
         </ul>
     );
@@ -134,7 +134,7 @@ export function NavBar() {
                         <ul>
                             <li>
                                 {" "}
-                                <a href="#"> Quem somos </a>
+                                <a href="/about"> Quem somos </a>
                             </li>
                             <li>
                                 {" "}

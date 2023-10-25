@@ -293,17 +293,17 @@ export default function Search() {
                         <h3 className="text-bold">Atenção</h3>
                         <p>
                             {
-                                "As companhias aéreas podem alterar os preços das passagens sem aviso prévio. Garantimos suas passagens somente após a emissão dos bilhetes e envio dos tickets por e-mail."
+                                "1) As companhias aéreas podem alterar os preços das passagens sem aviso prévio. Garantimos suas passagens somente após a emissão dos bilhetes e envio dos tickets por e-mail."
                             }
                         </p>
                         <p>
                             {
-                                "Os valores informados não contemplam as taxas para despacho de bagagens. Você poderá adicionar sua bagagem na página de pagamento."
+                                "2) Os valores informados não contemplam as taxas para despacho de bagagens. Você poderá adicionar sua bagagem na página de pagamento."
                             }
                         </p>
                         <p>
                             {
-                                "A Cavok Viagens realizará o seu check in e enviaremos a você o cartão de embarque atualizado até 24 horas antes do voo."
+                                "3)A Cavok Viagens realizará o seu check in e enviaremos a você o cartão de embarque atualizado até 24 horas antes do voo."
                             }
                         </p>
                     </div>

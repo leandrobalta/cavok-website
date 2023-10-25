@@ -238,7 +238,7 @@ export default function Terms() {
                     oriundos do sistema do usu&aacute;rio ou de terceiros.
                 </p>
 
-                <h2 className="text-bold text-lg">11) Falhas no sistema</h2>
+                <h2 className="text-bold text-lg">10) Falhas no sistema</h2>
 
                 <p>
                     N&atilde;o nos responsabilizamos por qualquer dano, preju&iacute;zo ou perda sofridos pelo
@@ -249,7 +249,7 @@ export default function Terms() {
                     navega&ccedil;&atilde;o na internet ou como consequ&ecirc;ncia de transfer&ecirc;ncia de dados.
                 </p>
 
-                <h2 className="text-bold text-lg">12) Indeniza&ccedil;&atilde;o</h2>
+                <h2 className="text-bold text-lg">11) Indeniza&ccedil;&atilde;o</h2>
 
                 <p>
                     Cabe ao usu&aacute;rio indenizar a Cavok Viagens diretores, administradores, colaboradores,
@@ -260,7 +260,7 @@ export default function Terms() {
                     advogados.
                 </p>
 
-                <p>13) Legisla&ccedil;&atilde;o aplic&aacute;vel e foro de elei&ccedil;&atilde;o</p>
+                <h2 className="text-bold text-lg">12) Legisla&ccedil;&atilde;o aplic&aacute;vel e foro de elei&ccedil;&atilde;o</h2>
 
                 <p>
                     Todos os itens deste Termos e Condi&ccedil;&otilde;es Gerais de Uso do Site s&atilde;o regidos pelas

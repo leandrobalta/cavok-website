@@ -18,6 +18,8 @@ import { AlertUtilsProvider } from "context/alert-utils.context";
 import Politics  from 'pages/politics/politics'
 import Terms from "pages/terms/terms";
 import Privacy from "pages/privacy/privacy";
+import Doubts from "pages/doubts/doubts";
+import About from "pages/about/about";
 
 const router = createBrowserRouter([
     {
@@ -58,6 +60,14 @@ const router = createBrowserRouter([
             {
                 path: "/privacy",
                 element: <Privacy />,
+            },
+            {
+                path: "/doubts",
+                element: <Doubts />
+            },
+            {
+                path: "about",
+                element: <About />
             }
         ],
     },
