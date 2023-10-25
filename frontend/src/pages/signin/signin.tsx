@@ -58,8 +58,8 @@ export default function Signin() {
                     className="bg-white"
                     fullWidth
                 >
-                    <CavokToggleButton value={PayerTypeEnum.person}>Pessoa Fisica</CavokToggleButton>
-                    <CavokToggleButton value={PayerTypeEnum.company}>Pessoa Juridica</CavokToggleButton>
+                    <CavokToggleButton value={PayerTypeEnum.person}>{"Pessoa Física"}</CavokToggleButton>
+                    <CavokToggleButton value={PayerTypeEnum.company}>{"Pessoa Jurídica"}</CavokToggleButton>
                 </ToggleButtonGroup>
                 <Divider />
                 <div className="grid grid-cols-2 gap-4">
@@ -79,7 +79,7 @@ export default function Signin() {
                                 <TextField fullWidth label="Telefone" variant="outlined" />
                             </InputMask>
                             <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Genero</InputLabel>
+                                <InputLabel id="demo-simple-select-label">{"Gênero"}</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -94,7 +94,7 @@ export default function Signin() {
                                 <TextField fullWidth label="CEP" variant="outlined" />
                             </InputMask>
                             <TextField fullWidth label="Endereço" variant="outlined" />
-                            <TextField fullWidth label="Numero" variant="outlined" />
+                            <TextField fullWidth label="Número" variant="outlined" />
                             <TextField fullWidth label="Complemento" variant="outlined" />
                             <TextField fullWidth label="Bairro" variant="outlined" />
                             <TextField fullWidth label="Cidade" variant="outlined" />
@@ -102,14 +102,14 @@ export default function Signin() {
                         </>
                     ) : (
                         <>
-                            <TextField fullWidth label="Nome completo do responsavél" variant="outlined" />
+                            <TextField fullWidth label="Nome completo do responsável" variant="outlined" />
                             {width > 820 ? (
                                 <DatePicker label="Nascimento" format="DD/MM/YYYY" />
                             ) : (
                                 <MobileDatePicker label="Nascimento" format="DD/MM/YYYY" />
                             )}
                             <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Genero</InputLabel>
+                                <InputLabel id="demo-simple-select-label">{"Gênero"}</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -121,7 +121,7 @@ export default function Signin() {
                                 </Select>
                             </FormControl>
                             <InputMask mask="999.999.999-99" maskChar={null}>
-                                <TextField fullWidth label="CPF do responsavel" variant="outlined" />
+                                <TextField fullWidth label="CPF do responsável" variant="outlined" />
                             </InputMask>
                             <TextField fullWidth label="Email" variant="outlined" />
                             <TextField fullWidth label="Nome da empresa" variant="outlined" />
@@ -136,7 +136,7 @@ export default function Signin() {
                                 <TextField fullWidth label="CEP" variant="outlined" />
                             </InputMask>
                             <TextField fullWidth label="Endereço" variant="outlined" />
-                            <TextField fullWidth label="Numero" variant="outlined" />
+                            <TextField fullWidth label="Número" variant="outlined" />
                             <TextField fullWidth label="Complemento" variant="outlined" />
                             <TextField fullWidth label="Bairro" variant="outlined" />
                             <TextField fullWidth label="Cidade" variant="outlined" />
@@ -149,7 +149,7 @@ export default function Signin() {
                         Inscrever-se
                     </Button>
                     <p className="flex justify-center gap-2 whitespace-nowrap">
-                        Ja possui cadastro?
+                        {"Já possui cadastro?"}
                         <a href="/login" className="text-[#134074] hover:underline">
                             Entrar
                         </a>

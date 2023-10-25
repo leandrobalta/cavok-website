@@ -153,7 +153,7 @@ const PassengersContent = (props: PassengersContentProps) => {
                     defaultValue="economy"
                     name="radio-buttons-group"
                 >
-                    <FormControlLabel value="economy" control={<Radio />} label="Economica" />
+                    <FormControlLabel value="economy" control={<Radio />} label="Econômica" />
                     <FormControlLabel value="executive" control={<Radio />} label="Executiva" />
                 </RadioGroup>
             </div>

@@ -58,10 +58,6 @@ const MenuList = () => {
             </li>
             <Divider />
             <li>
-                <a href="">Central de Ajuda</a>
-            </li>
-            <Divider />
-            <li>
                 <a href="../privacy">Política de Privacidade</a>
             </li>
             <Divider />
@@ -142,7 +138,7 @@ export function NavBar() {
                             </li>
                             <li>
                                 {" "}
-                                <a href="#"> Fale Conosco </a>
+                                <a href="https://api.whatsapp.com/send?phone=5512997578780&text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20cota%C3%A7%C3%A3o."> Fale Conosco </a>
                             </li>
                         </ul>
                     </div>

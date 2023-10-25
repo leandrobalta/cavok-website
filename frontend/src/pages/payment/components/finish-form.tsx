@@ -43,6 +43,8 @@ interface CardInfo {
 export function FinishForm() {
     const { width } = useWindowDimensions();
 
+    const [isInternational, setIsInternational] = useState<boolean>(true);
+    const [cvcMask, setCvcMask] = useState<"999" | "9999">("999");
     const [paymentMode, setPaymentMode] = useState<PaymentModeEnum>(PaymentModeEnum.pix);
     const [payerType, setPayerType] = useState<PayerTypeEnum>(PayerTypeEnum.person);
     const [termsAndConditions, setTermsAndConditions] = useState<boolean>(false);
@@ -99,13 +101,14 @@ export function FinishForm() {
     const handleCardInputChange = (e: any) => {
         const { name, value } = e.target;
 
-        console.log(name, value);
-
         if (name === "name") {
-            console.log("is name");
             if (!validateName(value)) {
                 return;
             }
+        }
+
+        if (name === "cvc" && value.toString().lenght === 4){
+            console.log("cvc value: ", value)
         }
 
         setCardInfo({ ...cardInfo, [name]: value });
@@ -157,6 +160,15 @@ export function FinishForm() {
                 <div className="flex flex-col gap-4 border-black bg-white p-4 rounded-lg text-start shadow-xl">
                     <div className="flex flex-col gap-4">
                         <h2 className="text-bold">Dados do passageiro {value}</h2>
+                        <FormControlLabel
+                            control={<Checkbox />}
+                            label={"Voo internacional (apenas para teste)"}
+                            checked={isInternational}
+                            onChange={(evt) => {
+                                const target = evt.target as HTMLInputElement;
+                                setIsInternational(target.checked);
+                            }}
+                        />
                         <div className="grid grid-cols-2 gap-4">
                             <TextField fullWidth label="Primeiro nome" variant="outlined" />
                             <TextField fullWidth label="Sobrenome" variant="outlined" />
@@ -164,9 +176,24 @@ export function FinishForm() {
                             <InputMask mask="(99) 99999-9999" maskChar={null}>
                                 <TextField fullWidth label="Telefone" variant="outlined" />
                             </InputMask>
-                            <InputMask mask="999.999.999-99" maskChar={null}>
-                                <TextField fullWidth label="CPF OU PASSAPORTE" variant="outlined" />
-                            </InputMask>
+                            {isInternational ? (
+                                <>
+                                    <InputMask mask="aa999999" maskChar={null}>
+                                        <TextField fullWidth label="Passaporte" variant="outlined" />
+                                    </InputMask>
+                                    <InputMask mask="99/99">
+                                        <TextField
+                                            label="Vencimento (MM/YY)"
+                                            variant="outlined"
+                                            error={!cardExpiryValid}
+                                        />
+                                    </InputMask>
+                                </>
+                            ) : (
+                                <InputMask mask="999.999.999-99" maskChar={null}>
+                                    <TextField fullWidth label="CPF" variant="outlined" />
+                                </InputMask>
+                            )}
                             {width > 820 ? (
                                 <DatePicker label="Nascimento" format="DD/MM/YYYY" />
                             ) : (
@@ -217,24 +244,28 @@ export function FinishForm() {
                                                         <BigSuitcaseIcon /> {"Não inclui mala de 23kg."}
                                                     </div>
                                                 )}
-                                                <span className="w-full ml-12 text-silver text-start">
-                                                    {"(50 reais.)"}
-                                                </span>
+                                                {!isInternational && (
+                                                    <span className="w-full ml-12 text-silver text-start">
+                                                        {"(50 reais.)"}
+                                                    </span>
+                                                )}
                                             </div>
-                                            <ButtonGroup
-                                                variant="outlined"
-                                                size="small"
-                                                aria-label="outlined button group"
-                                                className="h-8"
-                                            >
-                                                <Button
-                                                    disabled={outBigSuitcaseCount === 0}
-                                                    onClick={handleOutRemoveBigSuitcase}
+                                            {!isInternational && (
+                                                <ButtonGroup
+                                                    variant="outlined"
+                                                    size="small"
+                                                    aria-label="outlined button group"
+                                                    className="h-8"
                                                 >
-                                                    -
-                                                </Button>
-                                                <Button onClick={handleOutAddBigSuitcase}>+</Button>
-                                            </ButtonGroup>
+                                                    <Button
+                                                        disabled={outBigSuitcaseCount === 0}
+                                                        onClick={handleOutRemoveBigSuitcase}
+                                                    >
+                                                        -
+                                                    </Button>
+                                                    <Button onClick={handleOutAddBigSuitcase}>+</Button>
+                                                </ButtonGroup>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -275,24 +306,28 @@ export function FinishForm() {
                                                                 <BigSuitcaseIcon /> {"Não inclui mala de 23kg."}
                                                             </div>
                                                         )}
-                                                        <span className="w-full ml-12 text-silver text-start">
-                                                            {"(50 reais.)"}
-                                                        </span>
+                                                        {!isInternational && (
+                                                            <span className="w-full ml-12 text-silver text-start">
+                                                                {"(50 reais.)"}
+                                                            </span>
+                                                        )}
                                                     </div>
-                                                    <ButtonGroup
-                                                        variant="outlined"
-                                                        size="small"
-                                                        aria-label="outlined button group"
-                                                        className="h-8"
-                                                    >
-                                                        <Button
-                                                            disabled={backBigSuitcaseCount === 0}
-                                                            onClick={handleBackRemoveBigSuitcase}
+                                                    {!isInternational && (
+                                                        <ButtonGroup
+                                                            variant="outlined"
+                                                            size="small"
+                                                            aria-label="outlined button group"
+                                                            className="h-8"
                                                         >
-                                                            -
-                                                        </Button>
-                                                        <Button onClick={handleBackAddBigSuitcase}>+</Button>
-                                                    </ButtonGroup>
+                                                            <Button
+                                                                disabled={backBigSuitcaseCount === 0}
+                                                                onClick={handleBackRemoveBigSuitcase}
+                                                            >
+                                                                -
+                                                            </Button>
+                                                            <Button onClick={handleBackAddBigSuitcase}>+</Button>
+                                                        </ButtonGroup>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -353,7 +388,7 @@ export function FinishForm() {
                                         onChange={handleCardInputChange}
                                         onFocus={handleCardInputFocus}
                                     >
-                                        <TextField label="Numero" variant="outlined" name="number" />
+                                        <TextField label="Número" variant="outlined" name="number" />
                                     </InputMask>
                                     <TextField
                                         name="name"
@@ -376,17 +411,14 @@ export function FinishForm() {
                                                 error={!cardExpiryValid}
                                             />
                                         </InputMask>
-                                        <InputMask
-                                            mask="999"
+                                        <TextField
+                                            type="number"
                                             onChange={handleCardInputChange}
                                             onFocus={handleCardInputFocus}
-                                        >
-                                            <TextField
-                                                name="cvc"
-                                                label="CVC (Codigo de Segurança)"
-                                                variant="outlined"
-                                            />
-                                        </InputMask>
+                                            name="cvc"
+                                            label="CVV (Código de Segurança)"
+                                            variant="outlined"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -403,7 +435,7 @@ export function FinishForm() {
                             value={PayerTypeEnum.person}
                             className=""
                             control={<Radio />}
-                            label={"Pessoa Fisica"}
+                            label={"Pessoa Física"}
                             onChange={(evt) => {
                                 handlePayerTypeChange(evt as any);
                             }}
@@ -412,7 +444,7 @@ export function FinishForm() {
                             value={PayerTypeEnum.company}
                             className=""
                             control={<Radio />}
-                            label={"Pessoa Juridica"}
+                            label={"Pessoa Jurídica"}
                             onChange={(evt) => {
                                 handlePayerTypeChange(evt as any);
                             }}
@@ -430,7 +462,7 @@ export function FinishForm() {
                     <Divider />
                     {payerType === PayerTypeEnum.person ? (
                         <div className="flex flex-col gap-4">
-                            <h2 className="text-bold">Pessoa Fisica</h2>
+                            <h2 className="text-bold">{"Pessoa Física"}</h2>
                             <div className="grid grid-cols-2 gap-4">
                                 <TextField fullWidth label="Nome completo" variant="outlined" />
                                 <InputMask mask="999.999.999-99" maskChar={null}>
@@ -446,7 +478,7 @@ export function FinishForm() {
                                     <TextField fullWidth label="Telefone" variant="outlined" />
                                 </InputMask>
                                 <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Genero</InputLabel>
+                                    <InputLabel id="demo-simple-select-label">{"Gênero"}</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
@@ -457,11 +489,11 @@ export function FinishForm() {
                                         <MenuItem value="female">Feminino</MenuItem>
                                     </Select>
                                 </FormControl>
-                                <InputMask mask="99.999-99">
+                                <InputMask mask="99.999-999">
                                     <TextField fullWidth label="CEP" variant="outlined" />
                                 </InputMask>
                                 <TextField fullWidth label="Endereço" variant="outlined" />
-                                <TextField fullWidth label="Numero" variant="outlined" />
+                                <TextField fullWidth label="Número" variant="outlined" />
                                 <TextField fullWidth label="Complemento" variant="outlined" />
                                 <TextField fullWidth label="Bairro" variant="outlined" />
                                 <TextField fullWidth label="Cidade" variant="outlined" />
@@ -470,7 +502,7 @@ export function FinishForm() {
                         </div>
                     ) : (
                         <div className="flex flex-col gap-4">
-                            <h2 className="text-bold">Pessoa Juridica</h2>
+                            <h2 className="text-bold">{"Pessoa Jurídica"}</h2>
                             <div className="grid grid-cols-2 gap-4">
                                 <TextField fullWidth label="Nome completo do responsavél" variant="outlined" />
                                 {width > 820 ? (
@@ -479,11 +511,11 @@ export function FinishForm() {
                                     <MobileDatePicker label="Nascimento" format="DD/MM/YYYY" />
                                 )}
                                 <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Genero</InputLabel>
+                                    <InputLabel id="demo-simple-select-label">{"Gênero"}</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        label="Genero"
+                                        label="Gênero"
                                         onChange={onPayerGenderChange}
                                     >
                                         <MenuItem value="male">Masculino</MenuItem>
@@ -502,11 +534,11 @@ export function FinishForm() {
                                 <InputMask mask="(99) 99999-9999" maskChar={null}>
                                     <TextField fullWidth label="Telefone" variant="outlined" />
                                 </InputMask>
-                                <InputMask mask="99.999-99">
+                                <InputMask mask="99.999-999">
                                     <TextField fullWidth label="CEP" variant="outlined" />
                                 </InputMask>
                                 <TextField fullWidth label="Endereço" variant="outlined" />
-                                <TextField fullWidth label="Numero" variant="outlined" />
+                                <TextField fullWidth label="Número" variant="outlined" />
                                 <TextField fullWidth label="Complemento" variant="outlined" />
                                 <TextField fullWidth label="Bairro" variant="outlined" />
                                 <TextField fullWidth label="Cidade" variant="outlined" />
@@ -520,7 +552,15 @@ export function FinishForm() {
             {/* material ui checkbox to check if the person aprove the terms and conditions of cavok viagens, only if this checkbox is checked the consumer can finish the payment */}
             <FormControlLabel
                 control={<Checkbox />}
-                label={`Li e concordo com os termos e condições da Cavok Viagens`}
+                label={
+                    <>
+                        Li e concordo com os{" "}
+                        <a href="/terms" className="text-[#134085] hover:underline">
+                            termos e condições
+                        </a>{" "}
+                        da Cavok Viagens
+                    </>
+                }
                 value={termsAndConditions}
                 onChange={(evt) => {
                     const target = evt.target as HTMLInputElement;

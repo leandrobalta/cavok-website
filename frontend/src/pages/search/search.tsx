@@ -106,7 +106,7 @@ const FilterChecks = (props: FilterChecksProps) => {
                             <div className="filter-content-item-body-line">
                                 <FormControlLabel
                                     control={<Checkbox defaultChecked />}
-                                    label={`Todos as ${props.title}`}
+                                    label={`Todas as ${props.title}`}
                                     id="todos"
                                 />
                                 <span>{allAmount}</span>
@@ -136,7 +136,7 @@ const FilterChecks = (props: FilterChecksProps) => {
                         <div className="filter-content-item-body-line">
                             <FormControlLabel
                                 control={<Checkbox defaultChecked />}
-                                label={`Todos as ${props.title}`}
+                                label={`Todas as ${props.title}`}
                                 id="todos"
                             />
                             <span>{allAmount}</span>
@@ -292,17 +292,19 @@ export default function Search() {
                     <div className="information">
                         <h3 className="text-bold">Atenção</h3>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur metus quis eros
-                            euismod, vitae varius dolor gravida. Cras sem diam, viverra sit amet nibh fringilla,
-                            vulputate posuere erat. Phasellus sagittis eu mauris sit amet imperdiet.
+                            {
+                                "As companhias aéreas podem alterar os preços das passagens sem aviso prévio. Garantimos suas passagens somente após a emissão dos bilhetes e envio dos tickets por e-mail."
+                            }
                         </p>
                         <p>
-                            Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus
-                            massa, a vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
+                            {
+                                "Os valores informados não contemplam as taxas para despacho de bagagens. Você poderá adicionar sua bagagem na página de pagamento."
+                            }
                         </p>
                         <p>
-                            Phasellus ac sagittis nunc. Duis congue, est eu convallis ultricies, augue urna faucibus
-                            massa, a vulputate ex nisi at lacus. Nullam gravida pretium nunc vulputate sodales.
+                            {
+                                "A Cavok Viagens realizará o seu check in e enviaremos a você o cartão de embarque atualizado até 24 horas antes do voo."
+                            }
                         </p>
                     </div>
                 </div>

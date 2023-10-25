@@ -45,7 +45,7 @@ export default function LoginPage() {
                                 Entrar
                             </Button>
                             <p className="flex justify-center gap-2 whitespace-nowrap">
-                                Ainda nao possui cadastro?
+                                {"Ainda não possui cadastro?"}
                                 <a href="/signin" className="text-[#134074] hover:underline whitespace-nowrap">
                                     Crie uma conta
                                 </a>
