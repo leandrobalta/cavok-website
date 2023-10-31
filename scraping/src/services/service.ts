@@ -2,10 +2,11 @@ import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { PuppeteerExtraPluginAdblocker } from "puppeteer-extra-plugin-adblocker";
 import { Browser } from "puppeteer";
+import Logger from "../utils/logger";
 
 export abstract class Service {
     constructor() {
-        console.log("Starting service...");
+        Logger.info("Starting service...");
         puppeteer.use(new PuppeteerExtraPluginAdblocker({ blockTrackers: true }));
         puppeteer.use(StealthPlugin());
     }
@@ -14,7 +15,7 @@ export abstract class Service {
         const browser = await puppeteer.launch({
             //executablePath: '/usr/bin/google-chrome',
             args: ["--no-sandbox", "--disable-setuid-sandbox"],
-            headless: true
+            headless: false
         });
 
         return browser;
