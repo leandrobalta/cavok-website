@@ -1,62 +1,31 @@
-import puppeteer from "puppeteer-extra";
-import StealthPlugin from "puppeteer-extra-plugin-stealth";
-import { PuppeteerExtraPluginAdblocker } from "puppeteer-extra-plugin-adblocker";
+import express from 'express'
+import cors from 'cors'
 
-const initBrowser = async () => {
-  const browser = await puppeteer.launch({
-    headless: false,
-    executablePath: "/usr/bin/google-chrome",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    slowMo: 50,
-  });
-  return browser;
-};
+// Porta do servidor
+const PORT = process.env.PORT || 4000
+// Host do servidor
+const HOSTNAME = process.env.HOSTNAME || 'http://localhost'
 
-(async () => {
-  puppeteer.use(new PuppeteerExtraPluginAdblocker({ blockTrackers: true }));
-  puppeteer.use(StealthPlugin());
-  const browser = await initBrowser();
-  const page = await browser.newPage();
+export class Program {
+  PORT: number;
+  HOSTNAME: string;
+  express: express.Application;
+  
+  constructor() {
+    console.log("Starting program...");
+    this.PORT = process.env.PORT ? parseInt(process.env.PORT) : 4000
+    this.HOSTNAME = process.env.HOSTNAME || 'http://localhost'
+    this.express = express();
 
-//   page.on('console', async (msg) => {
-//     const msgArgs = msg.args();
-//     for (let i = 0; i < msgArgs.length; ++i) {
-//       console.log(await msgArgs[i].jsonValue());
-//     }
-//   });
+    this.loadRoutes();
+  }
 
-  await page.goto(
-    "https://www.smiles.com.br/mfe/emissao-passagem/?adults=2&cabin=ALL&children=0&departureDate=1701313200000&infants=0&isElegible=false&isFlexibleDateChecked=false&returnDate=1701615600000&searchType=g3&segments=1&tripType=1&originAirport=VCP&originCity=&originCountry=&originAirportIsAny=false&destinationAirport=GYN&destinCity=&destinCountry=&destinAirportIsAny=false&novo-resultado-voos=true"
-  );
-//   const cookieAcceptButton = await page.$("#onetrust-reject-all-handler");
-//   if (cookieAcceptButton) {
-//     await cookieAcceptButton.click();
-//   } else {
-//     console.log("O botão de aceitar cookies não foi encontrado.");
-//   }
+  loadRoutes() {
+    this.express.use(cors());
+    this.express.use(express.json());
+    this.express.use(express.urlencoded({ extended: true }));
+    this.express.use('/api', require('./routes'));
+  }
+}
 
-  await page.click("#onetrust-reject-all-handler")
-
-  const prices = await page.evaluate(() => {
-    // getting elements
-    const subText = document.querySelector(".select-flight-header-info-content-subText")?.innerHTML;
-
-    const itemsList: Element[] = Array.from(document.querySelectorAll<HTMLDivElement>(".select-flight-list-accordion-item"));
-
-    return subText;
-
-    const worstPrices = [];
-    for (const item of itemsList) {
-      const worstMilesPrice = item.querySelector(
-        "flight-fare-input-item  smiles > flight-fare-input-container-control-label"
-      )?.innerHTML;
-      worstPrices.push(worstMilesPrice);
-    }
-
-    return worstPrices;
-  });
-
-  console.log("page title is: ", prices);
-
-  await browser.close();
-})();
+new Program();
