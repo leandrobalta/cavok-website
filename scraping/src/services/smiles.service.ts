@@ -13,50 +13,57 @@ export class SmilesService extends Service {
         const page = await this.newPage(browser);
 
         await page.goto(
-            "https://www.smiles.com.br/mfe/emissao-passagem/?adults=2&cabin=ALL&children=0&departureDate=1701313200000&infants=0&isElegible=false&isFlexibleDateChecked=false&returnDate=1701615600000&searchType=g3&segments=1&tripType=1&originAirport=VCP&originCity=&originCountry=&originAirportIsAny=false&destinationAirport=GYN&destinCity=&destinCountry=&destinAirportIsAny=false&novo-resultado-voos=true"
+            "https://www.smiles.com.br/mfe/emissao-passagem/?adults=1&cabin=ALL&children=0&departureDate=1704769200000&infants=0&isElegible=false&isFlexibleDateChecked=false&returnDate=&searchType=congenere&segments=1&tripType=2&originAirport=HND&originCity=&originCountry=&originAirportIsAny=false&destinationAirport=JFK&destinCity=&destinCountry=&destinAirportIsAny=false&novo-resultado-voos=true"
         );
 
-        Logger.info("Waiting for cookies...")
+        Logger.info("Waiting for cookies...");
 
-        //const cookieAcceptButton = await page.waitForSelector("#onetrust-reject-all-handler", {visible: true});
-
-        //await page.click("#onetrust-reject-all-handler");
-
-        await page.waitForSelector(".select-flight-list-accordion-item", {visible: true, timeout: 10000});
+        await page.waitForSelector(".select-flight-list-accordion-item");
 
         const trips = await page.evaluate(() => {
-            // getting elements
-            const subText = document.querySelector(".select-flight-header-info-content-subText")?.innerHTML;
+            const itemsList: Element[] = Array.from(document.querySelectorAll<HTMLDivElement>(".select-flight-list-accordion-item"));
+            const auxTrips = [];
 
-            const itemsList: Element[] = Array.from(
-                document.querySelectorAll<HTMLDivElement>(".select-flight-list-accordion-item")
-            );
-            
-            console.log("itemsList: ", itemsList);
-
-            const worstPrices = [];
             for (const item of itemsList) {
                 const smilesClubMilesCheckBox = item.querySelector<HTMLInputElement>(".smiles_club input");
-                console.log(smilesClubMilesCheckBox)
+                console.log(`checkbox: ${smilesClubMilesCheckBox}`);
 
                 if (smilesClubMilesCheckBox) {
-                    smilesClubMilesCheckBox.click();
+                    // Verifique se o checkbox não está marcado antes de clicar nele.
+                    console.log(`checkbox: ${smilesClubMilesCheckBox.checked}`);
+                    if (!smilesClubMilesCheckBox.checked) {
+                        smilesClubMilesCheckBox.click();
+                        console.log(`   checkbox after click: ${smilesClubMilesCheckBox.checked}`)
+                    }
                 }
-                
-                item.querySelector<HTMLButtonElement>(".select-flight-list-accordion-item-button-confirm")?.click();
-            
+
+                const confirmButton = item.querySelector<HTMLButtonElement>(".select-flight-list-accordion-item-button-confirm");
+
+                if (confirmButton) {
+                    confirmButton.click();
+                }
+
+                const priceMilesDiv = item.querySelector<HTMLDivElement>(".selected-flight-overview")
+
+                if (priceMilesDiv) {
+                    console.log(`priceMilesDiv: ${priceMilesDiv.textContent}`);
+                }
+
                 const priceMiles = item.querySelector<HTMLDivElement>(".selected-flight-overview")?.childNodes[2].textContent;
-                const tripTax = item.querySelector<HTMLDivElement>(".MONEY")?.childNodes[1].textContent
+                const tripTax = item.querySelector<HTMLDivElement>(".MONEY")?.childNodes[1].textContent;
+
+                console.log(`priceMiles: ${priceMiles}`);
+                console.log(`tripTax: ${tripTax}`);
 
                 const trip = {
                     priceMiles,
-                    tripTax
-                }
+                    tripTax,
+                };
 
-                worstPrices.push(trip);
+                auxTrips.push(trip);
             }
 
-            return worstPrices;
+            return auxTrips;
         });
 
         Logger.info("page title is: ", trips);

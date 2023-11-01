@@ -14,7 +14,7 @@ export abstract class Service {
     async initBrowser() {
         const browser = await puppeteer.launch({
             //executablePath: '/usr/bin/google-chrome',
-            args: ["--no-sandbox", "--disable-setuid-sandbox"],
+            args: ["--no-sandbox", "--disable-setuid-sandbox", '--enable-logging,'],
             headless: false
         });
 
