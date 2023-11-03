@@ -26,13 +26,13 @@ export abstract class Service {
 
         await page.setRequestInterception(true);
 
-        page.on("request", (req) => {
-            if (req.resourceType() === "stylesheet" || req.resourceType() === "font" || req.resourceType() === "image") {
-                req.abort();
-            } else {
-                req.continue();
-            }
-        });
+        // page.on("request", (req) => {
+        //     if (req.resourceType() === "stylesheet" || req.resourceType() === "font" || req.resourceType() === "image") {
+        //         req.abort();
+        //     } else {
+        //         req.continue();
+        //     }
+        // });
 
         page.on("console", (msg) => {
             for (let i = 0; i < msg.args().length; ++i) console.log(`${i}: ${msg.args()[i]}`);
