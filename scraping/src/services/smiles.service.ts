@@ -21,75 +21,35 @@ export class SmilesService extends Service {
 
         await page.waitForSelector(".select-flight-list-accordion-item");
 
-        // const tripsHandles = await page.evaluateHandle(() => document.querySelectorAll<HTMLDivElement>(".select-flight-list-accordion-item"));
-        // const tripsDivs = await tripsHandles.getProperties();
-        // const tripsDivsArray= tripsDivs.values();
+        let trips: any[] = [];
+            
+        const tripsHandles = await page.$$(".select-flight-list-accordion-item");
 
-        // Logger.info(`tripsDivsArray: ${tripsDivsArray}`);
-
-        // // iterate over tripsDivs
-        // for (const tripDiv of tripsDivsArray) {
-        //     Logger.info(`tripDiv: ${tripDiv}`);
-        //     const trip = tripDiv.asElement()
-
-            // await page.evaluate(async (tripDiv) => {
-            //     const smilesClubMilesCheckBox = tripDiv.querySelector<HTMLInputElement>(".smiles_club input");
-            //     console.log(`checkbox: ${smilesClubMilesCheckBox}`);
-            //     if (!smilesClubMilesCheckBox) {
-            //         console.log("smilesClubMilesCheckBox not found");
-            //         return;
-            //     }
-            //     console.log(`checkbox: ${smilesClubMilesCheckBox.checked}`);
-            //     if (!smilesClubMilesCheckBox.checked) {
-            //         smilesClubMilesCheckBox.click();
-            //         console.log(`   checkbox after click: ${smilesClubMilesCheckBox.checked}`);
-            //     }
-            //     const confirmButton = tripDiv.querySelector<HTMLButtonElement>(".select-flight-list-accordion-item-button-confirm");
-            //     if (!confirmButton) {
-            //         console.log("confirmButton not found");
-            //         return;
-            //     }
-            //     console.log("confirmButton found");
-            //     confirmButton.click();
-            //     await new Promise(function (resolve) {
-            //         setTimeout(resolve, 3000);
-            //     });
-            //     const priceMiles = document.querySelector<HTMLDivElement>(".selected-flight-overview")?.childNodes[2].textContent;
-            //     const tripTax = document.querySelector<HTMLDivElement>(".MONEY")?.childNodes[1].textContent;
-            //     if (!priceMiles || !tripTax) {
-            //         console.log("priceMiles or tripTax not found");
-            //         return;
-            //     }
-            //     const trip = {
-            //         priceMiles,
-            //         tripTax,
-            //     };
-            //     console.log(`priceMiles: ${priceMiles}`);
-            //     console.log(`tripTax: ${tripTax}`);
-
-            //     return trip;
-            // }, tripDiv.asElement());
-        //}
-
-        const trips = await page.evaluate(async () => {
-            const itemsList: Element[] = Array.from(document.querySelectorAll<HTMLDivElement>(".select-flight-list-accordion-item"));
-            const auxTrips = [];
-            for (const item of itemsList) {
-                const smilesClubMilesCheckBox = item.querySelector<HTMLInputElement>(".smiles_club input");
+        Logger.info(`tripsHandles: ${tripsHandles}`);
+        
+        let counter = 0;
+        
+        for (const tripHandle of tripsHandles) {
+            await page.waitForSelector(".select-flight-list-accordion-item");
+            Logger.info(`tripHandle: ${tripHandle}`);
+            Logger.info(`counter: ${counter}`);
+            const tripInfo = await page.evaluate(async (index) => {
+                console.log("starting getting tripInfo")
+                const smilesClubMilesCheckBox = document.querySelectorAll<HTMLInputElement>(".smiles_club input")[index];
                 console.log(`checkbox: ${smilesClubMilesCheckBox}`);
                 if (!smilesClubMilesCheckBox) {
                     console.log("smilesClubMilesCheckBox not found");
-                    continue;
+                    return;
                 }
                 console.log(`checkbox: ${smilesClubMilesCheckBox.checked}`);
                 if (!smilesClubMilesCheckBox.checked) {
                     smilesClubMilesCheckBox.click();
                     console.log(`   checkbox after click: ${smilesClubMilesCheckBox.checked}`);
                 }
-                const confirmButton = item.querySelector<HTMLButtonElement>(".select-flight-list-accordion-item-button-confirm");
+                const confirmButton = document.querySelectorAll<HTMLButtonElement>(".select-flight-list-accordion-item-button-confirm")[index];
                 if (!confirmButton) {
                     console.log("confirmButton not found");
-                    continue;
+                    return;
                 }
                 console.log("confirmButton found");
                 confirmButton.click();
@@ -100,21 +60,28 @@ export class SmilesService extends Service {
                 const tripTax = document.querySelector<HTMLDivElement>(".MONEY")?.childNodes[1].textContent;
                 if (!priceMiles || !tripTax) {
                     console.log("priceMiles or tripTax not found");
-                    continue;
+                    return;
                 }
-                const trip = {
+                const auxtrip = {
                     priceMiles,
                     tripTax,
                 };
                 console.log(`priceMiles: ${priceMiles}`);
                 console.log(`tripTax: ${tripTax}`);
-                auxTrips.push(trip);
 
-                document.querySelector<HTMLDivElement>(".search ")?.click();
+                return auxtrip;
+            }, counter);
+
+            if (!tripInfo || tripInfo === undefined || tripInfo === null) {
+                Logger.info(`tripInfo: ${tripInfo}`);
+                continue;
             }
-            return auxTrips;
-        });
-        
+
+            trips.push(tripInfo);
+
+            await page.reload();
+            counter++;
+        }
 
         await browser.close();
 
