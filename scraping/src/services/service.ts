@@ -3,6 +3,7 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { PuppeteerExtraPluginAdblocker } from "puppeteer-extra-plugin-adblocker";
 import { Browser } from "puppeteer";
 import Logger from "../utils/logger";
+import { Travel } from "../models/Travel";
 
 export abstract class Service {
     constructor() {
@@ -15,7 +16,7 @@ export abstract class Service {
         const browser = await puppeteer.launch({
             //executablePath: '/usr/bin/google-chrome',
             args: ["--no-sandbox", "--disable-setuid-sandbox", '--enable-logging,'],
-            headless: false
+            headless: true
         });
 
         return browser;
@@ -26,13 +27,13 @@ export abstract class Service {
 
         await page.setRequestInterception(true);
 
-        // page.on("request", (req) => {
-        //     if (req.resourceType() === "stylesheet" || req.resourceType() === "font" || req.resourceType() === "image") {
-        //         req.abort();
-        //     } else {
-        //         req.continue();
-        //     }
-        // });
+        page.on("request", (req) => {
+            if (req.resourceType() === "stylesheet" || req.resourceType() === "font" || req.resourceType() === "image") {
+                req.abort();
+            } else {
+                req.continue();
+            }
+        });
 
         page.on("console", (msg) => {
             for (let i = 0; i < msg.args().length; ++i) console.log(`${i}: ${msg.args()[i]}`);
@@ -45,5 +46,13 @@ export abstract class Service {
         await browser.close();
     }
 
-    abstract search(): Promise<any>;
+    parseCurrencyStringToFloat(currencyString: string): number {
+        const cleanedString = currencyString.replace(".", "").replace(",", ".");
+      
+        const floatValue = parseFloat(cleanedString);
+      
+        return floatValue;
+    }
+
+    abstract search(travel: Travel): Promise<any>;
 }
