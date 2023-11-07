@@ -3,7 +3,8 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { PuppeteerExtraPluginAdblocker } from "puppeteer-extra-plugin-adblocker";
 import { Browser } from "puppeteer";
 import Logger from "../utils/logger";
-import { Travel } from "../models/Travel";
+import { SearchTravelRequest, Travel } from "../models/SearchTravel";
+import { program } from "..";
 
 export abstract class Service {
     constructor() {
@@ -18,6 +19,8 @@ export abstract class Service {
             args: ["--no-sandbox", "--disable-setuid-sandbox", '--enable-logging,'],
             headless: true
         });
+
+        program.puppeteerProcesses.set("", browser);
 
         return browser;
     }
@@ -54,5 +57,5 @@ export abstract class Service {
         return floatValue;
     }
 
-    abstract search(travel: Travel): Promise<any>;
+    abstract search(travel: SearchTravelRequest): Promise<Travel[]>;
 }

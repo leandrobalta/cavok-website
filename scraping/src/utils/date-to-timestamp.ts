@@ -3,7 +3,7 @@ export function dateToTimestamp(dateString: string): number | null {
 
     if (dateParts.length !== 3) {
         console.error('A data deve estar no formato "yyyy-mm-dd".');
-        return null;
+        throw new Error('A data deve estar no formato "yyyy-mm-dd".');
     }
 
     const year = parseInt(dateParts[0], 10);
