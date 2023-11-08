@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { SmilesService } from "../services/smiles.service";
 import Logger from "../utils/logger";
 import { SearchTravelRequest } from "../models/SearchTravel";
+import { RequestSubscribeClose } from "../utils/req-subscribe-close";
 
 const smilesRouter = Router();
 
@@ -14,12 +15,22 @@ smilesRouter.post("/searchTravel", async (req: Request, res: Response) => {
             res.status(400).send({ success: false, message: "Invalid request body." });
             return;
         }
-
         Logger.info(`travelSearch: ${travelSearch}`);
-        const smilesService = new SmilesService();
+
+        const key = `${req.socket.remoteAddress}:${req.socket.remotePort}`;
+        Logger.info(`[RECEIVE] key: ${key}`);
+        const smilesService = new SmilesService(`${req.socket.remoteAddress}:${req.socket.remotePort}`);
+        
+        RequestSubscribeClose(req.socket, smilesService);
+
         const result = await smilesService.search(travelSearch);
-        Logger.info(`result: ${result}`);
-        res.status(200).send({ success: true, data: result });
+    
+        const response = {
+            success: true,
+            data: result
+        };
+        Logger.info(`[SEND] response: ${response}`);
+        res.status(200).send(response);
     } catch (error) {
         let message = "internal server error";
         if (error instanceof Error) {

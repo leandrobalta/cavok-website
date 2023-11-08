@@ -5,8 +5,8 @@ import { Connection, SearchTravelRequest, Travel } from "../models/SearchTravel"
 import { dateToTimestamp } from "../utils/date-to-timestamp";
 
 export class SmilesService extends Service {
-    constructor() {
-        super();
+    constructor(key: string) {
+        super(key);
     }
 
     async search(travel: SearchTravelRequest): Promise<Travel[]> {

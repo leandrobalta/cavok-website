@@ -7,8 +7,10 @@ import { SearchTravelRequest, Travel } from "../models/SearchTravel";
 import { program } from "..";
 
 export abstract class Service {
-    constructor() {
-        Logger.info("Starting service...");
+    key: string;
+
+    constructor(key: string) {
+        this.key = key;
         puppeteer.use(new PuppeteerExtraPluginAdblocker({ blockTrackers: true }));
         puppeteer.use(StealthPlugin());
     }
@@ -20,7 +22,7 @@ export abstract class Service {
             headless: true
         });
 
-        program.puppeteerProcesses.set("", browser);
+        program.puppeteerProcesses.set(this.key, browser);
 
         return browser;
     }
@@ -47,6 +49,14 @@ export abstract class Service {
 
     async closeBrowser(browser: Browser) {
         await browser.close();
+    }
+
+    async kill() {
+        const browser = program.puppeteerProcesses.get(this.key);
+        if (browser) {
+            await browser.close();
+            program.puppeteerProcesses.delete(this.key);
+        }
     }
 
     parseCurrencyStringToFloat(currencyString: string): number {
