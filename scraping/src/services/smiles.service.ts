@@ -35,6 +35,7 @@ export class SmilesService extends Service {
         Logger.info(`tripsHandles: ${tripsHandles}`);
 
         for (let i = 0; i < tripsHandles.length; i++) {
+            if (i > 1) break;
             await page.waitForSelector(".select-flight-list-accordion-item");
             const tripInfo = await page.evaluate(async (index) => {
                 async function waitForElement(selector: string) {
